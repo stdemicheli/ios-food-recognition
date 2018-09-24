@@ -1,0 +1,1321 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		00E2C1092D2255BB25E45DF004D3E7E5 /* UIWebView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 1E46076579CEF0E93A346C2F578A7EBC /* UIWebView+AFNetworking.m */; };
+		00ED59EE2784CE922358E57E241A6C75 /* UIRefreshControl+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 492D2DA3AB9BE913962BC5B76BEB60B0 /* UIRefreshControl+AFNetworking.m */; };
+		0B932CADDA84C3253C845BD81E741328 /* Pods-ios-food-recognitionTests-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 871C63E8850591C66134973D799E8A51 /* Pods-ios-food-recognitionTests-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0D58399A6DC61099900309A4449F7891 /* AFURLSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D8A2D92D725B66BB04BB318235597DA /* AFURLSessionManager.m */; };
+		11EAB2A17E2712DB04831AD0FFD6A5DB /* AFURLResponseSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 33D14F4B4A3168AC215FFF85A657E455 /* AFURLResponseSerialization.m */; };
+		137A6E8841A2429C00CBFA701695197E /* AFNetworkReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 52BC08814D9230F77A70368DAB6A0E23 /* AFNetworkReachabilityManager.m */; };
+		15304B6383EF69EC4E3DE45F8613BE2E /* UIRefreshControl+AFNetworking.h in Headers */ = {isa = PBXBuildFile; fileRef = 1CF71AFA4F7595C334C49FCF3F2CB22A /* UIRefreshControl+AFNetworking.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1579ABB5208A03468A3BD6EBD85F9E71 /* ClarifaiLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = F560470966655FD360CCC1C98686F73E /* ClarifaiLocation.m */; };
+		15F1AB626337FECD0B9CFAAD90FAC342 /* AFNetworkActivityIndicatorManager.m in Sources */ = {isa = PBXBuildFile; fileRef = FF1973F1F5E2F568CBDAFD0EDE6E52E5 /* AFNetworkActivityIndicatorManager.m */; };
+		1FCB41F5B6D7D7134EEEC0CF664AFC3F /* ClarifaiOutputFace.m in Sources */ = {isa = PBXBuildFile; fileRef = D499D936EDCE1D8CC80C92F0AD8321EF /* ClarifaiOutputFace.m */; };
+		27D39E7560A107D7CC8B88973E425C8D /* ClarifaiModelVersion.m in Sources */ = {isa = PBXBuildFile; fileRef = BBBE9D760C34316BBDE22528F017CDBA /* ClarifaiModelVersion.m */; };
+		2E68973739E2AE713059A22F94238C60 /* AFURLResponseSerialization.h in Headers */ = {isa = PBXBuildFile; fileRef = 83F218255EB30F2125F1160EBE4296FC /* AFURLResponseSerialization.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2E84E4963039D4A70C9E80A57A18EC83 /* ResponseSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = 66F48A63ADFD1B6DA183D17540635620 /* ResponseSerializer.m */; };
+		32CAC10B745A2B3722AB2B2C76E7B28C /* ClarifaiConcept.h in Headers */ = {isa = PBXBuildFile; fileRef = F5E4A5ABFD0C1A12CF81BA6D4D43B769 /* ClarifaiConcept.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3478FF4088370E426D8E6353C813C603 /* NSDictionary+Clarifai.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EB69D6B3FAD43201581838CC9D479F3 /* NSDictionary+Clarifai.m */; };
+		358A8598D8721A3254A46987841E1BBC /* AFNetworking.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5461D992F0D803F0F05DF72B2849301D /* AFNetworking.framework */; };
+		3631F6754B67EA1D5D671F76031B1C4D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E72265D742A839587BC23CD8BD6AF14D /* Foundation.framework */; };
+		37DE4A1DAC2D920611AED92CB8DBB090 /* ClarifaiModel.h in Headers */ = {isa = PBXBuildFile; fileRef = 9C4FA5E65CCD598ED1E15F7DC8146CA1 /* ClarifaiModel.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3BBEB803973B6CC5C9F3923CA4D219F1 /* ClarifaiOutputFace.h in Headers */ = {isa = PBXBuildFile; fileRef = 41C9F2A7030AC5F723C811FFA83FE2A4 /* ClarifaiOutputFace.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3C37D706E6C351AAE04884CC3045CF4A /* Pods-ios-food-recognition-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 1484F97A6AE4E89760B824C124986E3E /* Pods-ios-food-recognition-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3CC1558D8899A2E13A968D4C403CD793 /* AFCompatibilityMacros.h in Headers */ = {isa = PBXBuildFile; fileRef = 0F5F0C503D5D2BB6F5611F97AE22B01B /* AFCompatibilityMacros.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3FC9E0205861DDFC56AA79CEF6FB72B7 /* ClarifaiConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 0DED9EB6E9BAFC6D807EEA7BA25484A2 /* ClarifaiConstants.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		402EB64C59857FE252DC98844643C420 /* UIButton+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = F59EECD259811D8C3B178FCB71C55CB9 /* UIButton+AFNetworking.m */; };
+		41FD4D0D6101210E26DDDCDD17FBB7C3 /* UIImageView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = A77D98BFD43567D0D8AF716F70801261 /* UIImageView+AFNetworking.m */; };
+		473557C0B29DF7D2B716C8BEF6D70003 /* ClarifaiInput.m in Sources */ = {isa = PBXBuildFile; fileRef = 423768C15987C86794C0D777D564167E /* ClarifaiInput.m */; };
+		47C2E90005B8DCF98049E706C1DBD2DD /* ClarifaiCrop.m in Sources */ = {isa = PBXBuildFile; fileRef = E06311E877479683446B592C5A553E0D /* ClarifaiCrop.m */; };
+		4A7FB8DE58F76F56EDC4291D1389E0AE /* Pods-ios-food-recognitionTests-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 6E82AD42C98EF33CEF9F49F291017CF6 /* Pods-ios-food-recognitionTests-dummy.m */; };
+		5075964B4A8C7A3D05C4C1A91833B8DB /* ClarifaiOutputRegion.m in Sources */ = {isa = PBXBuildFile; fileRef = B0D6EB29691E09A8D9D7D141E114BCB6 /* ClarifaiOutputRegion.m */; };
+		519B45AA46F948B84C661E475A809DC5 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E72265D742A839587BC23CD8BD6AF14D /* Foundation.framework */; };
+		548C6C2DD81628790502792841A64862 /* ClarifaiOutput.m in Sources */ = {isa = PBXBuildFile; fileRef = 59CB039E40EE11C3CB7282BD481282A6 /* ClarifaiOutput.m */; };
+		54AF663998095CF94E5EB92FF5960C58 /* ClarifaiApp.h in Headers */ = {isa = PBXBuildFile; fileRef = 4F49C7EC77B0C6D11D4FA212AADC7A4E /* ClarifaiApp.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5A4C39ACCE4CE7B6C69C736F48087759 /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 8B1D2BB9447874DE13848C9052151406 /* AFHTTPSessionManager.m */; };
+		616166BD57B8707EC940068BF5E1AA0A /* AFImageDownloader.h in Headers */ = {isa = PBXBuildFile; fileRef = 208AFD368022E244BD116E153C637383 /* AFImageDownloader.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		63A7B518E880C7AACABCD20AFA247C8C /* AFSecurityPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = 92BA973D8DDA5E11E662D4682FAF693B /* AFSecurityPolicy.m */; };
+		63B05DD8200C971ABDD35B000918A587 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DDBDFFA351A30960D21939E28DC60212 /* CoreGraphics.framework */; };
+		66340E06FB146280E83112B966E563C3 /* AFNetworkReachabilityManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 53500A5DACA2B65851456458B765CB98 /* AFNetworkReachabilityManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6657C2D365B8112B609D36FD4AD60E68 /* ClarifaiGeo.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D28B1D00E2F796B93295C7AA25DFF0F /* ClarifaiGeo.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		6885F9A30752A1960ADEC6689064524A /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DAE9E29D14DFD809059EC3455D955F8 /* SystemConfiguration.framework */; };
+		6A2AE9B8B0D3AE3F818480044324A70A /* ClarifaiSearchTerm.m in Sources */ = {isa = PBXBuildFile; fileRef = 5BE8FA8E8491E18A61E8CA43C41C2DE1 /* ClarifaiSearchTerm.m */; };
+		6A5E05D187005E863177B45D58905C71 /* AFImageDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = C9644EC236133C91FAB909B95892BA45 /* AFImageDownloader.m */; };
+		6C7C6C542448137FC3B6CEA04386780C /* AFHTTPSessionManager.h in Headers */ = {isa = PBXBuildFile; fileRef = C7EAEDA0F6C234DBABB81D615AE395B5 /* AFHTTPSessionManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		76BA5CCA7F0BD9E4B4B9C2C466C7DC58 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D90C6CE6DFFF0E79482EB6BEB9917B9D /* Security.framework */; };
+		78E8C7D8F30542133E31CA5FF6D0DFE4 /* ClarifaiOutputFocus.m in Sources */ = {isa = PBXBuildFile; fileRef = CA44F17A8CAB0F4C11EE18F7E307BC80 /* ClarifaiOutputFocus.m */; };
+		78F5D40D5B8E9FC40FB257953EA945BA /* UIImage+AFNetworking.h in Headers */ = {isa = PBXBuildFile; fileRef = A96CABF478C9BCCAC9F6C007C4590A59 /* UIImage+AFNetworking.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		7A62BF11F6642580FA44741DC3A2D3C9 /* ClarifaiGeo.m in Sources */ = {isa = PBXBuildFile; fileRef = 6EC10DE87B2870408FB01DD11BE84735 /* ClarifaiGeo.m */; };
+		81376874A6B1F6F240FFB40BBAF1AC51 /* Pods-ios-food-recognition-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = F01DC890833B16D30386675FD33E44F2 /* Pods-ios-food-recognition-dummy.m */; };
+		87B7E872A04766842F13E221E9422AE7 /* NSArray+Clarifai.h in Headers */ = {isa = PBXBuildFile; fileRef = 9ECD6E4821FD2BACA12FAEAA68251239 /* NSArray+Clarifai.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		8826A0887EEE1A618FA3BA34989E05B5 /* AFNetworking-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 796DBD43A3A406BA65F748C142345425 /* AFNetworking-dummy.m */; };
+		88A52F2DE87FAAEF79B420CC9B6BDE80 /* AFNetworking-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = FFBDE54B203AC5ED8116C1DF468BFC1C /* AFNetworking-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		8AD9F8FE36978CB4348E402207950883 /* AFAutoPurgingImageCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 38559A34AECE63C9FE72F72B130CBB69 /* AFAutoPurgingImageCache.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		8D3B35C2CD092FE3DA602EA834D39C8B /* ClarifaiLocation.h in Headers */ = {isa = PBXBuildFile; fileRef = F657A050691980EB4E10E6A636F077B7 /* ClarifaiLocation.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		8EF2E0769283D7F00878AD57A6AA048F /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E72265D742A839587BC23CD8BD6AF14D /* Foundation.framework */; };
+		901790CB7729E8871AE5DE99E486792B /* AFSecurityPolicy.h in Headers */ = {isa = PBXBuildFile; fileRef = 3F2D9D91D79EEE719868F5DC80668359 /* AFSecurityPolicy.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		9486D80CC092F8ACB2355D5C94A155E3 /* AFAutoPurgingImageCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 605AED360E0C92F78A9761FA2DE782A5 /* AFAutoPurgingImageCache.m */; };
+		9BDA379185A7F15E5ACE9A4D9D1344A1 /* ClarifaiOutput.h in Headers */ = {isa = PBXBuildFile; fileRef = D5B95CA5EDF40895B22D3735119E2DAC /* ClarifaiOutput.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		9D380619079479C622272E2C77FCD289 /* AFNetworking.h in Headers */ = {isa = PBXBuildFile; fileRef = 44CC5677AA5EF7C2AF17E55739D83DB5 /* AFNetworking.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		9DCAFDFBC9280A361B063B3E5C2D2027 /* NSDictionary+Clarifai.h in Headers */ = {isa = PBXBuildFile; fileRef = 34FD2BF85A297357C0C6A99DD2D7661F /* NSDictionary+Clarifai.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		9FC1A7CE36DE492F237DDC916C6F3C84 /* ClarifaiOutputRegion.h in Headers */ = {isa = PBXBuildFile; fileRef = 225E75E61A39BA87C082198D2B350F89 /* ClarifaiOutputRegion.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A39E1924915C53C49E7220F72AD96BBB /* UIKit+AFNetworking.h in Headers */ = {isa = PBXBuildFile; fileRef = BF325E7C548D4DDBA803649CCA04F3D2 /* UIKit+AFNetworking.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A707F33AF9BDB27BD95432DFB1E2E97A /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D7729272B0191CF0AEEC273F9FF8FFC1 /* MobileCoreServices.framework */; };
+		B072ED70F33F4D199A2324438D9BFF9D /* ClarifaiModelVersion.h in Headers */ = {isa = PBXBuildFile; fileRef = 3D00576C4C3D43D8D6BC405170C241D2 /* ClarifaiModelVersion.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B4767F83A589E93EBCC92F4EB11FDB2A /* ClarifaiModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 07EAB6A239014C90F009974C0A9CBC19 /* ClarifaiModel.m */; };
+		B772355201E1F42A4338F747B7006DE7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E72265D742A839587BC23CD8BD6AF14D /* Foundation.framework */; };
+		BA8ECF0CEB07AA438AB1F86B2114DCB0 /* Clarifai-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 7E8047C3F2F9E262AB5A26321F591B35 /* Clarifai-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		BEE7FD5C1C06AF3670E0FB75F996DDF7 /* UIButton+AFNetworking.h in Headers */ = {isa = PBXBuildFile; fileRef = FAF9F793703533EDEA279FEDAB5A6355 /* UIButton+AFNetworking.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C39A86B0B7CA56CC1EE070068DBE9757 /* ClarifaiInput.h in Headers */ = {isa = PBXBuildFile; fileRef = 9A4D10A2919557FFBD2C3C7226AF4CEB /* ClarifaiInput.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CB3028664CA23A1480C18C7A86CFDAF4 /* UIActivityIndicatorView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F68BF73A6D3FF6247583DC7F582DC6 /* UIActivityIndicatorView+AFNetworking.m */; };
+		CB3CA20E3732A095F5515E0621D8719C /* AFURLRequestSerialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D31332CE6A66ECFD69235555B52428 /* AFURLRequestSerialization.m */; };
+		CB633AF10D27AD0971F3E34470B0BB01 /* UIWebView+AFNetworking.h in Headers */ = {isa = PBXBuildFile; fileRef = 239B5E1441DE33E0FE4CAD115EA1B37E /* UIWebView+AFNetworking.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CE242482B23A53117180AD5F2E2C6378 /* ClarifaiSearchResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 501F033C3CDF4B60CBBD6A44CB9D1C4C /* ClarifaiSearchResult.m */; };
+		D014A5430789C5F0FFCF490D53B22897 /* UIActivityIndicatorView+AFNetworking.h in Headers */ = {isa = PBXBuildFile; fileRef = BB5712BFEB526AE8EBD1875DDF8B3FED /* UIActivityIndicatorView+AFNetworking.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D02258DBA7DC9C4189C877AD943F3119 /* ClarifaiImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 1F2F45F60D773F552AB86B550878ACD3 /* ClarifaiImage.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D0A1E9D262B1A8B25FA13E195E331886 /* ClarifaiOutputFocus.h in Headers */ = {isa = PBXBuildFile; fileRef = 69121A55B1BD5861A43537C3C42D5F79 /* ClarifaiOutputFocus.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D35DF402ABE27A843AA2EB49CECAD6BB /* ResponseSerializer.h in Headers */ = {isa = PBXBuildFile; fileRef = C4A2339B25BA567E3D8362CDDCBF5708 /* ResponseSerializer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D491FD44351A11016A957CA81ABE0EC5 /* AFURLRequestSerialization.h in Headers */ = {isa = PBXBuildFile; fileRef = F2FEC6AAB9DB20B1BA78AE862E37BCD2 /* AFURLRequestSerialization.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		D78BBEDA6444B26F7214A96AA2D0B941 /* NSArray+Clarifai.m in Sources */ = {isa = PBXBuildFile; fileRef = 70B65688C4E8BCE2CB0FF2586C6136B3 /* NSArray+Clarifai.m */; };
+		DEA569E97DD710E6C37F16FB32022F1D /* Clarifai-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 24B1984E2B992A667A37F8DC9F0AB510 /* Clarifai-dummy.m */; };
+		DF74915F8F367134FA4277BE9A2F52DB /* UIProgressView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = A31D6C8A3F87A8807B6A4EC5EE01002F /* UIProgressView+AFNetworking.m */; };
+		E7F02FC7B01D71C07EE3F865843FC1EF /* ClarifaiApp.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A51D9EB4D4BEE2366FC6C5463F048E2 /* ClarifaiApp.m */; };
+		EC805FD7BB684382F4FC417B999FEA0B /* ClarifaiSearchTerm.h in Headers */ = {isa = PBXBuildFile; fileRef = 38497CD74F2C9351FF4E111DADA2DE6A /* ClarifaiSearchTerm.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EF8FE8AA1B70BA4581B8F1272DB40998 /* ClarifaiConcept.m in Sources */ = {isa = PBXBuildFile; fileRef = 383B5EA1935A8C8EABD92181C7FC5EFF /* ClarifaiConcept.m */; };
+		F2D2FE3B9DB1610D8EFAB393A3412DB7 /* UIImageView+AFNetworking.h in Headers */ = {isa = PBXBuildFile; fileRef = 25AAAA10B2999264C1E3266DFCC07E46 /* UIImageView+AFNetworking.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		FCB209DFAFF4721A4AA51197AB2D7016 /* UIProgressView+AFNetworking.h in Headers */ = {isa = PBXBuildFile; fileRef = D39E51A2696FC6653C94A8D433B0F55B /* UIProgressView+AFNetworking.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		FE66EF8D47514D23E7551E2C95C765D8 /* AFURLSessionManager.h in Headers */ = {isa = PBXBuildFile; fileRef = A011D3ACC776C7D1D2593FA1155543F6 /* AFURLSessionManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		FE694AF60B7757F5FBF94CCAE2ADC095 /* ClarifaiImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 06F779B087BBD0DD4926B80E2041A00D /* ClarifaiImage.m */; };
+		FF12B4BE37652AC565ED618C106CFE10 /* AFNetworkActivityIndicatorManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 03D4E475EA2A66A744F0FC68CC3A5DE8 /* AFNetworkActivityIndicatorManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		FF971E2E46B0BEDBDC82C7143FBFA625 /* ClarifaiCrop.h in Headers */ = {isa = PBXBuildFile; fileRef = FE6D1CDCDD11A328121F67533A848F0E /* ClarifaiCrop.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		FFB830A576D74321892327EFBAD71ACC /* ClarifaiSearchResult.h in Headers */ = {isa = PBXBuildFile; fileRef = BAF09188E1A1A2BAFE88E66CB7CC621C /* ClarifaiSearchResult.h */; settings = {ATTRIBUTES = (Public, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		0ABC692E3A614A12B9114204025EA0B3 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EAE60BD2ADA8DCB217E116ADB628185C;
+			remoteInfo = AFNetworking;
+		};
+		2C5BB984FCDAD6F69B687A5242F8D2D8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EAE60BD2ADA8DCB217E116ADB628185C;
+			remoteInfo = AFNetworking;
+		};
+		E9A12091D15DB9C0452245D249843BB8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D61C669FE55A161C06B8F5667B69E884;
+			remoteInfo = Clarifai;
+		};
+		F767D03C4DD91D72866F6D74203EB555 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = B999F2CADEFB552AD531121BDD719C26;
+			remoteInfo = "Pods-ios-food-recognition";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		03D4E475EA2A66A744F0FC68CC3A5DE8 /* AFNetworkActivityIndicatorManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AFNetworkActivityIndicatorManager.h; path = "UIKit+AFNetworking/AFNetworkActivityIndicatorManager.h"; sourceTree = "<group>"; };
+		06F779B087BBD0DD4926B80E2041A00D /* ClarifaiImage.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ClarifaiImage.m; path = Clarifai/Classes/ClarifaiImage.m; sourceTree = "<group>"; };
+		07EAB6A239014C90F009974C0A9CBC19 /* ClarifaiModel.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ClarifaiModel.m; path = Clarifai/Classes/ClarifaiModel.m; sourceTree = "<group>"; };
+		0A51D9EB4D4BEE2366FC6C5463F048E2 /* ClarifaiApp.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ClarifaiApp.m; path = Clarifai/Classes/ClarifaiApp.m; sourceTree = "<group>"; };
+		0DED9EB6E9BAFC6D807EEA7BA25484A2 /* ClarifaiConstants.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ClarifaiConstants.h; path = Clarifai/Classes/ClarifaiConstants.h; sourceTree = "<group>"; };
+		0F5F0C503D5D2BB6F5611F97AE22B01B /* AFCompatibilityMacros.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AFCompatibilityMacros.h; path = AFNetworking/AFCompatibilityMacros.h; sourceTree = "<group>"; };
+		1484F97A6AE4E89760B824C124986E3E /* Pods-ios-food-recognition-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-ios-food-recognition-umbrella.h"; sourceTree = "<group>"; };
+		17F87EE2E8B7473B51AC7DE4453B850A /* Pods-ios-food-recognition-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-ios-food-recognition-acknowledgements.plist"; sourceTree = "<group>"; };
+		1CF71AFA4F7595C334C49FCF3F2CB22A /* UIRefreshControl+AFNetworking.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIRefreshControl+AFNetworking.h"; path = "UIKit+AFNetworking/UIRefreshControl+AFNetworking.h"; sourceTree = "<group>"; };
+		1D5B1FF8990657DD5BE4D777F2F3BAB4 /* AFNetworking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = AFNetworking.framework; path = AFNetworking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1E46076579CEF0E93A346C2F578A7EBC /* UIWebView+AFNetworking.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIWebView+AFNetworking.m"; path = "UIKit+AFNetworking/UIWebView+AFNetworking.m"; sourceTree = "<group>"; };
+		1E9949A03F494222E3A80DF42F64A0E8 /* Clarifai-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Clarifai-prefix.pch"; sourceTree = "<group>"; };
+		1F2F45F60D773F552AB86B550878ACD3 /* ClarifaiImage.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ClarifaiImage.h; path = Clarifai/Classes/ClarifaiImage.h; sourceTree = "<group>"; };
+		208AFD368022E244BD116E153C637383 /* AFImageDownloader.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AFImageDownloader.h; path = "UIKit+AFNetworking/AFImageDownloader.h"; sourceTree = "<group>"; };
+		225E75E61A39BA87C082198D2B350F89 /* ClarifaiOutputRegion.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ClarifaiOutputRegion.h; path = Clarifai/Classes/ClarifaiOutputRegion.h; sourceTree = "<group>"; };
+		239B5E1441DE33E0FE4CAD115EA1B37E /* UIWebView+AFNetworking.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIWebView+AFNetworking.h"; path = "UIKit+AFNetworking/UIWebView+AFNetworking.h"; sourceTree = "<group>"; };
+		24B1984E2B992A667A37F8DC9F0AB510 /* Clarifai-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Clarifai-dummy.m"; sourceTree = "<group>"; };
+		25AAAA10B2999264C1E3266DFCC07E46 /* UIImageView+AFNetworking.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIImageView+AFNetworking.h"; path = "UIKit+AFNetworking/UIImageView+AFNetworking.h"; sourceTree = "<group>"; };
+		26CEAC0B6A153E235F5331BF77A8D1CF /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		27F68BF73A6D3FF6247583DC7F582DC6 /* UIActivityIndicatorView+AFNetworking.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIActivityIndicatorView+AFNetworking.m"; path = "UIKit+AFNetworking/UIActivityIndicatorView+AFNetworking.m"; sourceTree = "<group>"; };
+		2C6C0796AAF1FDA92171EEDB18AE0703 /* Clarifai.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Clarifai.framework; path = Clarifai.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		33D14F4B4A3168AC215FFF85A657E455 /* AFURLResponseSerialization.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AFURLResponseSerialization.m; path = AFNetworking/AFURLResponseSerialization.m; sourceTree = "<group>"; };
+		34FD2BF85A297357C0C6A99DD2D7661F /* NSDictionary+Clarifai.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSDictionary+Clarifai.h"; path = "Clarifai/Classes/NSDictionary+Clarifai.h"; sourceTree = "<group>"; };
+		370FF4D131BC767830C8A6DC8A84035D /* Pods-ios-food-recognition-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-ios-food-recognition-resources.sh"; sourceTree = "<group>"; };
+		383B5EA1935A8C8EABD92181C7FC5EFF /* ClarifaiConcept.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ClarifaiConcept.m; path = Clarifai/Classes/ClarifaiConcept.m; sourceTree = "<group>"; };
+		38497CD74F2C9351FF4E111DADA2DE6A /* ClarifaiSearchTerm.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ClarifaiSearchTerm.h; path = Clarifai/Classes/ClarifaiSearchTerm.h; sourceTree = "<group>"; };
+		38559A34AECE63C9FE72F72B130CBB69 /* AFAutoPurgingImageCache.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AFAutoPurgingImageCache.h; path = "UIKit+AFNetworking/AFAutoPurgingImageCache.h"; sourceTree = "<group>"; };
+		3D00576C4C3D43D8D6BC405170C241D2 /* ClarifaiModelVersion.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ClarifaiModelVersion.h; path = Clarifai/Classes/ClarifaiModelVersion.h; sourceTree = "<group>"; };
+		3F2D9D91D79EEE719868F5DC80668359 /* AFSecurityPolicy.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AFSecurityPolicy.h; path = AFNetworking/AFSecurityPolicy.h; sourceTree = "<group>"; };
+		3F63F6F1025FF93612BA830D54A64857 /* Pods-ios-food-recognitionTests.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-ios-food-recognitionTests.modulemap"; sourceTree = "<group>"; };
+		41C9F2A7030AC5F723C811FFA83FE2A4 /* ClarifaiOutputFace.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ClarifaiOutputFace.h; path = Clarifai/Classes/ClarifaiOutputFace.h; sourceTree = "<group>"; };
+		423768C15987C86794C0D777D564167E /* ClarifaiInput.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ClarifaiInput.m; path = Clarifai/Classes/ClarifaiInput.m; sourceTree = "<group>"; };
+		44CC5677AA5EF7C2AF17E55739D83DB5 /* AFNetworking.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AFNetworking.h; path = AFNetworking/AFNetworking.h; sourceTree = "<group>"; };
+		492D2DA3AB9BE913962BC5B76BEB60B0 /* UIRefreshControl+AFNetworking.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIRefreshControl+AFNetworking.m"; path = "UIKit+AFNetworking/UIRefreshControl+AFNetworking.m"; sourceTree = "<group>"; };
+		4D28B1D00E2F796B93295C7AA25DFF0F /* ClarifaiGeo.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ClarifaiGeo.h; path = Clarifai/Classes/ClarifaiGeo.h; sourceTree = "<group>"; };
+		4D8A2D92D725B66BB04BB318235597DA /* AFURLSessionManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AFURLSessionManager.m; path = AFNetworking/AFURLSessionManager.m; sourceTree = "<group>"; };
+		4DDA9F5A33AF57F4A1F29F27501E826E /* AFNetworking.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = AFNetworking.modulemap; sourceTree = "<group>"; };
+		4F49C7EC77B0C6D11D4FA212AADC7A4E /* ClarifaiApp.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ClarifaiApp.h; path = Clarifai/Classes/ClarifaiApp.h; sourceTree = "<group>"; };
+		501F033C3CDF4B60CBBD6A44CB9D1C4C /* ClarifaiSearchResult.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ClarifaiSearchResult.m; path = Clarifai/Classes/ClarifaiSearchResult.m; sourceTree = "<group>"; };
+		52BC08814D9230F77A70368DAB6A0E23 /* AFNetworkReachabilityManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AFNetworkReachabilityManager.m; path = AFNetworking/AFNetworkReachabilityManager.m; sourceTree = "<group>"; };
+		53500A5DACA2B65851456458B765CB98 /* AFNetworkReachabilityManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AFNetworkReachabilityManager.h; path = AFNetworking/AFNetworkReachabilityManager.h; sourceTree = "<group>"; };
+		5461D992F0D803F0F05DF72B2849301D /* AFNetworking.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = AFNetworking.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		59CB039E40EE11C3CB7282BD481282A6 /* ClarifaiOutput.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ClarifaiOutput.m; path = Clarifai/Classes/ClarifaiOutput.m; sourceTree = "<group>"; };
+		5BE8FA8E8491E18A61E8CA43C41C2DE1 /* ClarifaiSearchTerm.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ClarifaiSearchTerm.m; path = Clarifai/Classes/ClarifaiSearchTerm.m; sourceTree = "<group>"; };
+		5C22895CA9BF9E5687A38AD480E0CC4B /* Pods-ios-food-recognitionTests-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-ios-food-recognitionTests-frameworks.sh"; sourceTree = "<group>"; };
+		605AED360E0C92F78A9761FA2DE782A5 /* AFAutoPurgingImageCache.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AFAutoPurgingImageCache.m; path = "UIKit+AFNetworking/AFAutoPurgingImageCache.m"; sourceTree = "<group>"; };
+		6071EADCA1D8B397025A008FEA184DE0 /* AFNetworking.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = AFNetworking.xcconfig; sourceTree = "<group>"; };
+		625A30C8456CAD15F7E167208E736E82 /* Pods-ios-food-recognition-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-ios-food-recognition-frameworks.sh"; sourceTree = "<group>"; };
+		66F48A63ADFD1B6DA183D17540635620 /* ResponseSerializer.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ResponseSerializer.m; path = Clarifai/Classes/ResponseSerializer.m; sourceTree = "<group>"; };
+		69121A55B1BD5861A43537C3C42D5F79 /* ClarifaiOutputFocus.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ClarifaiOutputFocus.h; path = Clarifai/Classes/ClarifaiOutputFocus.h; sourceTree = "<group>"; };
+		6C264D28F23DE837672056B328728F23 /* Pods-ios-food-recognitionTests-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-ios-food-recognitionTests-acknowledgements.plist"; sourceTree = "<group>"; };
+		6E7887FEC1F5968B642B5DF7062F6460 /* Clarifai.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = Clarifai.xcconfig; sourceTree = "<group>"; };
+		6E82AD42C98EF33CEF9F49F291017CF6 /* Pods-ios-food-recognitionTests-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-ios-food-recognitionTests-dummy.m"; sourceTree = "<group>"; };
+		6EB69D6B3FAD43201581838CC9D479F3 /* NSDictionary+Clarifai.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSDictionary+Clarifai.m"; path = "Clarifai/Classes/NSDictionary+Clarifai.m"; sourceTree = "<group>"; };
+		6EC10DE87B2870408FB01DD11BE84735 /* ClarifaiGeo.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ClarifaiGeo.m; path = Clarifai/Classes/ClarifaiGeo.m; sourceTree = "<group>"; };
+		7005AC531F48DAB3B3E9809B3F32F944 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		70B65688C4E8BCE2CB0FF2586C6136B3 /* NSArray+Clarifai.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSArray+Clarifai.m"; path = "Clarifai/Classes/NSArray+Clarifai.m"; sourceTree = "<group>"; };
+		796DBD43A3A406BA65F748C142345425 /* AFNetworking-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "AFNetworking-dummy.m"; sourceTree = "<group>"; };
+		7E8047C3F2F9E262AB5A26321F591B35 /* Clarifai-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Clarifai-umbrella.h"; sourceTree = "<group>"; };
+		83335E145A16406B80C235E73A7BACA1 /* Clarifai.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = Clarifai.modulemap; sourceTree = "<group>"; };
+		83F218255EB30F2125F1160EBE4296FC /* AFURLResponseSerialization.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AFURLResponseSerialization.h; path = AFNetworking/AFURLResponseSerialization.h; sourceTree = "<group>"; };
+		871C63E8850591C66134973D799E8A51 /* Pods-ios-food-recognitionTests-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-ios-food-recognitionTests-umbrella.h"; sourceTree = "<group>"; };
+		88D31332CE6A66ECFD69235555B52428 /* AFURLRequestSerialization.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AFURLRequestSerialization.m; path = AFNetworking/AFURLRequestSerialization.m; sourceTree = "<group>"; };
+		8B1D2BB9447874DE13848C9052151406 /* AFHTTPSessionManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AFHTTPSessionManager.m; path = AFNetworking/AFHTTPSessionManager.m; sourceTree = "<group>"; };
+		8DAE9E29D14DFD809059EC3455D955F8 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.3.sdk/System/Library/Frameworks/SystemConfiguration.framework; sourceTree = DEVELOPER_DIR; };
+		92BA973D8DDA5E11E662D4682FAF693B /* AFSecurityPolicy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AFSecurityPolicy.m; path = AFNetworking/AFSecurityPolicy.m; sourceTree = "<group>"; };
+		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		96139B8EDDF7282739F39692B5E503CB /* Pods-ios-food-recognition.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ios-food-recognition.debug.xcconfig"; sourceTree = "<group>"; };
+		98D617C43692E328383D8B164B964AC8 /* Pods-ios-food-recognitionTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ios-food-recognitionTests.debug.xcconfig"; sourceTree = "<group>"; };
+		9A4D10A2919557FFBD2C3C7226AF4CEB /* ClarifaiInput.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ClarifaiInput.h; path = Clarifai/Classes/ClarifaiInput.h; sourceTree = "<group>"; };
+		9C4FA5E65CCD598ED1E15F7DC8146CA1 /* ClarifaiModel.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ClarifaiModel.h; path = Clarifai/Classes/ClarifaiModel.h; sourceTree = "<group>"; };
+		9ECD6E4821FD2BACA12FAEAA68251239 /* NSArray+Clarifai.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "NSArray+Clarifai.h"; path = "Clarifai/Classes/NSArray+Clarifai.h"; sourceTree = "<group>"; };
+		A011D3ACC776C7D1D2593FA1155543F6 /* AFURLSessionManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AFURLSessionManager.h; path = AFNetworking/AFURLSessionManager.h; sourceTree = "<group>"; };
+		A31D6C8A3F87A8807B6A4EC5EE01002F /* UIProgressView+AFNetworking.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIProgressView+AFNetworking.m"; path = "UIKit+AFNetworking/UIProgressView+AFNetworking.m"; sourceTree = "<group>"; };
+		A40A9D46D2AF1BF9D692089824BF622C /* Pods-ios-food-recognition.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-ios-food-recognition.modulemap"; sourceTree = "<group>"; };
+		A587269045F27BF7136D07C71D616A8C /* Pods_ios_food_recognition.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_ios_food_recognition.framework; path = "Pods-ios-food-recognition.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		A71E7B91B6A57E5B415192182A7F7F44 /* Pods-ios-food-recognition.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ios-food-recognition.release.xcconfig"; sourceTree = "<group>"; };
+		A77D98BFD43567D0D8AF716F70801261 /* UIImageView+AFNetworking.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIImageView+AFNetworking.m"; path = "UIKit+AFNetworking/UIImageView+AFNetworking.m"; sourceTree = "<group>"; };
+		A96CABF478C9BCCAC9F6C007C4590A59 /* UIImage+AFNetworking.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIImage+AFNetworking.h"; path = "UIKit+AFNetworking/UIImage+AFNetworking.h"; sourceTree = "<group>"; };
+		B09D6FAB2C3B911FD091A88BAD55470C /* Pods-ios-food-recognition-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-ios-food-recognition-acknowledgements.markdown"; sourceTree = "<group>"; };
+		B0D6EB29691E09A8D9D7D141E114BCB6 /* ClarifaiOutputRegion.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ClarifaiOutputRegion.m; path = Clarifai/Classes/ClarifaiOutputRegion.m; sourceTree = "<group>"; };
+		BAF09188E1A1A2BAFE88E66CB7CC621C /* ClarifaiSearchResult.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ClarifaiSearchResult.h; path = Clarifai/Classes/ClarifaiSearchResult.h; sourceTree = "<group>"; };
+		BB5712BFEB526AE8EBD1875DDF8B3FED /* UIActivityIndicatorView+AFNetworking.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIActivityIndicatorView+AFNetworking.h"; path = "UIKit+AFNetworking/UIActivityIndicatorView+AFNetworking.h"; sourceTree = "<group>"; };
+		BBBE9D760C34316BBDE22528F017CDBA /* ClarifaiModelVersion.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ClarifaiModelVersion.m; path = Clarifai/Classes/ClarifaiModelVersion.m; sourceTree = "<group>"; };
+		BBF31788B8E4611CB31E6A1CCFC660C2 /* Pods-ios-food-recognitionTests-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-ios-food-recognitionTests-acknowledgements.markdown"; sourceTree = "<group>"; };
+		BC20FF52B87ABDB91CCEAF8AACAFAA9C /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BF325E7C548D4DDBA803649CCA04F3D2 /* UIKit+AFNetworking.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIKit+AFNetworking.h"; path = "UIKit+AFNetworking/UIKit+AFNetworking.h"; sourceTree = "<group>"; };
+		C2BF91A32DB09AEDD35CE66A009C80B9 /* Pods-ios-food-recognitionTests-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-ios-food-recognitionTests-resources.sh"; sourceTree = "<group>"; };
+		C4A2339B25BA567E3D8362CDDCBF5708 /* ResponseSerializer.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ResponseSerializer.h; path = Clarifai/Classes/ResponseSerializer.h; sourceTree = "<group>"; };
+		C7EAEDA0F6C234DBABB81D615AE395B5 /* AFHTTPSessionManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AFHTTPSessionManager.h; path = AFNetworking/AFHTTPSessionManager.h; sourceTree = "<group>"; };
+		C9644EC236133C91FAB909B95892BA45 /* AFImageDownloader.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AFImageDownloader.m; path = "UIKit+AFNetworking/AFImageDownloader.m"; sourceTree = "<group>"; };
+		CA44F17A8CAB0F4C11EE18F7E307BC80 /* ClarifaiOutputFocus.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ClarifaiOutputFocus.m; path = Clarifai/Classes/ClarifaiOutputFocus.m; sourceTree = "<group>"; };
+		CF25C817D09C84041D19FCBB16815202 /* AFNetworking-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "AFNetworking-prefix.pch"; sourceTree = "<group>"; };
+		D39E51A2696FC6653C94A8D433B0F55B /* UIProgressView+AFNetworking.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIProgressView+AFNetworking.h"; path = "UIKit+AFNetworking/UIProgressView+AFNetworking.h"; sourceTree = "<group>"; };
+		D499D936EDCE1D8CC80C92F0AD8321EF /* ClarifaiOutputFace.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ClarifaiOutputFace.m; path = Clarifai/Classes/ClarifaiOutputFace.m; sourceTree = "<group>"; };
+		D5B95CA5EDF40895B22D3735119E2DAC /* ClarifaiOutput.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ClarifaiOutput.h; path = Clarifai/Classes/ClarifaiOutput.h; sourceTree = "<group>"; };
+		D7729272B0191CF0AEEC273F9FF8FFC1 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.3.sdk/System/Library/Frameworks/MobileCoreServices.framework; sourceTree = DEVELOPER_DIR; };
+		D90C6CE6DFFF0E79482EB6BEB9917B9D /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.3.sdk/System/Library/Frameworks/Security.framework; sourceTree = DEVELOPER_DIR; };
+		DDBDFFA351A30960D21939E28DC60212 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.3.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
+		E06311E877479683446B592C5A553E0D /* ClarifaiCrop.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ClarifaiCrop.m; path = Clarifai/Classes/ClarifaiCrop.m; sourceTree = "<group>"; };
+		E5796DC7DC95495FEA69B7E4AC3FC182 /* Pods-ios-food-recognitionTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-ios-food-recognitionTests.release.xcconfig"; sourceTree = "<group>"; };
+		E72265D742A839587BC23CD8BD6AF14D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		F01DC890833B16D30386675FD33E44F2 /* Pods-ios-food-recognition-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-ios-food-recognition-dummy.m"; sourceTree = "<group>"; };
+		F2FEC6AAB9DB20B1BA78AE862E37BCD2 /* AFURLRequestSerialization.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = AFURLRequestSerialization.h; path = AFNetworking/AFURLRequestSerialization.h; sourceTree = "<group>"; };
+		F560470966655FD360CCC1C98686F73E /* ClarifaiLocation.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = ClarifaiLocation.m; path = Clarifai/Classes/ClarifaiLocation.m; sourceTree = "<group>"; };
+		F59EECD259811D8C3B178FCB71C55CB9 /* UIButton+AFNetworking.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "UIButton+AFNetworking.m"; path = "UIKit+AFNetworking/UIButton+AFNetworking.m"; sourceTree = "<group>"; };
+		F5E4A5ABFD0C1A12CF81BA6D4D43B769 /* ClarifaiConcept.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ClarifaiConcept.h; path = Clarifai/Classes/ClarifaiConcept.h; sourceTree = "<group>"; };
+		F631E01E57D3B0DD8DF2816352E22197 /* Pods_ios_food_recognitionTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = Pods_ios_food_recognitionTests.framework; path = "Pods-ios-food-recognitionTests.framework"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F657A050691980EB4E10E6A636F077B7 /* ClarifaiLocation.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ClarifaiLocation.h; path = Clarifai/Classes/ClarifaiLocation.h; sourceTree = "<group>"; };
+		FAF9F793703533EDEA279FEDAB5A6355 /* UIButton+AFNetworking.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = "UIButton+AFNetworking.h"; path = "UIKit+AFNetworking/UIButton+AFNetworking.h"; sourceTree = "<group>"; };
+		FB02C3B44D5AD72C0B6FF017FC018DB8 /* Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FE6D1CDCDD11A328121F67533A848F0E /* ClarifaiCrop.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = ClarifaiCrop.h; path = Clarifai/Classes/ClarifaiCrop.h; sourceTree = "<group>"; };
+		FF1973F1F5E2F568CBDAFD0EDE6E52E5 /* AFNetworkActivityIndicatorManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = AFNetworkActivityIndicatorManager.m; path = "UIKit+AFNetworking/AFNetworkActivityIndicatorManager.m"; sourceTree = "<group>"; };
+		FFBDE54B203AC5ED8116C1DF468BFC1C /* AFNetworking-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "AFNetworking-umbrella.h"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		201C4131525D709A2C0FE414167327DC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				63B05DD8200C971ABDD35B000918A587 /* CoreGraphics.framework in Frameworks */,
+				B772355201E1F42A4338F747B7006DE7 /* Foundation.framework in Frameworks */,
+				A707F33AF9BDB27BD95432DFB1E2E97A /* MobileCoreServices.framework in Frameworks */,
+				76BA5CCA7F0BD9E4B4B9C2C466C7DC58 /* Security.framework in Frameworks */,
+				6885F9A30752A1960ADEC6689064524A /* SystemConfiguration.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4A672F01DAD0466810BEA2BFC4BF85CE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				358A8598D8721A3254A46987841E1BBC /* AFNetworking.framework in Frameworks */,
+				8EF2E0769283D7F00878AD57A6AA048F /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C1A3F06066A11288305444D2745EE2C4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3631F6754B67EA1D5D671F76031B1C4D /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D1A9BA56131401841A22433F72F596ED /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				519B45AA46F948B84C661E475A809DC5 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		02935CB9C6684348DE986A185DB098F1 /* AFNetworking */ = {
+			isa = PBXGroup;
+			children = (
+				44CC5677AA5EF7C2AF17E55739D83DB5 /* AFNetworking.h */,
+				1C2175EFB664699CF7363A5BA7FF9EB6 /* NSURLSession */,
+				EC920BE579A3866E7828507494F4CA02 /* Reachability */,
+				8AA786C0561EAB32B92B91ACF20A7AF3 /* Security */,
+				397A79F1923041D3803FEC146A4B36E6 /* Serialization */,
+				A8FFE6B23505A87A5859532999939D29 /* Support Files */,
+				831DB15642FDE12E570F6B2F18AA60A3 /* UIKit */,
+			);
+			name = AFNetworking;
+			path = AFNetworking;
+			sourceTree = "<group>";
+		};
+		05FA435E0E0913151C374D923D602A8D /* Targets Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				B6C3C2890891CAC18CE9632725B7132A /* Pods-ios-food-recognition */,
+				9B6A90EC63D020B09E9233500BD239FD /* Pods-ios-food-recognitionTests */,
+			);
+			name = "Targets Support Files";
+			sourceTree = "<group>";
+		};
+		1C2175EFB664699CF7363A5BA7FF9EB6 /* NSURLSession */ = {
+			isa = PBXGroup;
+			children = (
+				0F5F0C503D5D2BB6F5611F97AE22B01B /* AFCompatibilityMacros.h */,
+				C7EAEDA0F6C234DBABB81D615AE395B5 /* AFHTTPSessionManager.h */,
+				8B1D2BB9447874DE13848C9052151406 /* AFHTTPSessionManager.m */,
+				A011D3ACC776C7D1D2593FA1155543F6 /* AFURLSessionManager.h */,
+				4D8A2D92D725B66BB04BB318235597DA /* AFURLSessionManager.m */,
+			);
+			name = NSURLSession;
+			sourceTree = "<group>";
+		};
+		397A79F1923041D3803FEC146A4B36E6 /* Serialization */ = {
+			isa = PBXGroup;
+			children = (
+				F2FEC6AAB9DB20B1BA78AE862E37BCD2 /* AFURLRequestSerialization.h */,
+				88D31332CE6A66ECFD69235555B52428 /* AFURLRequestSerialization.m */,
+				83F218255EB30F2125F1160EBE4296FC /* AFURLResponseSerialization.h */,
+				33D14F4B4A3168AC215FFF85A657E455 /* AFURLResponseSerialization.m */,
+			);
+			name = Serialization;
+			sourceTree = "<group>";
+		};
+		3EF8FA57863DD39B7948141A4C20EBCC /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				1D5B1FF8990657DD5BE4D777F2F3BAB4 /* AFNetworking.framework */,
+				2C6C0796AAF1FDA92171EEDB18AE0703 /* Clarifai.framework */,
+				A587269045F27BF7136D07C71D616A8C /* Pods_ios_food_recognition.framework */,
+				F631E01E57D3B0DD8DF2816352E22197 /* Pods_ios_food_recognitionTests.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		5916FE1C79838425F84CCDF4300C7809 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				02935CB9C6684348DE986A185DB098F1 /* AFNetworking */,
+				83506B48E7D9FF743C2C3EDF3FCCA982 /* Clarifai */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		7DB346D0F39D3F0E887471402A8071AB = {
+			isa = PBXGroup;
+			children = (
+				93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */,
+				EFC8D1216166DE80CF4A6175E6193664 /* Frameworks */,
+				5916FE1C79838425F84CCDF4300C7809 /* Pods */,
+				3EF8FA57863DD39B7948141A4C20EBCC /* Products */,
+				05FA435E0E0913151C374D923D602A8D /* Targets Support Files */,
+			);
+			sourceTree = "<group>";
+		};
+		831DB15642FDE12E570F6B2F18AA60A3 /* UIKit */ = {
+			isa = PBXGroup;
+			children = (
+				38559A34AECE63C9FE72F72B130CBB69 /* AFAutoPurgingImageCache.h */,
+				605AED360E0C92F78A9761FA2DE782A5 /* AFAutoPurgingImageCache.m */,
+				208AFD368022E244BD116E153C637383 /* AFImageDownloader.h */,
+				C9644EC236133C91FAB909B95892BA45 /* AFImageDownloader.m */,
+				03D4E475EA2A66A744F0FC68CC3A5DE8 /* AFNetworkActivityIndicatorManager.h */,
+				FF1973F1F5E2F568CBDAFD0EDE6E52E5 /* AFNetworkActivityIndicatorManager.m */,
+				BB5712BFEB526AE8EBD1875DDF8B3FED /* UIActivityIndicatorView+AFNetworking.h */,
+				27F68BF73A6D3FF6247583DC7F582DC6 /* UIActivityIndicatorView+AFNetworking.m */,
+				FAF9F793703533EDEA279FEDAB5A6355 /* UIButton+AFNetworking.h */,
+				F59EECD259811D8C3B178FCB71C55CB9 /* UIButton+AFNetworking.m */,
+				A96CABF478C9BCCAC9F6C007C4590A59 /* UIImage+AFNetworking.h */,
+				25AAAA10B2999264C1E3266DFCC07E46 /* UIImageView+AFNetworking.h */,
+				A77D98BFD43567D0D8AF716F70801261 /* UIImageView+AFNetworking.m */,
+				BF325E7C548D4DDBA803649CCA04F3D2 /* UIKit+AFNetworking.h */,
+				D39E51A2696FC6653C94A8D433B0F55B /* UIProgressView+AFNetworking.h */,
+				A31D6C8A3F87A8807B6A4EC5EE01002F /* UIProgressView+AFNetworking.m */,
+				1CF71AFA4F7595C334C49FCF3F2CB22A /* UIRefreshControl+AFNetworking.h */,
+				492D2DA3AB9BE913962BC5B76BEB60B0 /* UIRefreshControl+AFNetworking.m */,
+				239B5E1441DE33E0FE4CAD115EA1B37E /* UIWebView+AFNetworking.h */,
+				1E46076579CEF0E93A346C2F578A7EBC /* UIWebView+AFNetworking.m */,
+			);
+			name = UIKit;
+			sourceTree = "<group>";
+		};
+		83506B48E7D9FF743C2C3EDF3FCCA982 /* Clarifai */ = {
+			isa = PBXGroup;
+			children = (
+				4F49C7EC77B0C6D11D4FA212AADC7A4E /* ClarifaiApp.h */,
+				0A51D9EB4D4BEE2366FC6C5463F048E2 /* ClarifaiApp.m */,
+				F5E4A5ABFD0C1A12CF81BA6D4D43B769 /* ClarifaiConcept.h */,
+				383B5EA1935A8C8EABD92181C7FC5EFF /* ClarifaiConcept.m */,
+				0DED9EB6E9BAFC6D807EEA7BA25484A2 /* ClarifaiConstants.h */,
+				FE6D1CDCDD11A328121F67533A848F0E /* ClarifaiCrop.h */,
+				E06311E877479683446B592C5A553E0D /* ClarifaiCrop.m */,
+				4D28B1D00E2F796B93295C7AA25DFF0F /* ClarifaiGeo.h */,
+				6EC10DE87B2870408FB01DD11BE84735 /* ClarifaiGeo.m */,
+				1F2F45F60D773F552AB86B550878ACD3 /* ClarifaiImage.h */,
+				06F779B087BBD0DD4926B80E2041A00D /* ClarifaiImage.m */,
+				9A4D10A2919557FFBD2C3C7226AF4CEB /* ClarifaiInput.h */,
+				423768C15987C86794C0D777D564167E /* ClarifaiInput.m */,
+				F657A050691980EB4E10E6A636F077B7 /* ClarifaiLocation.h */,
+				F560470966655FD360CCC1C98686F73E /* ClarifaiLocation.m */,
+				9C4FA5E65CCD598ED1E15F7DC8146CA1 /* ClarifaiModel.h */,
+				07EAB6A239014C90F009974C0A9CBC19 /* ClarifaiModel.m */,
+				3D00576C4C3D43D8D6BC405170C241D2 /* ClarifaiModelVersion.h */,
+				BBBE9D760C34316BBDE22528F017CDBA /* ClarifaiModelVersion.m */,
+				D5B95CA5EDF40895B22D3735119E2DAC /* ClarifaiOutput.h */,
+				59CB039E40EE11C3CB7282BD481282A6 /* ClarifaiOutput.m */,
+				41C9F2A7030AC5F723C811FFA83FE2A4 /* ClarifaiOutputFace.h */,
+				D499D936EDCE1D8CC80C92F0AD8321EF /* ClarifaiOutputFace.m */,
+				69121A55B1BD5861A43537C3C42D5F79 /* ClarifaiOutputFocus.h */,
+				CA44F17A8CAB0F4C11EE18F7E307BC80 /* ClarifaiOutputFocus.m */,
+				225E75E61A39BA87C082198D2B350F89 /* ClarifaiOutputRegion.h */,
+				B0D6EB29691E09A8D9D7D141E114BCB6 /* ClarifaiOutputRegion.m */,
+				BAF09188E1A1A2BAFE88E66CB7CC621C /* ClarifaiSearchResult.h */,
+				501F033C3CDF4B60CBBD6A44CB9D1C4C /* ClarifaiSearchResult.m */,
+				38497CD74F2C9351FF4E111DADA2DE6A /* ClarifaiSearchTerm.h */,
+				5BE8FA8E8491E18A61E8CA43C41C2DE1 /* ClarifaiSearchTerm.m */,
+				9ECD6E4821FD2BACA12FAEAA68251239 /* NSArray+Clarifai.h */,
+				70B65688C4E8BCE2CB0FF2586C6136B3 /* NSArray+Clarifai.m */,
+				34FD2BF85A297357C0C6A99DD2D7661F /* NSDictionary+Clarifai.h */,
+				6EB69D6B3FAD43201581838CC9D479F3 /* NSDictionary+Clarifai.m */,
+				C4A2339B25BA567E3D8362CDDCBF5708 /* ResponseSerializer.h */,
+				66F48A63ADFD1B6DA183D17540635620 /* ResponseSerializer.m */,
+				EF7A38BA7FA9094954DA9CB225AEF4C0 /* Support Files */,
+			);
+			name = Clarifai;
+			path = Clarifai;
+			sourceTree = "<group>";
+		};
+		8AA786C0561EAB32B92B91ACF20A7AF3 /* Security */ = {
+			isa = PBXGroup;
+			children = (
+				3F2D9D91D79EEE719868F5DC80668359 /* AFSecurityPolicy.h */,
+				92BA973D8DDA5E11E662D4682FAF693B /* AFSecurityPolicy.m */,
+			);
+			name = Security;
+			sourceTree = "<group>";
+		};
+		9B6A90EC63D020B09E9233500BD239FD /* Pods-ios-food-recognitionTests */ = {
+			isa = PBXGroup;
+			children = (
+				BC20FF52B87ABDB91CCEAF8AACAFAA9C /* Info.plist */,
+				3F63F6F1025FF93612BA830D54A64857 /* Pods-ios-food-recognitionTests.modulemap */,
+				BBF31788B8E4611CB31E6A1CCFC660C2 /* Pods-ios-food-recognitionTests-acknowledgements.markdown */,
+				6C264D28F23DE837672056B328728F23 /* Pods-ios-food-recognitionTests-acknowledgements.plist */,
+				6E82AD42C98EF33CEF9F49F291017CF6 /* Pods-ios-food-recognitionTests-dummy.m */,
+				5C22895CA9BF9E5687A38AD480E0CC4B /* Pods-ios-food-recognitionTests-frameworks.sh */,
+				C2BF91A32DB09AEDD35CE66A009C80B9 /* Pods-ios-food-recognitionTests-resources.sh */,
+				871C63E8850591C66134973D799E8A51 /* Pods-ios-food-recognitionTests-umbrella.h */,
+				98D617C43692E328383D8B164B964AC8 /* Pods-ios-food-recognitionTests.debug.xcconfig */,
+				E5796DC7DC95495FEA69B7E4AC3FC182 /* Pods-ios-food-recognitionTests.release.xcconfig */,
+			);
+			name = "Pods-ios-food-recognitionTests";
+			path = "Target Support Files/Pods-ios-food-recognitionTests";
+			sourceTree = "<group>";
+		};
+		A8FFE6B23505A87A5859532999939D29 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				4DDA9F5A33AF57F4A1F29F27501E826E /* AFNetworking.modulemap */,
+				6071EADCA1D8B397025A008FEA184DE0 /* AFNetworking.xcconfig */,
+				796DBD43A3A406BA65F748C142345425 /* AFNetworking-dummy.m */,
+				CF25C817D09C84041D19FCBB16815202 /* AFNetworking-prefix.pch */,
+				FFBDE54B203AC5ED8116C1DF468BFC1C /* AFNetworking-umbrella.h */,
+				FB02C3B44D5AD72C0B6FF017FC018DB8 /* Info.plist */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/AFNetworking";
+			sourceTree = "<group>";
+		};
+		B6C3C2890891CAC18CE9632725B7132A /* Pods-ios-food-recognition */ = {
+			isa = PBXGroup;
+			children = (
+				7005AC531F48DAB3B3E9809B3F32F944 /* Info.plist */,
+				A40A9D46D2AF1BF9D692089824BF622C /* Pods-ios-food-recognition.modulemap */,
+				B09D6FAB2C3B911FD091A88BAD55470C /* Pods-ios-food-recognition-acknowledgements.markdown */,
+				17F87EE2E8B7473B51AC7DE4453B850A /* Pods-ios-food-recognition-acknowledgements.plist */,
+				F01DC890833B16D30386675FD33E44F2 /* Pods-ios-food-recognition-dummy.m */,
+				625A30C8456CAD15F7E167208E736E82 /* Pods-ios-food-recognition-frameworks.sh */,
+				370FF4D131BC767830C8A6DC8A84035D /* Pods-ios-food-recognition-resources.sh */,
+				1484F97A6AE4E89760B824C124986E3E /* Pods-ios-food-recognition-umbrella.h */,
+				96139B8EDDF7282739F39692B5E503CB /* Pods-ios-food-recognition.debug.xcconfig */,
+				A71E7B91B6A57E5B415192182A7F7F44 /* Pods-ios-food-recognition.release.xcconfig */,
+			);
+			name = "Pods-ios-food-recognition";
+			path = "Target Support Files/Pods-ios-food-recognition";
+			sourceTree = "<group>";
+		};
+		C2D2092A0B5B67D0F34937D00026E6EC /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				DDBDFFA351A30960D21939E28DC60212 /* CoreGraphics.framework */,
+				E72265D742A839587BC23CD8BD6AF14D /* Foundation.framework */,
+				D7729272B0191CF0AEEC273F9FF8FFC1 /* MobileCoreServices.framework */,
+				D90C6CE6DFFF0E79482EB6BEB9917B9D /* Security.framework */,
+				8DAE9E29D14DFD809059EC3455D955F8 /* SystemConfiguration.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
+		EC920BE579A3866E7828507494F4CA02 /* Reachability */ = {
+			isa = PBXGroup;
+			children = (
+				53500A5DACA2B65851456458B765CB98 /* AFNetworkReachabilityManager.h */,
+				52BC08814D9230F77A70368DAB6A0E23 /* AFNetworkReachabilityManager.m */,
+			);
+			name = Reachability;
+			sourceTree = "<group>";
+		};
+		EF7A38BA7FA9094954DA9CB225AEF4C0 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				83335E145A16406B80C235E73A7BACA1 /* Clarifai.modulemap */,
+				6E7887FEC1F5968B642B5DF7062F6460 /* Clarifai.xcconfig */,
+				24B1984E2B992A667A37F8DC9F0AB510 /* Clarifai-dummy.m */,
+				1E9949A03F494222E3A80DF42F64A0E8 /* Clarifai-prefix.pch */,
+				7E8047C3F2F9E262AB5A26321F591B35 /* Clarifai-umbrella.h */,
+				26CEAC0B6A153E235F5331BF77A8D1CF /* Info.plist */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/Clarifai";
+			sourceTree = "<group>";
+		};
+		EFC8D1216166DE80CF4A6175E6193664 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				5461D992F0D803F0F05DF72B2849301D /* AFNetworking.framework */,
+				C2D2092A0B5B67D0F34937D00026E6EC /* iOS */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		19621A3ECF4A310E0CA623AE3835B918 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3C37D706E6C351AAE04884CC3045CF4A /* Pods-ios-food-recognition-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		51D8EA28FD6F1D7B3A6C896C7EC517EE /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BA8ECF0CEB07AA438AB1F86B2114DCB0 /* Clarifai-umbrella.h in Headers */,
+				54AF663998095CF94E5EB92FF5960C58 /* ClarifaiApp.h in Headers */,
+				32CAC10B745A2B3722AB2B2C76E7B28C /* ClarifaiConcept.h in Headers */,
+				3FC9E0205861DDFC56AA79CEF6FB72B7 /* ClarifaiConstants.h in Headers */,
+				FF971E2E46B0BEDBDC82C7143FBFA625 /* ClarifaiCrop.h in Headers */,
+				6657C2D365B8112B609D36FD4AD60E68 /* ClarifaiGeo.h in Headers */,
+				D02258DBA7DC9C4189C877AD943F3119 /* ClarifaiImage.h in Headers */,
+				C39A86B0B7CA56CC1EE070068DBE9757 /* ClarifaiInput.h in Headers */,
+				8D3B35C2CD092FE3DA602EA834D39C8B /* ClarifaiLocation.h in Headers */,
+				37DE4A1DAC2D920611AED92CB8DBB090 /* ClarifaiModel.h in Headers */,
+				B072ED70F33F4D199A2324438D9BFF9D /* ClarifaiModelVersion.h in Headers */,
+				9BDA379185A7F15E5ACE9A4D9D1344A1 /* ClarifaiOutput.h in Headers */,
+				3BBEB803973B6CC5C9F3923CA4D219F1 /* ClarifaiOutputFace.h in Headers */,
+				D0A1E9D262B1A8B25FA13E195E331886 /* ClarifaiOutputFocus.h in Headers */,
+				9FC1A7CE36DE492F237DDC916C6F3C84 /* ClarifaiOutputRegion.h in Headers */,
+				FFB830A576D74321892327EFBAD71ACC /* ClarifaiSearchResult.h in Headers */,
+				EC805FD7BB684382F4FC417B999FEA0B /* ClarifaiSearchTerm.h in Headers */,
+				87B7E872A04766842F13E221E9422AE7 /* NSArray+Clarifai.h in Headers */,
+				9DCAFDFBC9280A361B063B3E5C2D2027 /* NSDictionary+Clarifai.h in Headers */,
+				D35DF402ABE27A843AA2EB49CECAD6BB /* ResponseSerializer.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		84F329E77D2BFAC7AFA03130BF24627B /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				0B932CADDA84C3253C845BD81E741328 /* Pods-ios-food-recognitionTests-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B5E140C985F3196798D57F2A7DB76ECD /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8AD9F8FE36978CB4348E402207950883 /* AFAutoPurgingImageCache.h in Headers */,
+				3CC1558D8899A2E13A968D4C403CD793 /* AFCompatibilityMacros.h in Headers */,
+				6C7C6C542448137FC3B6CEA04386780C /* AFHTTPSessionManager.h in Headers */,
+				616166BD57B8707EC940068BF5E1AA0A /* AFImageDownloader.h in Headers */,
+				FF12B4BE37652AC565ED618C106CFE10 /* AFNetworkActivityIndicatorManager.h in Headers */,
+				88A52F2DE87FAAEF79B420CC9B6BDE80 /* AFNetworking-umbrella.h in Headers */,
+				9D380619079479C622272E2C77FCD289 /* AFNetworking.h in Headers */,
+				66340E06FB146280E83112B966E563C3 /* AFNetworkReachabilityManager.h in Headers */,
+				901790CB7729E8871AE5DE99E486792B /* AFSecurityPolicy.h in Headers */,
+				D491FD44351A11016A957CA81ABE0EC5 /* AFURLRequestSerialization.h in Headers */,
+				2E68973739E2AE713059A22F94238C60 /* AFURLResponseSerialization.h in Headers */,
+				FE66EF8D47514D23E7551E2C95C765D8 /* AFURLSessionManager.h in Headers */,
+				D014A5430789C5F0FFCF490D53B22897 /* UIActivityIndicatorView+AFNetworking.h in Headers */,
+				BEE7FD5C1C06AF3670E0FB75F996DDF7 /* UIButton+AFNetworking.h in Headers */,
+				78F5D40D5B8E9FC40FB257953EA945BA /* UIImage+AFNetworking.h in Headers */,
+				F2D2FE3B9DB1610D8EFAB393A3412DB7 /* UIImageView+AFNetworking.h in Headers */,
+				A39E1924915C53C49E7220F72AD96BBB /* UIKit+AFNetworking.h in Headers */,
+				FCB209DFAFF4721A4AA51197AB2D7016 /* UIProgressView+AFNetworking.h in Headers */,
+				15304B6383EF69EC4E3DE45F8613BE2E /* UIRefreshControl+AFNetworking.h in Headers */,
+				CB633AF10D27AD0971F3E34470B0BB01 /* UIWebView+AFNetworking.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		B999F2CADEFB552AD531121BDD719C26 /* Pods-ios-food-recognition */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EDC97AA551D7575C54C96B9C84933AE0 /* Build configuration list for PBXNativeTarget "Pods-ios-food-recognition" */;
+			buildPhases = (
+				19621A3ECF4A310E0CA623AE3835B918 /* Headers */,
+				AEF5D13C125675187DEF3BF7AA5F09D4 /* Sources */,
+				C1A3F06066A11288305444D2745EE2C4 /* Frameworks */,
+				10CE4ED2F163BC2797F1B697998B754D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C94A4A618121C86FED08F832F916307E /* PBXTargetDependency */,
+				F9160C95E4554DDC3D5B7AF8FA0B1E0D /* PBXTargetDependency */,
+			);
+			name = "Pods-ios-food-recognition";
+			productName = "Pods-ios-food-recognition";
+			productReference = A587269045F27BF7136D07C71D616A8C /* Pods_ios_food_recognition.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		D61C669FE55A161C06B8F5667B69E884 /* Clarifai */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 835131C8D1873A063841E3ACD04547CE /* Build configuration list for PBXNativeTarget "Clarifai" */;
+			buildPhases = (
+				51D8EA28FD6F1D7B3A6C896C7EC517EE /* Headers */,
+				C3E5E55DB4ECFB2BA3DE24829FDDCE8D /* Sources */,
+				4A672F01DAD0466810BEA2BFC4BF85CE /* Frameworks */,
+				D5A7D154E092EBAF99D5444AC9ECD0A8 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C43E5EC8661F4FDB90C96D0B36CA3EB2 /* PBXTargetDependency */,
+			);
+			name = Clarifai;
+			productName = Clarifai;
+			productReference = 2C6C0796AAF1FDA92171EEDB18AE0703 /* Clarifai.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		EAE60BD2ADA8DCB217E116ADB628185C /* AFNetworking */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8289B039CF0D8B5A385C13089893A356 /* Build configuration list for PBXNativeTarget "AFNetworking" */;
+			buildPhases = (
+				B5E140C985F3196798D57F2A7DB76ECD /* Headers */,
+				07C7A3674C96B85AD8EA6C6D71BC549B /* Sources */,
+				201C4131525D709A2C0FE414167327DC /* Frameworks */,
+				8F134AE083847A523C4AE149B84307BF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = AFNetworking;
+			productName = AFNetworking;
+			productReference = 1D5B1FF8990657DD5BE4D777F2F3BAB4 /* AFNetworking.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		FD065A289966AC0D5AE119834A67AFD4 /* Pods-ios-food-recognitionTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 70DE2CD7ADBD2DD00ACCB3DED0BF00CD /* Build configuration list for PBXNativeTarget "Pods-ios-food-recognitionTests" */;
+			buildPhases = (
+				84F329E77D2BFAC7AFA03130BF24627B /* Headers */,
+				B3616DC6A3BDE73E9FB5B59D6C33AA38 /* Sources */,
+				D1A9BA56131401841A22433F72F596ED /* Frameworks */,
+				4137706CC2010DE2DE48543367D0A515 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				BAB8DD2D730D10B6348A1AA13626E2EB /* PBXTargetDependency */,
+			);
+			name = "Pods-ios-food-recognitionTests";
+			productName = "Pods-ios-food-recognitionTests";
+			productReference = F631E01E57D3B0DD8DF2816352E22197 /* Pods_ios_food_recognitionTests.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		D41D8CD98F00B204E9800998ECF8427E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0930;
+				LastUpgradeCheck = 0930;
+			};
+			buildConfigurationList = 2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 7DB346D0F39D3F0E887471402A8071AB;
+			productRefGroup = 3EF8FA57863DD39B7948141A4C20EBCC /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				EAE60BD2ADA8DCB217E116ADB628185C /* AFNetworking */,
+				D61C669FE55A161C06B8F5667B69E884 /* Clarifai */,
+				B999F2CADEFB552AD531121BDD719C26 /* Pods-ios-food-recognition */,
+				FD065A289966AC0D5AE119834A67AFD4 /* Pods-ios-food-recognitionTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		10CE4ED2F163BC2797F1B697998B754D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4137706CC2010DE2DE48543367D0A515 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8F134AE083847A523C4AE149B84307BF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D5A7D154E092EBAF99D5444AC9ECD0A8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		07C7A3674C96B85AD8EA6C6D71BC549B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9486D80CC092F8ACB2355D5C94A155E3 /* AFAutoPurgingImageCache.m in Sources */,
+				5A4C39ACCE4CE7B6C69C736F48087759 /* AFHTTPSessionManager.m in Sources */,
+				6A5E05D187005E863177B45D58905C71 /* AFImageDownloader.m in Sources */,
+				15F1AB626337FECD0B9CFAAD90FAC342 /* AFNetworkActivityIndicatorManager.m in Sources */,
+				8826A0887EEE1A618FA3BA34989E05B5 /* AFNetworking-dummy.m in Sources */,
+				137A6E8841A2429C00CBFA701695197E /* AFNetworkReachabilityManager.m in Sources */,
+				63A7B518E880C7AACABCD20AFA247C8C /* AFSecurityPolicy.m in Sources */,
+				CB3CA20E3732A095F5515E0621D8719C /* AFURLRequestSerialization.m in Sources */,
+				11EAB2A17E2712DB04831AD0FFD6A5DB /* AFURLResponseSerialization.m in Sources */,
+				0D58399A6DC61099900309A4449F7891 /* AFURLSessionManager.m in Sources */,
+				CB3028664CA23A1480C18C7A86CFDAF4 /* UIActivityIndicatorView+AFNetworking.m in Sources */,
+				402EB64C59857FE252DC98844643C420 /* UIButton+AFNetworking.m in Sources */,
+				41FD4D0D6101210E26DDDCDD17FBB7C3 /* UIImageView+AFNetworking.m in Sources */,
+				DF74915F8F367134FA4277BE9A2F52DB /* UIProgressView+AFNetworking.m in Sources */,
+				00ED59EE2784CE922358E57E241A6C75 /* UIRefreshControl+AFNetworking.m in Sources */,
+				00E2C1092D2255BB25E45DF004D3E7E5 /* UIWebView+AFNetworking.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AEF5D13C125675187DEF3BF7AA5F09D4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				81376874A6B1F6F240FFB40BBAF1AC51 /* Pods-ios-food-recognition-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B3616DC6A3BDE73E9FB5B59D6C33AA38 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4A7FB8DE58F76F56EDC4291D1389E0AE /* Pods-ios-food-recognitionTests-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C3E5E55DB4ECFB2BA3DE24829FDDCE8D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DEA569E97DD710E6C37F16FB32022F1D /* Clarifai-dummy.m in Sources */,
+				E7F02FC7B01D71C07EE3F865843FC1EF /* ClarifaiApp.m in Sources */,
+				EF8FE8AA1B70BA4581B8F1272DB40998 /* ClarifaiConcept.m in Sources */,
+				47C2E90005B8DCF98049E706C1DBD2DD /* ClarifaiCrop.m in Sources */,
+				7A62BF11F6642580FA44741DC3A2D3C9 /* ClarifaiGeo.m in Sources */,
+				FE694AF60B7757F5FBF94CCAE2ADC095 /* ClarifaiImage.m in Sources */,
+				473557C0B29DF7D2B716C8BEF6D70003 /* ClarifaiInput.m in Sources */,
+				1579ABB5208A03468A3BD6EBD85F9E71 /* ClarifaiLocation.m in Sources */,
+				B4767F83A589E93EBCC92F4EB11FDB2A /* ClarifaiModel.m in Sources */,
+				27D39E7560A107D7CC8B88973E425C8D /* ClarifaiModelVersion.m in Sources */,
+				548C6C2DD81628790502792841A64862 /* ClarifaiOutput.m in Sources */,
+				1FCB41F5B6D7D7134EEEC0CF664AFC3F /* ClarifaiOutputFace.m in Sources */,
+				78E8C7D8F30542133E31CA5FF6D0DFE4 /* ClarifaiOutputFocus.m in Sources */,
+				5075964B4A8C7A3D05C4C1A91833B8DB /* ClarifaiOutputRegion.m in Sources */,
+				CE242482B23A53117180AD5F2E2C6378 /* ClarifaiSearchResult.m in Sources */,
+				6A2AE9B8B0D3AE3F818480044324A70A /* ClarifaiSearchTerm.m in Sources */,
+				D78BBEDA6444B26F7214A96AA2D0B941 /* NSArray+Clarifai.m in Sources */,
+				3478FF4088370E426D8E6353C813C603 /* NSDictionary+Clarifai.m in Sources */,
+				2E84E4963039D4A70C9E80A57A18EC83 /* ResponseSerializer.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		BAB8DD2D730D10B6348A1AA13626E2EB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Pods-ios-food-recognition";
+			target = B999F2CADEFB552AD531121BDD719C26 /* Pods-ios-food-recognition */;
+			targetProxy = F767D03C4DD91D72866F6D74203EB555 /* PBXContainerItemProxy */;
+		};
+		C43E5EC8661F4FDB90C96D0B36CA3EB2 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = AFNetworking;
+			target = EAE60BD2ADA8DCB217E116ADB628185C /* AFNetworking */;
+			targetProxy = 0ABC692E3A614A12B9114204025EA0B3 /* PBXContainerItemProxy */;
+		};
+		C94A4A618121C86FED08F832F916307E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = AFNetworking;
+			target = EAE60BD2ADA8DCB217E116ADB628185C /* AFNetworking */;
+			targetProxy = 2C5BB984FCDAD6F69B687A5242F8D2D8 /* PBXContainerItemProxy */;
+		};
+		F9160C95E4554DDC3D5B7AF8FA0B1E0D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Clarifai;
+			target = D61C669FE55A161C06B8F5667B69E884 /* Clarifai */;
+			targetProxy = E9A12091D15DB9C0452245D249843BB8 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		0D733E96AC27AB2E46836D187AB15200 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = E5796DC7DC95495FEA69B7E4AC3FC182 /* Pods-ios-food-recognitionTests.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-ios-food-recognitionTests/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-ios-food-recognitionTests/Pods-ios-food-recognitionTests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		25ABEA98A46C27A46269862D4144ADD5 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6E7887FEC1F5968B642B5DF7062F6460 /* Clarifai.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/Clarifai/Clarifai-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/Clarifai/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULEMAP_FILE = "Target Support Files/Clarifai/Clarifai.modulemap";
+				PRODUCT_MODULE_NAME = Clarifai;
+				PRODUCT_NAME = Clarifai;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		2D16CB3AAE34005551CB83165C90FE44 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6071EADCA1D8B397025A008FEA184DE0 /* AFNetworking.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/AFNetworking/AFNetworking-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/AFNetworking/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULEMAP_FILE = "Target Support Files/AFNetworking/AFNetworking.modulemap";
+				PRODUCT_MODULE_NAME = AFNetworking;
+				PRODUCT_NAME = AFNetworking;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		40B45BB3CF3EE4476259302A7FAAD78F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGNING_REQUIRED = NO;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_RELEASE=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRIP_INSTALLED_PRODUCT = NO;
+				SYMROOT = "${SRCROOT}/../build";
+			};
+			name = Release;
+		};
+		60C2155825A658E91C3805DAFC842D3E /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A71E7B91B6A57E5B415192182A7F7F44 /* Pods-ios-food-recognition.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-ios-food-recognition/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-ios-food-recognition/Pods-ios-food-recognition.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		835DE9AEAC9A69E8F1995A1936AF635E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 96139B8EDDF7282739F39692B5E503CB /* Pods-ios-food-recognition.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-ios-food-recognition/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-ios-food-recognition/Pods-ios-food-recognition.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		85ED3013A635C27F8B7FAF51362B108C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGNING_ALLOWED = NO;
+				CODE_SIGNING_REQUIRED = NO;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_DEBUG=1",
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRIP_INSTALLED_PRODUCT = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SYMROOT = "${SRCROOT}/../build";
+			};
+			name = Debug;
+		};
+		95C74832DF60C0250D39E176BC028735 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6E7887FEC1F5968B642B5DF7062F6460 /* Clarifai.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/Clarifai/Clarifai-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/Clarifai/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULEMAP_FILE = "Target Support Files/Clarifai/Clarifai.modulemap";
+				PRODUCT_MODULE_NAME = Clarifai;
+				PRODUCT_NAME = Clarifai;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		C0454F4329C20690B9E2CB21C1FDC8EF /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6071EADCA1D8B397025A008FEA184DE0 /* AFNetworking.xcconfig */;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/AFNetworking/AFNetworking-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/AFNetworking/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULEMAP_FILE = "Target Support Files/AFNetworking/AFNetworking.modulemap";
+				PRODUCT_MODULE_NAME = AFNetworking;
+				PRODUCT_NAME = AFNetworking;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 4.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		EABD52701CC6A11AA2646A0B0671460E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 98D617C43692E328383D8B164B964AC8 /* Pods-ios-food-recognitionTests.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				CODE_SIGN_IDENTITY = "";
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-ios-food-recognitionTests/Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-ios-food-recognitionTests/Pods-ios-food-recognitionTests.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2D8E8EC45A3A1A1D94AE762CB5028504 /* Build configuration list for PBXProject "Pods" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				85ED3013A635C27F8B7FAF51362B108C /* Debug */,
+				40B45BB3CF3EE4476259302A7FAAD78F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		70DE2CD7ADBD2DD00ACCB3DED0BF00CD /* Build configuration list for PBXNativeTarget "Pods-ios-food-recognitionTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EABD52701CC6A11AA2646A0B0671460E /* Debug */,
+				0D733E96AC27AB2E46836D187AB15200 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8289B039CF0D8B5A385C13089893A356 /* Build configuration list for PBXNativeTarget "AFNetworking" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2D16CB3AAE34005551CB83165C90FE44 /* Debug */,
+				C0454F4329C20690B9E2CB21C1FDC8EF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		835131C8D1873A063841E3ACD04547CE /* Build configuration list for PBXNativeTarget "Clarifai" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				95C74832DF60C0250D39E176BC028735 /* Debug */,
+				25ABEA98A46C27A46269862D4144ADD5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EDC97AA551D7575C54C96B9C84933AE0 /* Build configuration list for PBXNativeTarget "Pods-ios-food-recognition" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				835DE9AEAC9A69E8F1995A1936AF635E /* Debug */,
+				60C2155825A658E91C3805DAFC842D3E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = D41D8CD98F00B204E9800998ECF8427E /* Project object */;
+}
