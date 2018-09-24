@@ -14,4 +14,12 @@ struct Prediction: Codable {
     let name: String
     let value: Double
     
+    enum CodingKeys: String, CodingKey {
+        case id
+        case name
+        case value
+    }
+    
 }
+
+// [data: [concepts: [id: xx, value: 0.98, name: tomato, app_id: main]], input: [id: xx, data: [image[url: www.sdsfs.com]]]]

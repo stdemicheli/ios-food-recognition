@@ -27,8 +27,18 @@ class FoodClient {
     
     // MARK: - Properties (public)
     
-    var predictions = [Prediction]()
-    var foodSearchResult = [Nutrition]()
+    var predictions = [ClarifaiConcept]()
+    var nutritionInfo: Nutrition?
+    var foodSearchResult = [Food]()
+    var nutrientDefinitions: [NutrientDefinition] = {
+        let nutrientDefinitions = URL(fileURLWithPath: Bundle.main.path(forResource: "NutrientDefinitions", ofType: "plist")!)
+        do {
+            return try PropertyListDecoder().decode([NutrientDefinition].self, from: Data(contentsOf: nutrientDefinitions))
+        } catch {
+            NSLog("Error decoding nutrient definitions from plist: \(error)")
+            return []
+        }
+    }()
     
     // MARK: - Properties (private)
     
@@ -36,17 +46,32 @@ class FoodClient {
     
     // MARK: - Methods (public)
     
+    func recognizeFood(with image: UIImage, completion: @escaping CompletionHandler) {
+        predict(with: image) { (error) in
+            if let error = error { completion(error); return }
+            
+            let labels = self.getLabelsForTop(8, in: self.predictions)
+            self.fetchFood(with: labels) { (error) in
+                if let error = error { completion(error); return }
+                
+                self.foodSearchResult = self.sync(self.foodSearchResult, with: self.nutrientDefinitions)
+                completion(nil)
+            }
+        }
+    }
     
     // MARK: - Methods (private)
     
-    func fetchCommonFood(with query: String, completion: @escaping CompletionHandler = { _ in }) {
+    private func fetchFood(with query: String, completion: @escaping CompletionHandler = { _ in }) {
         let url = URL(string: Constants.Nutritionix.baseURL.rawValue)!
             .appendingPathComponent("search")
             .appendingPathComponent("instant")
         
         var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: true)!
         let searchQueryItem = URLQueryItem(name: "query", value: query)
-        urlComponents.queryItems = [searchQueryItem]
+        let isDetailedQueryItem = URLQueryItem(name: "detailed", value: "true")
+        let isBrandedQueryItem = URLQueryItem(name: "branded", value: "false")
+        urlComponents.queryItems = [searchQueryItem, isDetailedQueryItem, isBrandedQueryItem]
         
         guard let requestURL = urlComponents.url else {
             NSLog("Problem constructing search URL for \(query)")
@@ -60,7 +85,7 @@ class FoodClient {
                          forHTTPHeaderField: Constants.Nutritionix.appIdHeader.rawValue)
         request.setValue(Constants.Nutritionix.APIKey.rawValue,
                          forHTTPHeaderField: Constants.Nutritionix.APIKeyHeader.rawValue)
-        
+
         networkLoader.loadData(from: request) { (data, response, error) in
             if let error = error {
                 NSLog("Error while getting food info: \(error)")
@@ -82,8 +107,8 @@ class FoodClient {
                     return
                 }
                 
-                let searchResult = try JSONDecoder().decode(Nutritions.self, from: data)
-                self.foodSearchResult = searchResult.foods
+                let searchResult = try JSONDecoder().decode(Foods.self, from: data)
+                self.foodSearchResult = searchResult.common
                 completion(nil)
             } catch {
                 NSLog("Error while decoding food info: \(error)")
@@ -94,7 +119,7 @@ class FoodClient {
         
     }
     
-    func fetchNutritionInfo(for food: String, completion: @escaping CompletionHandler = { _ in }) {
+    private func fetchNutritionInfo(for food: String, completion: @escaping CompletionHandler = { _ in }) {
         let url = URL(string: Constants.Nutritionix.baseURL.rawValue)!
                     .appendingPathComponent("natural")
                     .appendingPathComponent("nutrients")
@@ -142,7 +167,7 @@ class FoodClient {
                 }
                 
                 let searchResult = try JSONDecoder().decode(Nutritions.self, from: data)
-                self.foodSearchResult = searchResult.foods
+                self.nutritionInfo = searchResult.foods.first
                 completion(nil)
             } catch {
                 NSLog("Error while decoding nutrition info: \(error)")
@@ -152,7 +177,7 @@ class FoodClient {
         }
     }
     
-    private func fetchPredictions(with image: UIImage, completion: @escaping CompletionHandler = { _ in }) {
+    func predict(with image: UIImage, completion: @escaping CompletionHandler = { _ in }) {
         let images = ClarifaiImage(image: image)
         let app = ClarifaiApp(apiKey: Constants.Clarifai.APIKey.rawValue)
         if let app = app {
@@ -174,13 +199,39 @@ class FoodClient {
                         return
                     }
                     
-                    let rawPredictions = predictions.first?.responseDict
-                    // TODO: parse responseDict into Prediction model
+                    self.predictions = predictions.first?.concepts ?? []
+                    
                     completion(nil)
                     
                 })
             }
         }
+    }
+    
+    // TODO: Refactor
+    private func sync(_ foods: [Food], with definitions: [NutrientDefinition]) -> [Food] {
+        let syncedFoods = foods
+        
+        for food in syncedFoods {
+            let syncedNutrients = food.fullNutrients
+
+            for nutrient in syncedNutrients {
+                for definition in definitions {
+                    if nutrient.attributeId == definition.attributeId {
+                        nutrient.name = definition.name
+                        nutrient.unit = definition.unit
+                    }
+                }
+            }
+            
+            food.fullNutrients = syncedNutrients
+        }
+        
+        return syncedFoods
+    }
+    
+    private func getLabelsForTop(_ max: Int, in labels: [ClarifaiConcept]) -> String {
+        return labels.prefix(max).compactMap { $0.conceptName }.joined(separator: " ")
     }
     
 }

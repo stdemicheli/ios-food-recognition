@@ -52,12 +52,6 @@ struct Nutritions: Decodable {
     
 }
 
-struct FoodError: Decodable {
-    
-    let message: String
-    
-}
-
 struct NutritionHTTPBody: Encodable {
     
     init(with query: String) {
@@ -70,13 +64,73 @@ struct NutritionHTTPBody: Encodable {
     
 }
 
-struct FoodHTTPBody: Encodable {
+class Food: Decodable {
     
-    init(with query: String) {
-        self.query = query
+    init(name: String, servingQty: Int, servingUnit: String, fullNutrients: [Nutrient]) {
+        self.name = name
+        self.servingQuantity = servingQty
+        self.servingUnit = servingUnit
+        self.fullNutrients = fullNutrients
     }
     
-    var query: String
-    var detailed: Bool = true
+    var name: String
+    let servingQuantity: Int
+    let servingUnit: String
+    var fullNutrients: [Nutrient]
+    
+    enum CodingKeys: String, CodingKey {
+        case name = "food_name"
+        case servingQuantity = "serving_qty"
+        case servingUnit = "serving_unit"
+        case fullNutrients = "full_nutrients"
+    }
+    
+}
+
+class Nutrient: Decodable {
+    
+    init(attributeId: Int, value: Double) {
+        self.attributeId = attributeId
+        self.value = value
+    }
+    
+    let attributeId: Int
+    let value: Double
+    var name: String?
+    var unit: String?
+    
+    enum CodingKeys: String, CodingKey {
+        case attributeId = "attr_id"
+        case value
+    }
+    
+}
+
+struct NutrientDefinition: Decodable {
+    
+    let attributeId: Int
+    let name: String
+    let usdaTag: String
+    let unit: String
+    
+    enum CodingKeys: String, CodingKey {
+        case attributeId = "attr_id"
+        case name
+        case usdaTag = "usda_tag"
+        case unit
+    }
+    
+}
+
+struct Foods: Decodable {
+    
+    // var branded: [Food]
+    var common: [Food]
+    
+}
+
+struct FoodError: Decodable {
+    
+    let message: String
     
 }
