@@ -7,15 +7,26 @@
 //
 
 import UIKit
-import Clarifai
+import HealthKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        let typesToWrite = Constants.HealthKit().typesToWrite
+        let typesToRead = Constants.HealthKit().typesToRead
+        let healthController = HealthKitController(typesToWrite: typesToWrite, typesToRead: typesToRead)
+        
+        healthController.authorizeHealthKit { (authorized, error) in
+            if let error = error {
+                NSLog("Error authorizing HealthKit: \(error)")
+                return
+            }
+            print("HealthKit Successfully Authorized.")
+        }
         
         return true
     }

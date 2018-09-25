@@ -8,18 +8,27 @@
 
 import UIKit
 
-class CameraViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class CameraViewController: UIViewController {
     
     // MARK: - Properties (public)
     
-    @IBOutlet weak var image: UIImageView!
-    @IBOutlet weak var tableView: UITableView!
+    let foodClient = FoodClient()
     
+    @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var searchBar: UITableView!
     
     // MARK: - Properties (private)
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        self.navigationController?.setNavigationBarHidden(true, animated: animated)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        self.navigationController?.setNavigationBarHidden(false, animated: animated)
     }
     
     override func viewDidLoad() {
@@ -28,6 +37,8 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
         tableView.delegate = self
         tableView.dataSource = self
         
+        searchBar.delegate = self
+        
         openImagePickerController()
     }
     
@@ -35,15 +46,9 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
     
     @IBAction func save(_ sender: Any) {
         tabBarController?.selectedIndex = 1
-        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-        let vc = storyboard.instantiateViewController(withIdentifier: "CameraViewController")
-        guard var viewcontrollers = self.navigationController?.viewControllers else { return }
-        viewcontrollers.removeLast()
-        viewcontrollers.append(vc)
-        navigationController?.setViewControllers(viewcontrollers, animated: false)
+        resetViewController()
         // Save data to Health Kit
         // Spinner
-        
         // Move to Home and update
     }
     
@@ -51,26 +56,15 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
         openImagePickerController()
     }
     
-    // MARK: - ImagePickerControllerDelegate
+    // MARK: - Methods (private)
     
-    func openImagePickerController() {
-        if UIImagePickerController.isSourceTypeAvailable(.camera){
-            let myPickerController = UIImagePickerController()
-            myPickerController.delegate = self;
-            myPickerController.sourceType = .camera
-            self.present(myPickerController, animated: false, completion: nil)
-        }
-    }
-    
-    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        self.dismiss(animated: true, completion: nil)
-    }
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
-            self.image?.image = image
-        }
-        self.dismiss(animated: true, completion: nil)
+    private func resetViewController() {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let vc = storyboard.instantiateViewController(withIdentifier: "CameraViewController")
+        guard var viewcontrollers = self.navigationController?.viewControllers else { return }
+        viewcontrollers.removeLast()
+        viewcontrollers.append(vc)
+        navigationController?.setViewControllers(viewcontrollers, animated: false)
     }
     
     
@@ -96,8 +90,50 @@ extension CameraViewController: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: "FoodCell", for: indexPath)
         
         cell.textLabel?.text = "pipi"
+        cell.detailTextLabel?.text = "langstrumpf"
+        
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: 50, height: 20))
+        label.text = "hi"
+        cell.accessoryView = label
         
         return cell
+    }
+    
+}
+
+extension CameraViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    
+    func openImagePickerController() {
+        if UIImagePickerController.isSourceTypeAvailable(.camera){
+            let myPickerController = UIImagePickerController()
+            myPickerController.delegate = self
+            myPickerController.sourceType = .camera
+            self.present(myPickerController, animated: true, completion: nil)
+        }
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        self.dismiss(animated: true, completion: nil)
+        tabBarController?.selectedIndex = 1
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+            self.imageView?.image = image
+        }
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+}
+
+extension CameraViewController: UISearchBarDelegate {
+    
+    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        // Instant manual search
+    }
+    
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        // Manual search submit
     }
     
 }
