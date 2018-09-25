@@ -36,6 +36,12 @@
 	</array>
 	<key>NSCameraUsageDescription</key>
 	<string>In order to take pictures of your food the app would like access to your camera.</string>
+	<key>NSHealthUpdateUsageDescription</key>
+	<string>The app would like to update your Health data in the categories below.</string>
+	<key>NSHealthShareUsageDescription</key>
+	<string>The app would like to acess your Health data in the categories below.</string>
+	<key>NSRemindersUsageDescription</key>
+	<string>We would like to send you reminders so you can check your nutrition status regularly.</string>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>

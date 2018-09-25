@@ -60,6 +60,10 @@ class FoodClient {
         }
     }
     
+    func fetchFoodInstantly(with query: String, completion: @escaping CompletionHandler) {
+        fetchFood(with: query)
+    }
+    
     // MARK: - Methods (private)
     
     private func fetchFood(with query: String, completion: @escaping CompletionHandler = { _ in }) {
@@ -177,7 +181,7 @@ class FoodClient {
         }
     }
     
-    func predict(with image: UIImage, completion: @escaping CompletionHandler = { _ in }) {
+    private func predict(with image: UIImage, completion: @escaping CompletionHandler = { _ in }) {
         let images = ClarifaiImage(image: image)
         let app = ClarifaiApp(apiKey: Constants.Clarifai.APIKey.rawValue)
         if let app = app {
