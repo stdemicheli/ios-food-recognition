@@ -25,6 +25,8 @@ class HealthKitController {
     
     // MARK: - Properties
     
+    var fetchedNutrients = [HKQuantityType : Double]()
+    
     private var typesToWrite: Set<HKSampleType>
     private var typesToRead: Set<HKObjectType>
     var healthStore: HKHealthStore? {
@@ -84,14 +86,35 @@ class HealthKitController {
         
     }
     
-    func fetchNutrition(from startDate: Date, until endDate: Date, completion: @escaping (Data?, Error?) -> Void) {
+    func fetchNutrition(from startDate: Date, until endDate: Date, completion: @escaping (Error?) -> Void) {
+        let hkNutrients = Constants.HealthKit().commonTypes
+        let dispatchGroup = DispatchGroup()
         
+        for nutrient in hkNutrients {
+            dispatchGroup.enter()
+            fetch(nutrient, from: startDate, to: endDate) { (_, error) in
+                if let error = error {
+                    NSLog("Error occured while fetching \(nutrient): \(error)")
+                    completion(error)
+                    return
+                }
+                
+                dispatchGroup.leave()
+            }
+        }
+        
+        dispatchGroup.notify(queue: .main) {
+            completion(nil)
+        }
     }
     
     func saveNutrition(for food: Food, completion: @escaping (Bool, Error?) -> Void) {
         let date = Date()
         let hkObjects = convert(food.fullNutrients)
-        let metadata = [HKMetadataKeyFoodType : food.name]
+        let metadata = [
+            HKMetadataKeyFoodType : food.name,
+            HKMetadataKeyExternalUUID: UUID().uuidString // TODO: save HKobject / or food object to coredata/firebase as a reference
+        ]
         guard let foodType = HKObjectType.correlationType(forIdentifier: HKCorrelationTypeIdentifier.food) else {
             fatalError("*** Unable to create the correlation type \(food.name) ***")
         }
@@ -113,6 +136,36 @@ class HealthKitController {
     }
     
     // MARK: - Methods (private)
+    
+    private func fetch(_ sampleType: HKQuantityType, from startDate: Date, to endDate: Date, completion: @escaping (HKQuantitySample?, Error?) -> Void) {
+        let predicate = HKQuery.predicateForSamples(withStart: startDate, end: endDate, options: [])
+        let query = HKSampleQuery(sampleType: sampleType, predicate: predicate, limit: Int(HKObjectQueryNoLimit), sortDescriptors: nil) { (query, results, error) in
+            guard let samples = results as? [HKQuantitySample] else {
+                fatalError("An error occured fetching the user's tracked food. The error was: \(String(describing: error?.localizedDescription))")
+            }
+            
+//            Dispatch.main.async?
+            
+//            guard let foodName =
+//                sample.metadata?[HKMetadataKeyFoodType] as? String else {
+//                    // if the metadata doesn't record the food type, just skip it.
+//                    break
+//            }
+            
+            var sampleQty: Double = 0.0
+            for sample in samples {
+                sampleQty += sample.quantityType == HKObjectType.quantityType(forIdentifier: .dietaryEnergyConsumed)
+                                ? sample.quantity.doubleValue(for: .kilocalorie())
+                                : sample.quantity.doubleValue(for: .gram())
+                
+            }
+            
+            self.fetchedNutrients[sampleType] = sampleQty
+        }
+        
+        healthStore?.execute(query)
+    }
+    
     
     private func convert(_ nutrients: [Nutrient]) -> Set<HKQuantitySample> {
         let date = Date()

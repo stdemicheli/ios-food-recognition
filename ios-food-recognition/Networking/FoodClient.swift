@@ -112,6 +112,7 @@ class FoodClient {
                 }
                 
                 let searchResult = try JSONDecoder().decode(Foods.self, from: data)
+                self.foodSearchResult.removeAll()
                 self.foodSearchResult = searchResult.common
                 completion(nil)
             } catch {
