@@ -26,6 +26,8 @@ class FoodTableViewCell: UITableViewCell {
         }
     }
     
+    var indexPath: IndexPath?
+    
     @IBOutlet weak var nameTextLabel: UILabel!
     @IBOutlet weak var servingTextLabel: UILabel!
     @IBOutlet weak var calorieTextLabel: UILabel!
@@ -81,7 +83,7 @@ class FoodTableViewCell: UITableViewCell {
     override var inputAccessoryView: UIView? {
         pickerToolbar.sizeToFit()
         
-        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(dismissPicker))
+        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(resignFirstResponder))
         
         // Can also add more items to toolbar
         pickerToolbar.setItems([doneButton], animated: false)
@@ -91,22 +93,9 @@ class FoodTableViewCell: UITableViewCell {
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        self.becomeFirstResponder()
+        _ = self.becomeFirstResponder()
     }
-    
-    
-    @objc func dismissPicker() {
-        //        if let selectedFood = self.selectedFood {
-        //            _ = updateQtys(for: selectedFood, with: updatedQty)
-        //            tableView.reloadData()
-        //
-        //            // Reset properties
-        //            self.selectedFood = nil
-        //            self.updatedQty = 1.0
-        //        }
-        self.endEditing(true)
-    }
-    
+        
 }
 
 // MARK: - UIPickerViewDelegate

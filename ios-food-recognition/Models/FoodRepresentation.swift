@@ -64,7 +64,8 @@ struct NutritionHTTPBody: Encodable {
     
 }
 
-class Food: Decodable {
+class Food: Decodable, Equatable {
+    
     
     init(name: String, servingQty: Int, servingUnit: String, fullNutrients: [Nutrient]) {
         self.name = name
@@ -74,7 +75,7 @@ class Food: Decodable {
     }
     
     var name: String
-    let servingQuantity: Int
+    var servingQuantity: Int
     let servingUnit: String
     var fullNutrients: [Nutrient]
     
@@ -83,6 +84,11 @@ class Food: Decodable {
         case servingQuantity = "serving_qty"
         case servingUnit = "serving_unit"
         case fullNutrients = "full_nutrients"
+    }
+    
+    // TODO: Refactor (with a uuid)
+    static func == (lhs: Food, rhs: Food) -> Bool {
+        return lhs.name == rhs.name
     }
     
 }

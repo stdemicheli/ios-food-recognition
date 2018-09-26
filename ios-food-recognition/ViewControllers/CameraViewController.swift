@@ -21,8 +21,8 @@ class CameraViewController: UIViewController {
     // MARK: - Properties (private)
     
     private let servingQtys = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-    private var updatedQty: Double = 1.0
-    private var selectedFood: Food?
+    private var updatedQty: Double?
+    private var selectedFoodIndexPath: IndexPath?
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -97,16 +97,22 @@ class CameraViewController: UIViewController {
         return nil
     }
     
-    private func updateQtys(for food: Food, with qty: Double) -> Food {
-        let updatedFood = food
-        let multiplier: Double = Double(food.servingQuantity) / qty
+    // TODO: Move to FoodClient?
+    // TODO: Make a new server call with food and udpated quantities
+    private func updateQty(for food: Food, with qty: Double) {
+        guard let index = foodClient.foodSearchResult.index(of: food) else { return }
+        let updatedFood = foodClient.foodSearchResult[index]
         
+        let multiplier: Double = qty / Double(updatedFood.servingQuantity)
+        
+        updatedFood.servingQuantity = Int(qty)
         updatedFood.fullNutrients = updatedFood.fullNutrients.map({ (nutrient) -> Nutrient in
             nutrient.value = nutrient.value * multiplier
             return nutrient
         })
         
-        return updatedFood
+        foodClient.foodSearchResult.remove(at: index)
+        foodClient.foodSearchResult.insert(updatedFood, at: index)
     }
     
     /*
@@ -135,6 +141,7 @@ extension CameraViewController: UITableViewDelegate, UITableViewDataSource, Food
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int, forCell cell: FoodTableViewCell) {
+        self.updatedQty = Double(servingQtys[row])
         
     }
     
@@ -143,7 +150,14 @@ extension CameraViewController: UITableViewDelegate, UITableViewDataSource, Food
     }
     
     func onPickerClose(_ cell: FoodTableViewCell) {
+        if let food = cell.food, let updatedQty = self.updatedQty {
+            _ = updateQty(for: food, with: updatedQty)
+        }
+        // Reset properties
+        self.selectedFoodIndexPath = nil
+        self.updatedQty = nil
         
+        tableView.reloadData()
     }
     
     
@@ -164,14 +178,16 @@ extension CameraViewController: UITableViewDelegate, UITableViewDataSource, Food
         return cell
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "FoodCell", for: indexPath) as! FoodTableViewCell
-        
-        if !cell.isFirstResponder {
-            _ = cell.becomeFirstResponder()
-        }
-
-    }
+//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        let cell = tableView.dequeueReusableCell(withIdentifier: "FoodCell", for: indexPath) as! FoodTableViewCell
+//
+//        self.selectedFoodIndexPath = indexPath
+//
+//        if !cell.isFirstResponder {
+//            _ = cell.becomeFirstResponder()
+//        }
+//
+//    }
     
 }
 
