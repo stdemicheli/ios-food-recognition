@@ -7,11 +7,25 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3D01B40A215BB19A009E4338 /* FoodTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D01B409215BB19A009E4338 /* FoodTableViewCell.swift */; };
+		3D01B40E215C074F009E4338 /* AnimatingHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D01B40D215C074F009E4338 /* AnimatingHeader.swift */; };
+		3D01B410215C20C0009E4338 /* HealthCardTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D01B40F215C20C0009E4338 /* HealthCardTableViewCell.swift */; };
 		3D039F2B2158E61B001178DC /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D039F2A2158E61B001178DC /* AppDelegate.swift */; };
 		3D039F302158E61B001178DC /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D039F2E2158E61B001178DC /* Main.storyboard */; };
 		3D039F322158E61C001178DC /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3D039F312158E61C001178DC /* Assets.xcassets */; };
 		3D039F352158E61C001178DC /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3D039F332158E61C001178DC /* LaunchScreen.storyboard */; };
 		3D039F402158E61C001178DC /* ios_food_recognitionTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D039F3F2158E61C001178DC /* ios_food_recognitionTests.swift */; };
+		3D50A6D021590594004AD7C3 /* NetworkDataLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D50A6CF21590594004AD7C3 /* NetworkDataLoader.swift */; };
+		3D50A6D2215905C9004AD7C3 /* FoodClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D50A6D1215905C9004AD7C3 /* FoodClient.swift */; };
+		3D50A6D421590B97004AD7C3 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D50A6D321590B97004AD7C3 /* Constants.swift */; };
+		3D50A6D621590D5F004AD7C3 /* HomeCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D50A6D521590D5F004AD7C3 /* HomeCollectionViewController.swift */; };
+		3D50A6D821591B21004AD7C3 /* Prediction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D50A6D721591B21004AD7C3 /* Prediction.swift */; };
+		3D50A6DA21591C20004AD7C3 /* FoodRepresentation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D50A6D921591C20004AD7C3 /* FoodRepresentation.swift */; };
+		3D50A6DE21598FE4004AD7C3 /* NutrientDefinitions.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3D50A6DD21598FE4004AD7C3 /* NutrientDefinitions.plist */; };
+		3D983C7E215A64DC00885A8A /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D983C7D215A64DC00885A8A /* CameraViewController.swift */; };
+		3D983C84215A9F4700885A8A /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3D983C83215A9F4700885A8A /* HealthKit.framework */; };
+		3D983C88215AA3ED00885A8A /* HealthKitController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D983C87215AA3ED00885A8A /* HealthKitController.swift */; };
+		3D983C8A215AFE6A00885A8A /* HomeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D983C89215AFE6A00885A8A /* HomeCollectionViewCell.swift */; };
 		A5F9DE651DF7FDBF31AAE056 /* Pods_ios_food_recognition.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C22D769EF9DE97164503C11B /* Pods_ios_food_recognition.framework */; };
 		EB5E1219B7DAF2172213FA01 /* Pods_ios_food_recognitionTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AEC7608576EA256B9439487A /* Pods_ios_food_recognitionTests.framework */; };
 /* End PBXBuildFile section */
@@ -28,6 +42,9 @@
 
 /* Begin PBXFileReference section */
 		133593549910B16DFF0572E4 /* Pods-ios-food-recognitionTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ios-food-recognitionTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-ios-food-recognitionTests/Pods-ios-food-recognitionTests.release.xcconfig"; sourceTree = "<group>"; };
+		3D01B409215BB19A009E4338 /* FoodTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodTableViewCell.swift; sourceTree = "<group>"; };
+		3D01B40D215C074F009E4338 /* AnimatingHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimatingHeader.swift; sourceTree = "<group>"; };
+		3D01B40F215C20C0009E4338 /* HealthCardTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthCardTableViewCell.swift; sourceTree = "<group>"; };
 		3D039F272158E61B001178DC /* ios-food-recognition.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "ios-food-recognition.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D039F2A2158E61B001178DC /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3D039F2F2158E61B001178DC /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -37,6 +54,18 @@
 		3D039F3B2158E61C001178DC /* ios-food-recognitionTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "ios-food-recognitionTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3D039F3F2158E61C001178DC /* ios_food_recognitionTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ios_food_recognitionTests.swift; sourceTree = "<group>"; };
 		3D039F412158E61C001178DC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3D50A6CF21590594004AD7C3 /* NetworkDataLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkDataLoader.swift; sourceTree = "<group>"; };
+		3D50A6D1215905C9004AD7C3 /* FoodClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodClient.swift; sourceTree = "<group>"; };
+		3D50A6D321590B97004AD7C3 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		3D50A6D521590D5F004AD7C3 /* HomeCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCollectionViewController.swift; sourceTree = "<group>"; };
+		3D50A6D721591B21004AD7C3 /* Prediction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Prediction.swift; sourceTree = "<group>"; };
+		3D50A6D921591C20004AD7C3 /* FoodRepresentation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodRepresentation.swift; sourceTree = "<group>"; };
+		3D50A6DD21598FE4004AD7C3 /* NutrientDefinitions.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = NutrientDefinitions.plist; sourceTree = "<group>"; };
+		3D983C7D215A64DC00885A8A /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
+		3D983C83215A9F4700885A8A /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
+		3D983C85215A9F4700885A8A /* ios-food-recognition.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "ios-food-recognition.entitlements"; sourceTree = "<group>"; };
+		3D983C87215AA3ED00885A8A /* HealthKitController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitController.swift; sourceTree = "<group>"; };
+		3D983C89215AFE6A00885A8A /* HomeCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeCollectionViewCell.swift; sourceTree = "<group>"; };
 		40AB4974E02FC5A81B4A0B4A /* Pods-ios-food-recognition.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ios-food-recognition.release.xcconfig"; path = "Pods/Target Support Files/Pods-ios-food-recognition/Pods-ios-food-recognition.release.xcconfig"; sourceTree = "<group>"; };
 		525AFA896F39DB4C59DBA2BD /* Pods-ios-food-recognitionTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ios-food-recognitionTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ios-food-recognitionTests/Pods-ios-food-recognitionTests.debug.xcconfig"; sourceTree = "<group>"; };
 		61E19789AEC6F37EDB3C56F7 /* Pods-ios-food-recognition.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ios-food-recognition.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ios-food-recognition/Pods-ios-food-recognition.debug.xcconfig"; sourceTree = "<group>"; };
@@ -50,6 +79,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A5F9DE651DF7FDBF31AAE056 /* Pods_ios_food_recognition.framework in Frameworks */,
+				3D983C84215A9F4700885A8A /* HealthKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -67,10 +97,28 @@
 		28A6F9D92747E3B7EEE329C8 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				3D983C83215A9F4700885A8A /* HealthKit.framework */,
 				C22D769EF9DE97164503C11B /* Pods_ios_food_recognition.framework */,
 				AEC7608576EA256B9439487A /* Pods_ios_food_recognitionTests.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		3D01B411215C3457009E4338 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				3D983C89215AFE6A00885A8A /* HomeCollectionViewCell.swift */,
+				3D01B40F215C20C0009E4338 /* HealthCardTableViewCell.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		3D01B412215C345B009E4338 /* Camera */ = {
+			isa = PBXGroup;
+			children = (
+				3D01B409215BB19A009E4338 /* FoodTableViewCell.swift */,
+			);
+			path = Camera;
 			sourceTree = "<group>";
 		};
 		3D039F1E2158E61B001178DC = {
@@ -96,12 +144,14 @@
 		3D039F292158E61B001178DC /* ios-food-recognition */ = {
 			isa = PBXGroup;
 			children = (
+				3D983C85215A9F4700885A8A /* ios-food-recognition.entitlements */,
 				3D039F2A2158E61B001178DC /* AppDelegate.swift */,
 				3D039F4D2158E64F001178DC /* Views */,
 				3D039F4C2158E648001178DC /* ViewControllers */,
 				3D039F4B2158E638001178DC /* ModelControllers */,
 				3D039F4A2158E631001178DC /* Models */,
 				3D039F4E2158E74B001178DC /* Networking */,
+				3D983C86215AA3CC00885A8A /* Helpers */,
 				3D039F502158E760001178DC /* Operations */,
 				3D039F512158E7BB001178DC /* Utilities */,
 				3D039F4F2158E759001178DC /* Resources */,
@@ -121,6 +171,8 @@
 		3D039F4A2158E631001178DC /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				3D50A6D721591B21004AD7C3 /* Prediction.swift */,
+				3D50A6D921591C20004AD7C3 /* FoodRepresentation.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -135,6 +187,8 @@
 		3D039F4C2158E648001178DC /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				3D50A6D521590D5F004AD7C3 /* HomeCollectionViewController.swift */,
+				3D983C7D215A64DC00885A8A /* CameraViewController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -142,6 +196,9 @@
 		3D039F4D2158E64F001178DC /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				3D01B40D215C074F009E4338 /* AnimatingHeader.swift */,
+				3D01B412215C345B009E4338 /* Camera */,
+				3D01B411215C3457009E4338 /* Home */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -149,6 +206,8 @@
 		3D039F4E2158E74B001178DC /* Networking */ = {
 			isa = PBXGroup;
 			children = (
+				3D50A6D1215905C9004AD7C3 /* FoodClient.swift */,
+				3D50A6CF21590594004AD7C3 /* NetworkDataLoader.swift */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -160,6 +219,8 @@
 				3D039F312158E61C001178DC /* Assets.xcassets */,
 				3D039F332158E61C001178DC /* LaunchScreen.storyboard */,
 				3D039F362158E61C001178DC /* Info.plist */,
+				3D50A6D321590B97004AD7C3 /* Constants.swift */,
+				3D50A6DD21598FE4004AD7C3 /* NutrientDefinitions.plist */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -176,6 +237,14 @@
 			children = (
 			);
 			path = Utilities;
+			sourceTree = "<group>";
+		};
+		3D983C86215AA3CC00885A8A /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				3D983C87215AA3ED00885A8A /* HealthKitController.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 		ABA90EFDBFCE9E7F4C127604 /* Pods */ = {
@@ -242,6 +311,11 @@
 				TargetAttributes = {
 					3D039F262158E61B001178DC = {
 						CreatedOnToolsVersion = 10.0;
+						SystemCapabilities = {
+							com.apple.HealthKit = {
+								enabled = 1;
+							};
+						};
 					};
 					3D039F3A2158E61C001178DC = {
 						CreatedOnToolsVersion = 10.0;
@@ -273,6 +347,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3D50A6DE21598FE4004AD7C3 /* NutrientDefinitions.plist in Resources */,
 				3D039F352158E61C001178DC /* LaunchScreen.storyboard in Resources */,
 				3D039F322158E61C001178DC /* Assets.xcassets in Resources */,
 				3D039F302158E61B001178DC /* Main.storyboard in Resources */,
@@ -364,7 +439,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3D01B40A215BB19A009E4338 /* FoodTableViewCell.swift in Sources */,
 				3D039F2B2158E61B001178DC /* AppDelegate.swift in Sources */,
+				3D50A6D021590594004AD7C3 /* NetworkDataLoader.swift in Sources */,
+				3D983C88215AA3ED00885A8A /* HealthKitController.swift in Sources */,
+				3D50A6DA21591C20004AD7C3 /* FoodRepresentation.swift in Sources */,
+				3D01B40E215C074F009E4338 /* AnimatingHeader.swift in Sources */,
+				3D50A6D821591B21004AD7C3 /* Prediction.swift in Sources */,
+				3D983C8A215AFE6A00885A8A /* HomeCollectionViewCell.swift in Sources */,
+				3D50A6D2215905C9004AD7C3 /* FoodClient.swift in Sources */,
+				3D01B410215C20C0009E4338 /* HealthCardTableViewCell.swift in Sources */,
+				3D983C7E215A64DC00885A8A /* CameraViewController.swift in Sources */,
+				3D50A6D621590D5F004AD7C3 /* HomeCollectionViewController.swift in Sources */,
+				3D50A6D421590B97004AD7C3 /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -527,6 +614,7 @@
 			baseConfigurationReference = 61E19789AEC6F37EDB3C56F7 /* Pods-ios-food-recognition.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "ios-food-recognition/ios-food-recognition.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 84BULQXU2Q;
 				INFOPLIST_FILE = "$(SRCROOT)/ios-food-recognition/Resources/Info.plist";
@@ -546,6 +634,7 @@
 			baseConfigurationReference = 40AB4974E02FC5A81B4A0B4A /* Pods-ios-food-recognition.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "ios-food-recognition/ios-food-recognition.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 84BULQXU2Q;
 				INFOPLIST_FILE = "$(SRCROOT)/ios-food-recognition/Resources/Info.plist";
