@@ -20,9 +20,22 @@ class CameraViewController: UIViewController {
     
     // MARK: - Properties (private)
     
+    private let servingQtys = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    private var updatedQty: Double = 1.0
+    private var selectedFood: Food?
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
+        
+        if let image = imageView?.image {
+            //        foodClient.recognizeFood(with: image) { (error) in
+            //            if let _ = error {
+            //                NSLog("error")
+            //                return
+            //            }
+            //        }
+        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -36,8 +49,15 @@ class CameraViewController: UIViewController {
         
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.showsVerticalScrollIndicator = false
         
         searchBar.delegate = self
+        
+        foodClient.fetchFoodInstantly(with: "caprese salad") { (_) in
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
         
         openImagePickerController()
     }
@@ -67,6 +87,27 @@ class CameraViewController: UIViewController {
         navigationController?.setViewControllers(viewcontrollers, animated: false)
     }
     
+    private func getCalories(for food: Food) -> Double? {
+        for nutrient in food.fullNutrients {
+            if nutrient.attributeId == 208 {
+                return nutrient.value
+            }
+        }
+        
+        return nil
+    }
+    
+    private func updateQtys(for food: Food, with qty: Double) -> Food {
+        let updatedFood = food
+        let multiplier: Double = Double(food.servingQuantity) / qty
+        
+        updatedFood.fullNutrients = updatedFood.fullNutrients.map({ (nutrient) -> Nutrient in
+            nutrient.value = nutrient.value * multiplier
+            return nutrient
+        })
+        
+        return updatedFood
+    }
     
     /*
     // MARK: - Navigation
@@ -80,23 +121,56 @@ class CameraViewController: UIViewController {
 
 }
 
-extension CameraViewController: UITableViewDelegate, UITableViewDataSource {
+extension CameraViewController: UITableViewDelegate, UITableViewDataSource, FoodTableCellDataSource, FoodTableCellDelegate {
+    func numberOfComponents(in pickerView: UIPickerView, forCell cell: FoodTableViewCell) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int, forCell cell: FoodTableViewCell) -> Int {
+        return servingQtys.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int, forCell cell: FoodTableViewCell) -> String? {
+        return String(servingQtys[row])
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int, forCell cell: FoodTableViewCell) {
+        
+    }
+    
+    func onPickerOpen(_ cell: FoodTableViewCell) {
+        
+    }
+    
+    func onPickerClose(_ cell: FoodTableViewCell) {
+        
+    }
+    
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return [1, 2, 3, 4, 5].count
+        return foodClient.foodSearchResult.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "FoodCell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "FoodCell", for: indexPath) as! FoodTableViewCell
         
-        cell.textLabel?.text = "pipi"
-        cell.detailTextLabel?.text = "langstrumpf"
+        cell.delegate = self
+        cell.dataSource = self
         
-        let label = UILabel(frame: CGRect(x: 0, y: 0, width: 50, height: 20))
-        label.text = "hi"
-        cell.accessoryView = label
+        let food = foodClient.foodSearchResult[indexPath.row]
+        cell.food = food
+        cell.calories = getCalories(for: food)
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let cell = tableView.dequeueReusableCell(withIdentifier: "FoodCell", for: indexPath) as! FoodTableViewCell
+        
+        if !cell.isFirstResponder {
+            _ = cell.becomeFirstResponder()
+        }
+
     }
     
 }

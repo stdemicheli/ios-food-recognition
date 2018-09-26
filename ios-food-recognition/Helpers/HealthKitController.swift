@@ -18,7 +18,8 @@ class HealthKitController {
     
     // MARK: - Init
     
-    init(typesToWrite: Set<HKSampleType>, typesToRead: Set<HKObjectType>) {
+    init(typesToWrite: Set<HKSampleType> = Constants.HealthKit().typesToWrite,
+         typesToRead: Set<HKObjectType> = Constants.HealthKit().typesToWrite) {
         self.typesToWrite = typesToWrite
         self.typesToRead = typesToRead
     }

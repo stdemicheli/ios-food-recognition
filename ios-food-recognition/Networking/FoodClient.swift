@@ -61,7 +61,14 @@ class FoodClient {
     }
     
     func fetchFoodInstantly(with query: String, completion: @escaping CompletionHandler) {
-        fetchFood(with: query)
+        fetchFood(with: query) { (_) in
+            completion(nil)
+        }
+    }
+    
+    func updateFood(with food: Food, at index: Int) {
+        self.foodSearchResult.remove(at: index)
+        self.foodSearchResult.insert(food, at: index)
     }
     
     // MARK: - Methods (private)
@@ -120,7 +127,6 @@ class FoodClient {
                 completion(error)
             }
         }
-        
         
     }
     

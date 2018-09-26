@@ -15,7 +15,7 @@ class HomeCollectionViewController: UICollectionViewController {
     
     // MARK: - Properties (public)
     
-    let foodClient = FoodClient()
+    let hkController = HealthKitController()
     
     // MARK: - Properties (private)
     
@@ -23,14 +23,7 @@ class HomeCollectionViewController: UICollectionViewController {
         super.viewDidLoad()
         self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
         
-//        let image = UIImage(named: "caprese-salad")!
-//
-//        foodClient.recognizeFood(with: image) { (error) in
-//            if let _ = error {
-//                NSLog("error")
-//                return
-//            }
-//        }
+        
     }
 
     // MARK: - Methods (public)
@@ -52,10 +45,10 @@ class HomeCollectionViewController: UICollectionViewController {
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath)
-    
-        // Configure the cell
-    
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! HomeCollectionViewCell
+        
+        cell.backgroundColor = indexPath.item % 2 == 0 ? UIColor.red : UIColor.green
+        
         return cell
     }
 
@@ -102,4 +95,16 @@ class HomeCollectionViewController: UICollectionViewController {
      }
      */
 
+}
+
+extension HomeCollectionViewController: UICollectionViewDelegateFlowLayout {
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return CGSize(width: view.frame.width, height: view.frame.height)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+        return 0
+    }
+    
 }

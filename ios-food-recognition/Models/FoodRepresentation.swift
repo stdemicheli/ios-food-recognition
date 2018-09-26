@@ -95,7 +95,7 @@ class Nutrient: Decodable {
     }
     
     let attributeId: Int
-    let value: Double
+    var value: Double
     var name: String?
     var unit: String?
     
