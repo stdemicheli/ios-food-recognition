@@ -12,10 +12,8 @@ class AnimatedHeaderView: UIView {
     var imageView: UIImageView!
     var colorView: UIView!
     var bgColor = UIColor(red: 235/255, green: 96/255, blue: 91/255, alpha: 1)
-    var titleLabel = UILabel()
     
     init(frame: CGRect, title: String) {
-        self.titleLabel.text = title.uppercased()
         super.init(frame: frame)
         setupView()
     }
@@ -54,19 +52,6 @@ class AnimatedHeaderView: UIView {
         
         colorView.backgroundColor = bgColor
         colorView.alpha = 0.0
-        
-        // Title
-        titleLabel.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(titleLabel)
-        
-        let titlesConstraints: [NSLayoutConstraint] = [
-            titleLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            titleLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 28),
-            ]
-        NSLayoutConstraint.activate(titlesConstraints)
-        
-        titleLabel.font = UIFont.systemFont(ofSize: 15.0)
-        titleLabel.textAlignment = .center
         
     }
     

@@ -8,7 +8,7 @@
 
 import UIKit
 
-private let reuseIdentifier = "Cell"
+private let reuseIdentifier = "HomeCell"
 
 class HomeCollectionViewController: UICollectionViewController {
 
@@ -19,11 +19,15 @@ class HomeCollectionViewController: UICollectionViewController {
     
     // MARK: - Properties (private)
     
+    private var cellSize: CGSize!
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.collectionView!.register(UICollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
-        
-        
+        self.collectionView!.register(HomeCollectionViewCell.self, forCellWithReuseIdentifier: reuseIdentifier)
+        self.collectionView.isPagingEnabled = true
+        self.collectionView.showsHorizontalScrollIndicator = false
+        self.cellSize = CGSize(width: self.view.frame.width, height: self.view.frame.height)
     }
 
     // MARK: - Methods (public)
@@ -36,22 +40,24 @@ class HomeCollectionViewController: UICollectionViewController {
     // MARK: UICollectionViewDataSource
 
     override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 0
+        return 1
     }
 
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 0
+        return 10
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! HomeCollectionViewCell
         
-        cell.backgroundColor = indexPath.item % 2 == 0 ? UIColor.red : UIColor.green
+        cell.delegate = self
+        
+        cell.headerView.backgroundColor = indexPath.item % 2 == 0 ? UIColor.red : UIColor.green
         
         return cell
     }
-
+    
     // MARK: UICollectionViewDelegate
 
     /*
@@ -106,5 +112,37 @@ extension HomeCollectionViewController: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 0
     }
+    
+}
+
+extension HomeCollectionViewController: HomeCollectionViewCellDelegate {
+    func next() {
+        let contentOffset = collectionView.contentOffset
+        collectionView.scrollRectToVisible(CGRect(x: contentOffset.x + cellSize.width,
+                                                  y: contentOffset.y,
+                                                  width: cellSize.width,
+                                                  height: cellSize.height), animated: true)
+    }
+    
+    func previous() {
+        let contentOffset = collectionView.contentOffset
+        collectionView.scrollRectToVisible(CGRect(x: contentOffset.x - cellSize.width,
+                                                  y: contentOffset.y,
+                                                  width: cellSize.width,
+                                                  height: cellSize.height), animated: true)
+    }
+    
+//    func goToCell(with id: String) {
+//        let contentOffset = collectionView.contentOffset
+//        guard let index = getIndex(for: id) else {
+//            NSLog("Could not get index for id: \(id)")
+//            return
+//        }
+//
+//        collectionView.scrollRectToVisible(CGRect(x: CGFloat(index) * cellSize.width,
+//                                                  y: contentOffset.y,
+//                                                  width: cellSize.width,
+//                                                  height: cellSize.height), animated: true)
+//    }
     
 }

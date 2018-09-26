@@ -14,16 +14,15 @@ class CameraViewController: UIViewController {
     
     let foodClient = FoodClient()
     
-    @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
     
-    var headerView: AnimatedHeaderView!
-    var headerViewHeight = UIScreen.main.bounds.size.height / 2.5
-    var headerViewCollapsedHeight: CGFloat = 80.0
-    var headerHeightConstraint: NSLayoutConstraint!
-    let saveButton = UIButton()
-    let retakePhotoButton = UIButton()
+    private var headerView: AnimatedHeaderView!
+    private var headerViewHeight = UIScreen.main.bounds.size.height / 2.5
+    private var headerViewCollapsedHeight: CGFloat = 80.0
+    private var headerHeightConstraint: NSLayoutConstraint!
+    private let saveButton = UIButton()
+    private let retakePhotoButton = UIButton()
     
     // MARK: - Properties (private)
     
@@ -60,13 +59,14 @@ class CameraViewController: UIViewController {
         
         setupHeader()
         setupTableView()
-        headerView.imageView?.image = UIImage(named: "caprese-salad")
-        
-        foodClient.fetchFoodInstantly(with: "caprese salad") { (_) in
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
-        }
+
+        // Testing purposes
+//        headerView.imageView?.image = UIImage(named: "caprese-salad")
+//        foodClient.fetchFoodInstantly(with: "caprese salad") { (_) in
+//            DispatchQueue.main.async {
+//                self.tableView.reloadData()
+//            }
+//        }
         
         openImagePickerController()
     }
@@ -217,19 +217,18 @@ extension CameraViewController: UIImagePickerControllerDelegate, UINavigationCon
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
-            self.imageView?.image = image
             self.headerView.imageView?.image = image
             // TODO: Implement a spinner which stops after closure completion, incl. timeout
-//            foodClient.recognizeFood(with: image) { (error) in
-//                if let error = error {
-//                    NSLog("Could not recognize food: \(error)")
-//                    return
-//                }
-//
-//                DispatchQueue.main.async {
-//                    self.tableView.reloadData()
-//                }
-//            }
+            foodClient.recognizeFood(with: image) { (error) in
+                if let error = error {
+                    NSLog("Could not recognize food: \(error)")
+                    return
+                }
+
+                DispatchQueue.main.async {
+                    self.tableView.reloadData()
+                }
+            }
         }
         self.dismiss(animated: true, completion: nil)
     }
