@@ -12,13 +12,13 @@ import HealthKit
 struct Constants {
     
     enum Clarifai: String {
-        case APIKey = "b4a2c3bb7e674abdb7705f0a593aee09"
-        case foodModelVersionID = "bd367be194cf45149e75f01d59f77ba7"
+        case APIKey = ""
+        case foodModelVersionID = ""
     }
     
     enum Nutritionix: String {
-        case APIKey = "eff499ac7b165f4962cafdf65cc60b99"
-        case appId = "c0de36f6"
+        case APIKey = ""
+        case appId = ""
         case remoteUserId = "0"
         case APIKeyHeader = "x-app-key"
         case appIdHeader = "x-app-id"
