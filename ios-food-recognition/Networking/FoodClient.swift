@@ -66,11 +66,6 @@ class FoodClient {
         }
     }
     
-    func updateFood(with food: Food, at index: Int) {
-        self.foodSearchResult.remove(at: index)
-        self.foodSearchResult.insert(food, at: index)
-    }
-    
     // MARK: - Methods (private)
     
     private func fetchFood(with query: String, completion: @escaping CompletionHandler = { _ in }) {

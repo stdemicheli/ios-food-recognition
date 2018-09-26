@@ -18,25 +18,29 @@ class CameraViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
     
+    var headerView: AnimatedHeaderView!
+    var headerViewHeight = UIScreen.main.bounds.size.height / 2.5
+    var headerViewCollapsedHeight: CGFloat = 80.0
+    var headerHeightConstraint: NSLayoutConstraint!
+    let saveButton = UIButton()
+    let retakePhotoButton = UIButton()
     
     // MARK: - Properties (private)
     
-    private let servingQtys = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    private var servingQtys: [Int] {
+        var qty = [Int]()
+        for i in 1..<100 {
+            qty.append(i)
+        }
+        return qty
+    }
+    
     private var updatedQty: Double?
     private var selectedFoodIndexPath: IndexPath?
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationController?.setNavigationBarHidden(true, animated: animated)
-        
-        if let image = imageView?.image {
-            //        foodClient.recognizeFood(with: image) { (error) in
-            //            if let _ = error {
-            //                NSLog("error")
-            //                return
-            //            }
-            //        }
-        }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -53,6 +57,10 @@ class CameraViewController: UIViewController {
         tableView.showsVerticalScrollIndicator = false
         
         searchBar.delegate = self
+        
+        setupHeader()
+        setupTableView()
+        headerView.imageView?.image = UIImage(named: "caprese-salad")
         
         foodClient.fetchFoodInstantly(with: "caprese salad") { (_) in
             DispatchQueue.main.async {
@@ -100,7 +108,7 @@ class CameraViewController: UIViewController {
     
     // TODO: Move to FoodClient?
     // TODO: Make a new server call with food and udpated quantities
-    private func updateQty(for food: Food, with qty: Double) {
+    private func update(_ food: Food, with qty: Double) {
         guard let index = foodClient.foodSearchResult.index(of: food) else { return }
         let updatedFood = foodClient.foodSearchResult[index]
         
@@ -143,7 +151,6 @@ extension CameraViewController: UITableViewDelegate, UITableViewDataSource, Food
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int, forCell cell: FoodTableViewCell) {
         self.updatedQty = Double(servingQtys[row])
-        
     }
     
     func onPickerOpen(_ cell: FoodTableViewCell) {
@@ -152,7 +159,7 @@ extension CameraViewController: UITableViewDelegate, UITableViewDataSource, Food
     
     func onPickerClose(_ cell: FoodTableViewCell) {
         if let food = cell.food, let updatedQty = self.updatedQty {
-            _ = updateQty(for: food, with: updatedQty)
+            _ = update(food, with: updatedQty)
         }
         // Reset properties
         self.selectedFoodIndexPath = nil
@@ -211,6 +218,18 @@ extension CameraViewController: UIImagePickerControllerDelegate, UINavigationCon
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
             self.imageView?.image = image
+            self.headerView.imageView?.image = image
+            // TODO: Implement a spinner which stops after closure completion, incl. timeout
+//            foodClient.recognizeFood(with: image) { (error) in
+//                if let error = error {
+//                    NSLog("Could not recognize food: \(error)")
+//                    return
+//                }
+//
+//                DispatchQueue.main.async {
+//                    self.tableView.reloadData()
+//                }
+//            }
         }
         self.dismiss(animated: true, completion: nil)
     }
@@ -225,6 +244,104 @@ extension CameraViewController: UISearchBarDelegate {
                 self.tableView.reloadData()
             }
         }
+    }
+    
+    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        searchBar.endEditing(true)
+    }
+    
+}
+
+extension CameraViewController: UIScrollViewDelegate {
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView.contentOffset.y < 0 {
+            self.headerHeightConstraint.constant += abs(scrollView.contentOffset.y)
+            headerView.incrementColorAlpha(with: self.headerHeightConstraint.constant)
+        } else if scrollView.contentOffset.y > 0 && self.headerHeightConstraint.constant >= headerViewCollapsedHeight {
+            // We don't want the header to move up too quickly so we divide the y-offset by 100
+            self.headerHeightConstraint.constant -= scrollView.contentOffset.y / 100
+            headerView.decrementColorAlpha(with: scrollView.contentOffset.y)
+            
+            if self.headerHeightConstraint.constant < headerViewCollapsedHeight {
+                self.headerHeightConstraint.constant = headerViewCollapsedHeight
+            }
+        }
+    }
+    
+    func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        if self.headerHeightConstraint.constant > headerViewHeight {
+            animateHeader()
+        }
+    }
+    
+    // Gets called when the scroll comes to a halt
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        if self.headerHeightConstraint.constant > headerViewHeight {
+            animateHeader()
+        }
+    }
+    
+    func animateHeader() {
+        // Set and animate the height constraint back to 150
+        UIView.animate(withDuration: 0.7, delay: 0.0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.5, options: .curveEaseInOut, animations: {
+            self.headerHeightConstraint.constant = self.headerViewHeight
+            self.view.layoutIfNeeded()
+        }, completion: nil)
+        
+    }
+    
+    func setupHeader() {
+        
+        headerView = AnimatedHeaderView(frame: CGRect.zero, title: "")
+        
+        headerView.translatesAutoresizingMaskIntoConstraints = false
+        saveButton.translatesAutoresizingMaskIntoConstraints = false
+        retakePhotoButton.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(headerView)
+        headerView.addSubview(saveButton)
+        headerView.addSubview(retakePhotoButton)
+        
+        headerHeightConstraint = headerView.heightAnchor.constraint(equalToConstant: headerViewHeight)
+        headerHeightConstraint.isActive = true
+        
+        let constraints: [NSLayoutConstraint] = [
+            headerView.topAnchor.constraint(equalTo: view.topAnchor),
+            headerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            headerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            saveButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 40),
+            saveButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            retakePhotoButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 40),
+            retakePhotoButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            ]
+        NSLayoutConstraint.activate(constraints)
+        
+        saveButton.setTitle("Save", for: .normal)
+        saveButton.setTitleColor(.white, for: .normal)
+        saveButton.titleLabel?.font.withSize(20.0)
+        saveButton.addTarget(self, action: #selector(save(_:)), for: .touchUpInside)
+        
+        retakePhotoButton.setTitle("Retake", for: .normal)
+        saveButton.setTitleColor(.white, for: .normal)
+        saveButton.titleLabel?.font.withSize(20.0)
+        retakePhotoButton.addTarget(self, action: #selector(retake(_:)), for: .touchUpInside)
+        
+    }
+    
+    func setupTableView() {
+        
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(tableView)
+        
+        let constraints: [NSLayoutConstraint] = [
+            tableView.topAnchor.constraint(equalTo: headerView.bottomAnchor),
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            ]
+        
+        NSLayoutConstraint.activate(constraints)
+        
     }
     
 }
