@@ -67,7 +67,7 @@ struct NutritionHTTPBody: Encodable {
 class Food: Decodable, Equatable {
     
     
-    init(name: String, servingQty: Int, servingUnit: String, fullNutrients: [Nutrient]) {
+    init(name: String, servingQty: Double, servingUnit: String, fullNutrients: [Nutrient]) {
         self.name = name
         self.servingQuantity = servingQty
         self.servingUnit = servingUnit
@@ -75,7 +75,7 @@ class Food: Decodable, Equatable {
     }
     
     var name: String
-    var servingQuantity: Int
+    var servingQuantity: Double
     let servingUnit: String
     var fullNutrients: [Nutrient]
     

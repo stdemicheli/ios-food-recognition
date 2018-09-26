@@ -16,7 +16,8 @@ class CameraViewController: UIViewController {
     
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var searchBar: UITableView!
+    @IBOutlet weak var searchBar: UISearchBar!
+    
     
     // MARK: - Properties (private)
     
@@ -105,7 +106,7 @@ class CameraViewController: UIViewController {
         
         let multiplier: Double = qty / Double(updatedFood.servingQuantity)
         
-        updatedFood.servingQuantity = Int(qty)
+        updatedFood.servingQuantity = qty
         updatedFood.fullNutrients = updatedFood.fullNutrients.map({ (nutrient) -> Nutrient in
             nutrient.value = nutrient.value * multiplier
             return nutrient
@@ -218,12 +219,12 @@ extension CameraViewController: UIImagePickerControllerDelegate, UINavigationCon
 
 extension CameraViewController: UISearchBarDelegate {
     
-    func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
-        // Instant manual search
-    }
-    
-    func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
-        // Manual search submit
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
+        foodClient.fetchFoodInstantly(with: searchText) { (_) in
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
     }
     
 }

@@ -47,7 +47,7 @@ class FoodTableViewCell: UITableViewCell {
     private func updateViews() {
         if let food = food {
             nameTextLabel?.text = food.name
-            servingTextLabel?.text = "\(food.servingQuantity) \(food.servingUnit)"
+            servingTextLabel?.text = "\(Int(food.servingQuantity)) \(food.servingUnit)"
         }
         
         if let calories = calories {
