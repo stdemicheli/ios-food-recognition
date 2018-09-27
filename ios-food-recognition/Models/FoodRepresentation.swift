@@ -153,6 +153,7 @@ struct HealthCard {
         var title: String
         var value: Double
         var unit: String
+        var goal: Double
         
     }
     

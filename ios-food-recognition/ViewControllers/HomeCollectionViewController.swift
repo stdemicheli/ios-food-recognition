@@ -16,6 +16,7 @@ class HomeCollectionViewController: UICollectionViewController {
     // MARK: - Properties (public)
     
     let hkController = HealthKitController()
+    var fetchedDates = [(Date, Date)]()
     
     // MARK: - Properties (private)
     
@@ -29,10 +30,37 @@ class HomeCollectionViewController: UICollectionViewController {
         self.collectionView.showsHorizontalScrollIndicator = false
         self.cellSize = CGSize(width: self.view.frame.width, height: self.view.frame.height)
         self.collectionView.semanticContentAttribute = UISemanticContentAttribute.forceRightToLeft
+        
+        fetchedDates = getDatesByDay(forPastDays: 15)
+        
     }
 
     // MARK: - Methods (public)
         
+    func getDatesByDay(forPastDays days: Int) -> [(Date, Date)] {
+        var dates = [(Date, Date)]()
+        let calendar = Calendar.current
+        let now = Date()
+        guard let tmrw = calendar.date(byAdding: .day, value: 1, to: now) else { return dates}
+        let components = calendar.dateComponents([.year, .month, .day], from: tmrw)
+        var currentDate = components
+        
+        for _ in 0..<days {
+            
+            guard let startDate = calendar.date(from: currentDate) else {
+                fatalError("*** Unable to create the start date ***")
+            }
+            
+            guard let endDate = calendar.date(byAdding: .day, value: -1, to: startDate) else {
+                fatalError("*** Unable to create the end date ***")
+            }
+            
+            dates.append((startDate, endDate))
+            currentDate = calendar.dateComponents([.year, .month, .day], from: endDate)
+        }
+        
+        return dates
+    }
     
     // MARK: - Methods (private)
     
@@ -46,13 +74,26 @@ class HomeCollectionViewController: UICollectionViewController {
 
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 10
+        return fetchedDates.count
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! HomeCollectionViewCell
         
         cell.delegate = self
+        
+        let date = fetchedDates[indexPath.item]
+        cell.date = date.0
+        
+        hkController.fetchNutrition(from: date.1, until: date.0) { (error) in
+            if let error = error {
+                NSLog("Error fetching data: \(error)")
+                return
+            }
+            
+            //cell.nutrients = self.hkController.fetchedNutrients
+            print(self.hkController.fetchedNutrients)
+        }
         
         cell.headerView.backgroundColor = indexPath.item % 2 == 0 ? UIColor.red : UIColor.green
         

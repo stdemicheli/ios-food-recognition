@@ -93,7 +93,7 @@ class HealthKitController {
         
         for nutrient in hkNutrients {
             dispatchGroup.enter()
-            fetch(nutrient, from: startDate, to: endDate) { (_, error) in
+            fetch(nutrient, from: startDate, to: endDate) { (error) in
                 if let error = error {
                     NSLog("Error occured while fetching \(nutrient): \(error)")
                     completion(error)
@@ -150,10 +150,11 @@ class HealthKitController {
     
     // MARK: - Methods (private)
     
-    private func fetch(_ sampleType: HKQuantityType, from startDate: Date, to endDate: Date, completion: @escaping (HKQuantitySample?, Error?) -> Void) {
+    private func fetch(_ sampleType: HKQuantityType, from startDate: Date, to endDate: Date, completion: @escaping (Error?) -> Void) {
         let predicate = HKQuery.predicateForSamples(withStart: startDate, end: endDate, options: [])
         let query = HKSampleQuery(sampleType: sampleType, predicate: predicate, limit: Int(HKObjectQueryNoLimit), sortDescriptors: nil) { (query, results, error) in
             guard let samples = results as? [HKQuantitySample] else {
+                completion(error)
                 fatalError("An error occured fetching the user's tracked food. The error was: \(String(describing: error?.localizedDescription))")
             }
             
@@ -174,6 +175,7 @@ class HealthKitController {
             }
             
             self.fetchedNutrients[sampleType] = sampleQty
+            completion(nil)
         }
         
         healthStore?.execute(query)

@@ -188,7 +188,7 @@ extension CameraViewController: UITableViewDelegate, UITableViewDataSource, Food
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return foodSections[section]
     }
-    
+        
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let foodSection = foodSections[section]
         return foodObjects[foodSection]?.count ?? 0
@@ -230,17 +230,6 @@ extension CameraViewController: UITableViewDelegate, UITableViewDataSource, Food
         
         return [save, remove]
     }
-    
-//    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        let cell = tableView.dequeueReusableCell(withIdentifier: "FoodCell", for: indexPath) as! FoodTableViewCell
-//
-//        self.selectedFoodIndexPath = indexPath
-//
-//        if !cell.isFirstResponder {
-//            _ = cell.becomeFirstResponder()
-//        }
-//
-//    }
     
 }
 
