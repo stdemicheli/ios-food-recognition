@@ -109,6 +109,18 @@ class HealthKitController {
         }
     }
     
+    func saveNutrition(for foods: [Food], completion: @escaping (Bool, Error?) -> Void) {
+        for food in foods {
+            saveNutrition(for: food) { (success, error) in
+                if let error = error {
+                    completion(false, error)
+                    return
+                }
+            }
+        }
+        completion(true, nil)
+    }
+    
     func saveNutrition(for food: Food, completion: @escaping (Bool, Error?) -> Void) {
         let date = Date()
         let hkObjects = convert(food.fullNutrients)

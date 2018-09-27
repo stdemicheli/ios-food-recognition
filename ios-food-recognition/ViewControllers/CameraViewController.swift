@@ -12,10 +12,12 @@ class CameraViewController: UIViewController {
     
     // MARK: - Properties (public)
     
+    let hkController = HealthKitController()
+    
     let foodClient = FoodClient()
     var foodObjects: [String : [Food]] {
         var objects = [String : [Food]]()
-        objects["Saved"] = foodClient.savedFood
+        objects["Saved"] = foodClient.savedFoods
         objects["Results"] = foodClient.foodSearchResult
         return objects
     }
@@ -81,9 +83,13 @@ class CameraViewController: UIViewController {
     // MARK: - Actions
     
     @IBAction func save(_ sender: Any) {
-        tabBarController?.selectedIndex = 0
-        resetViewController()
         // Save data to Health Kit
+        hkController.saveNutrition(for: foodClient.savedFoods) { (success, error) in
+            if success {
+                self.tabBarController?.selectedIndex = 0
+                self.resetViewController()
+            }
+        }
         // Spinner
         // Move to Home and update
     }
@@ -206,7 +212,7 @@ extension CameraViewController: UITableViewDelegate, UITableViewDataSource, Food
         let save = UITableViewRowAction(style: .normal, title: "Save") { (save, indexPath) in
             let foodSection = self.foodSections[indexPath.section]
             guard let food = self.foodObjects[foodSection]?[indexPath.row] else { return }
-            self.foodClient.savedFood.append(food)
+            self.foodClient.savedFoods.append(food)
             guard let index = self.foodClient.foodSearchResult.index(of: food) else { return }
             self.foodClient.foodSearchResult.remove(at: index)
             self.tableView.reloadData()
@@ -216,8 +222,8 @@ extension CameraViewController: UITableViewDelegate, UITableViewDataSource, Food
         let remove = UITableViewRowAction(style: .destructive, title: "Remove") { (remove, indexPath) in
             let foodSection = self.foodSections[indexPath.section]
             guard let food = self.foodObjects[foodSection]?[indexPath.row] else { return }
-            guard let index = self.foodClient.savedFood.index(of: food) else { return }
-            self.foodClient.savedFood.remove(at: index)
+            guard let index = self.foodClient.savedFoods.index(of: food) else { return }
+            self.foodClient.savedFoods.remove(at: index)
             self.foodClient.foodSearchResult.append(food)
             self.tableView.reloadData()
         }
@@ -356,7 +362,7 @@ extension CameraViewController: UIScrollViewDelegate {
             ]
         NSLayoutConstraint.activate(constraints)
         
-        saveButton.setTitle("Save", for: .normal)
+        saveButton.setTitle("Done", for: .normal)
         saveButton.setTitleColor(.white, for: .normal)
         saveButton.titleLabel?.font.withSize(20.0)
         saveButton.addTarget(self, action: #selector(save(_:)), for: .touchUpInside)
