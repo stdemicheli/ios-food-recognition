@@ -70,13 +70,13 @@ class CameraViewController: UIViewController {
         setupTableView()
 
         // Testing purposes
-        headerView.imageView?.image = UIImage(named: "caprese-salad")
-        foodClient.fetchFoodInstantly(with: "caprese salad") { (_) in
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
-        }
-        
+//        headerView.imageView?.image = UIImage(named: "caprese-salad")
+//        foodClient.fetchFoodInstantly(with: "caprese salad") { (_) in
+//            DispatchQueue.main.async {
+//                self.tableView.reloadData()
+//            }
+//        }
+//
         openImagePickerController()
     }
     
@@ -86,7 +86,7 @@ class CameraViewController: UIViewController {
         // Save data to Health Kit
         hkController.saveNutrition(for: foodClient.savedFoods) { (success, error) in
             if success {
-                self.tabBarController?.selectedIndex = 0
+                self.tabBarController?.selectedIndex = 1
                 self.resetViewController()
             }
         }
@@ -119,6 +119,12 @@ class CameraViewController: UIViewController {
         return nil
     }
     
+    private func save(food: Food) {
+        self.foodClient.savedFoods.append(food)
+        guard let index = self.foodClient.foodSearchResult.index(of: food) else { return }
+        self.foodClient.foodSearchResult.remove(at: index)
+    }
+    
     // TODO: Move to FoodClient?
     // TODO: Make a new server call with food and udpated quantities
     private func update(_ food: Food, with qty: Double) {
@@ -136,16 +142,6 @@ class CameraViewController: UIViewController {
         foodClient.foodSearchResult.remove(at: index)
         foodClient.foodSearchResult.insert(updatedFood, at: index)
     }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
 
@@ -167,16 +163,16 @@ extension CameraViewController: UITableViewDelegate, UITableViewDataSource, Food
     }
     
     func onPickerOpen(_ cell: FoodTableViewCell) {
-        
     }
     
     func onPickerClose(_ cell: FoodTableViewCell) {
-        if let food = cell.food, let updatedQty = self.updatedQty {
-            _ = update(food, with: updatedQty)
-        }
+        guard let food = cell.food, let updatedQty = self.updatedQty else { return }
+        _ = update(food, with: updatedQty)
         // Reset properties
         self.selectedFoodIndexPath = nil
         self.updatedQty = nil
+        
+        save(food: food)
         
         tableView.reloadData()
     }
@@ -212,9 +208,7 @@ extension CameraViewController: UITableViewDelegate, UITableViewDataSource, Food
         let save = UITableViewRowAction(style: .normal, title: "Save") { (save, indexPath) in
             let foodSection = self.foodSections[indexPath.section]
             guard let food = self.foodObjects[foodSection]?[indexPath.row] else { return }
-            self.foodClient.savedFoods.append(food)
-            guard let index = self.foodClient.foodSearchResult.index(of: food) else { return }
-            self.foodClient.foodSearchResult.remove(at: index)
+            self.save(food: food)
             self.tableView.reloadData()
         }
         save.backgroundColor = .green

@@ -7,11 +7,17 @@
 //
 
 import UIKit
+import HealthKit
 
 class HealthCardTableViewCell: UITableViewCell {
 
     
     // MARK: Properties
+    var nutrients: [HKQuantityType : Double]? {
+        didSet {
+            setupViews()
+        }
+    }
     var healthCard: HealthCard?
     
     private var titleTextLabel: UILabel!
@@ -48,10 +54,10 @@ class HealthCardTableViewCell: UITableViewCell {
         ]
         NSLayoutConstraint.activate(constraints)
         
-        titleTextLabel.text = "Vitamin Breakdown"
+        // titleTextLabel.text = "Vitamin Breakdown"
         titleTextLabel.numberOfLines = 1
         titleTextLabel.textAlignment = .left
-        titleTextLabel.font = UIFont.boldSystemFont(ofSize: 24)
+        titleTextLabel.font = UIFont.boldSystemFont(ofSize: 20)
     }
     
     private func setupBody() {
@@ -64,7 +70,7 @@ class HealthCardTableViewCell: UITableViewCell {
         self.addSubview(bodyView)
         bodyView.addSubview(bodyStackView)
         
-        var constraints: [NSLayoutConstraint] = [
+        let constraints: [NSLayoutConstraint] = [
             bodyView.topAnchor.constraint(equalTo: titleTextLabel.bottomAnchor, constant: margins),
             bodyView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: margins),
             bodyView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -margins),
@@ -75,43 +81,125 @@ class HealthCardTableViewCell: UITableViewCell {
             bodyStackView.bottomAnchor.constraint(equalTo: bodyView.bottomAnchor),
             ]
         
-        if let healthCard = healthCard {
-            for item in healthCard.items {
-                let itemStackView = UIStackView()
-                let itemTitle = UILabel()
-                let itemProgress = UIProgressView(progressViewStyle: .default)
-                let transform = CGAffineTransform(scaleX: 1.0, y: 5.0)
-                itemProgress.transform = transform
-                
-                itemStackView.translatesAutoresizingMaskIntoConstraints = false
-                itemTitle.translatesAutoresizingMaskIntoConstraints = false
-                itemProgress.translatesAutoresizingMaskIntoConstraints = false
-
-                itemStackView.addArrangedSubview(itemTitle)
-                itemStackView.addArrangedSubview(itemProgress)
-                bodyStackView.addArrangedSubview(itemStackView)
+        if let nutrients = nutrients {
+            let vitamins = filterNutrients(for: nutrients, with: Constants.HealthKit().vitaminTypes)
             
-                itemStackView.leadingAnchor.constraint(equalTo: bodyStackView.leadingAnchor).isActive = true
-                itemStackView.trailingAnchor.constraint(equalTo: bodyStackView.trailingAnchor).isActive = true
+            let calories = filterNutrients(for: nutrients, with: Constants.HealthKit().calorieTypes)
+            
+            if Bool.random() {
+                titleTextLabel.text = "Vitamin Breakdown"
+                for vitamin in vitamins {
+                    let itemStackView = UIStackView()
+                    let itemTitle = UILabel()
+                    let itemProgress = UIProgressView(progressViewStyle: .default)
+                    let transform = CGAffineTransform(scaleX: 1.0, y: 5.0)
+                    itemProgress.transform = transform
 
-                itemStackView.axis = .horizontal
-                itemStackView.alignment = .center
-                itemStackView.setCustomSpacing(12.0, after: itemTitle)
+                    itemStackView.translatesAutoresizingMaskIntoConstraints = false
+                    itemTitle.translatesAutoresizingMaskIntoConstraints = false
+                    itemProgress.translatesAutoresizingMaskIntoConstraints = false
 
-                itemTitle.text = item.title
-                itemProgress.progress = 0.0
-                itemProgress.setProgress(0.6, animated: true)
+                    itemStackView.addArrangedSubview(itemTitle)
+                    itemStackView.addArrangedSubview(itemProgress)
+                    bodyStackView.addArrangedSubview(itemStackView)
 
+                    itemStackView.leadingAnchor.constraint(equalTo: bodyStackView.leadingAnchor).isActive = true
+                    itemStackView.trailingAnchor.constraint(equalTo: bodyStackView.trailingAnchor).isActive = true
+                    itemTitle.widthAnchor.constraint(equalToConstant: 120).isActive = true
+
+                    itemStackView.axis = .horizontal
+                    itemStackView.alignment = .center
+                    itemStackView.setCustomSpacing(12.0, after: itemTitle)
+
+                    switch vitamin.key {
+                    case HKObjectType.quantityType(forIdentifier: .dietaryVitaminA)!:
+                        let goal = 0.0009
+                        itemTitle.text = "Vitamin A"
+                        itemProgress.progress = 0.0
+                        itemProgress.setProgress(Float(vitamin.value / goal), animated: true)
+                    case HKObjectType.quantityType(forIdentifier: .dietaryVitaminC)!:
+                        let goal = 0.09
+                        itemTitle.text = "Vitamin C"
+                        itemProgress.progress = 0.0
+                        itemProgress.setProgress(Float(vitamin.value / goal), animated: true)
+                    case HKObjectType.quantityType(forIdentifier: .dietaryVitaminD)!:
+                        let goal = 0.6
+                        itemTitle.text = "Vitamin D"
+                        itemProgress.progress = 0.0
+                        itemProgress.setProgress(Float(vitamin.value / goal), animated: true)
+                    case HKObjectType.quantityType(forIdentifier: .dietaryFolate)!:
+                        let goal = 0.0004
+                        itemTitle.text = "Folate"
+                        itemProgress.progress = 0.0
+                        itemProgress.setProgress(Float(vitamin.value / goal), animated: true)
+                    default:
+                        continue
+                    }
+                }
+            } else {
+                titleTextLabel.text = "Calorie Balance Keto Diet"
+                for calorie in calories {
+                    let itemStackView = UIStackView()
+                    let itemTitle = UILabel()
+                    let itemProgress = UIProgressView(progressViewStyle: .default)
+                    let transform = CGAffineTransform(scaleX: 1.0, y: 5.0)
+                    itemProgress.transform = transform
+                    
+                    itemStackView.translatesAutoresizingMaskIntoConstraints = false
+                    itemTitle.translatesAutoresizingMaskIntoConstraints = false
+                    itemProgress.translatesAutoresizingMaskIntoConstraints = false
+                    
+                    itemStackView.addArrangedSubview(itemTitle)
+                    itemStackView.addArrangedSubview(itemProgress)
+                    bodyStackView.addArrangedSubview(itemStackView)
+                    
+                    itemStackView.leadingAnchor.constraint(equalTo: bodyStackView.leadingAnchor).isActive = true
+                    itemStackView.trailingAnchor.constraint(equalTo: bodyStackView.trailingAnchor).isActive = true
+                    itemTitle.widthAnchor.constraint(equalToConstant: 120).isActive = true
+                    
+                    itemStackView.axis = .horizontal
+                    itemStackView.alignment = .center
+                    itemStackView.setCustomSpacing(12.0, after: itemTitle)
+                    
+                    switch calorie.key {
+                    case HKObjectType.quantityType(forIdentifier: .dietaryFatTotal)!:
+                        let goal = 171.0
+                        itemTitle.text = "Fat"
+                        itemProgress.progress = 0.0
+                        itemProgress.setProgress(Float(calorie.value / goal), animated: true)
+                    case HKObjectType.quantityType(forIdentifier: .dietaryCarbohydrates)!:
+                        let goal = 25.0
+                        itemTitle.text = "Carbs"
+                        itemProgress.progress = 0.0
+                        itemProgress.setProgress(Float(calorie.value / goal), animated: true)
+                    case HKObjectType.quantityType(forIdentifier: .dietaryProtein)!:
+                        let goal = 92.0
+                        itemTitle.text = "Protein"
+                        itemProgress.progress = 0.0
+                        itemProgress.setProgress(Float(calorie.value / goal), animated: true)
+                    default:
+                        continue
+                    }
+                }
             }
         }
         
         NSLayoutConstraint.activate(constraints)
-    
-        
         
         bodyStackView.axis = .vertical
         bodyStackView.distribution = .equalSpacing
         bodyStackView.alignment = .center
+    }
+    
+    private func filterNutrients(for nutrients: [HKQuantityType : Double], with types: Set<HKQuantityType>) -> [HKQuantityType : Double] {
+        return nutrients.filter { (key, value) -> Bool in
+            for type in types {
+                if key == type {
+                    return true
+                }
+            }
+            return false
+        }
     }
 
 }

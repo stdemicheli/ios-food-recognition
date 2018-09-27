@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import HealthKit
 
 protocol HomeCollectionViewCellDelegate {
     func next()
@@ -18,11 +19,20 @@ class HomeCollectionViewCell: UICollectionViewCell {
     
     
     // MARK: - Properties (public)
-    var energyConsumed: String? {
+    
+    let hkController = HealthKitController()
+    
+    var nutrients: [HKQuantityType : Double]? {
+        didSet {
+            setupViews()
+        }
+    }
+    var date: Date? {
         didSet {
             setupHeader()
         }
     }
+    
     var healthCards: [HealthCard]? {
         didSet {
             setupTableView()
@@ -87,7 +97,6 @@ class HomeCollectionViewCell: UICollectionViewCell {
     private func setupViews() {
         setupHeader()
         setupTableView()
-        
     }
     
     private func setupHeader() {
@@ -195,13 +204,19 @@ class HomeCollectionViewCell: UICollectionViewCell {
             ]
         NSLayoutConstraint.activate(constraints)
         
+        headerView.backgroundColor = .red
+        
         topStackView.axis = .horizontal
         topStackView.distribution = .equalSpacing
         topStackView.alignment = .center
         
         headerTitle.numberOfLines = 1
         headerTitle.textAlignment = .center
-        headerTitle.text = "27/09/2018"
+        if let date = self.date {
+            headerTitle.text = formateDate(for: date)
+        }
+        headerTitle.textColor = .white
+        headerTitle.font = UIFont.boldSystemFont(ofSize: 17)
         
         prevButton.setTitle("PREV", for: .normal)
         prevButton.addTarget(self, action: #selector(previousCell), for: .touchUpInside)
@@ -215,7 +230,8 @@ class HomeCollectionViewCell: UICollectionViewCell {
         
         mainMetric.numberOfLines = 1
         mainMetric.textAlignment = .center
-        mainMetric.text = "165165"
+        mainMetric.font = UIFont.boldSystemFont(ofSize: 22)
+        mainMetric.textColor = .white
         mainMetricSubView.clipsToBounds = true
         mainMetricSubView.layer.borderColor = UIColor(white: 1.0, alpha: 0.5).cgColor
         mainMetricSubView.layer.borderWidth = 10
@@ -223,6 +239,8 @@ class HomeCollectionViewCell: UICollectionViewCell {
         
         mainMetricLabel.numberOfLines = 1
         mainMetricLabel.textAlignment = .center
+        mainMetricLabel.textColor = .white
+        mainMetricLabel.font = UIFont.boldSystemFont(ofSize: 20)
         mainMetricLabel.text = "Kcal"
         
         bottomStackView.axis = .horizontal
@@ -243,27 +261,46 @@ class HomeCollectionViewCell: UICollectionViewCell {
         
         btmLeftMetric.numberOfLines = 1
         btmLeftMetric.textAlignment = .center
-        btmLeftMetric.text = "20%"
-        //btmLeftMetric.font = UIFont(name: "System", size: 24.0)
+        btmLeftMetric.textColor = .white
+        btmLeftMetric.font = UIFont.boldSystemFont(ofSize: 17)
         
         btmMidMetric.numberOfLines = 1
         btmMidMetric.textAlignment = .center
-        btmMidMetric.text = "30%"
+        btmMidMetric.textColor = .white
+        btmMidMetric.font = UIFont.boldSystemFont(ofSize: 17)
         
         btmRightMetric.numberOfLines = 1
         btmRightMetric.textAlignment = .center
-        btmRightMetric.text = "50%"
-        
+        btmRightMetric.textColor = .white
+        btmRightMetric.font = UIFont.boldSystemFont(ofSize: 17)
         
         btmLeftMetricTitle.numberOfLines = 1
         btmLeftMetricTitle.textAlignment = .center
         btmLeftMetricTitle.text = "Carbs"
+        btmLeftMetricTitle.textColor = .white
+        btmLeftMetricTitle.font = UIFont.boldSystemFont(ofSize: 17)
         btmMidMetricTitle.numberOfLines = 1
         btmMidMetricTitle.textAlignment = .center
         btmMidMetricTitle.text = "Protein"
+        btmMidMetricTitle.textColor = .white
+        btmMidMetricTitle.font = UIFont.boldSystemFont(ofSize: 17)
         btmRightMetricTitle.numberOfLines = 1
         btmRightMetricTitle.textAlignment = .center
         btmRightMetricTitle.text = "Fat"
+        btmRightMetricTitle.textColor = .white
+        btmRightMetricTitle.font = UIFont.boldSystemFont(ofSize: 17)
+        
+        guard let calories = self.nutrients?[HKObjectType.quantityType(forIdentifier: .dietaryEnergyConsumed)!],
+            let protein = self.nutrients?[HKObjectType.quantityType(forIdentifier: .dietaryProtein)!],
+            let carbs = self.nutrients?[HKObjectType.quantityType(forIdentifier: .dietaryCarbohydrates)!],
+            let fat = self.nutrients?[HKObjectType.quantityType(forIdentifier: .dietaryFatTotal)!] else { return }
+        
+        let totalCaloriesinGrams = protein + carbs + fat
+        
+        mainMetric.text = String(Int(calories))
+        btmLeftMetric.text = totalCaloriesinGrams != 0 ? "\(String(format: "%.0f%", (carbs / totalCaloriesinGrams) * 100))%" : "0%"
+        btmMidMetric.text =  totalCaloriesinGrams != 0 ? "\(String(format: "%.0f%", (protein / totalCaloriesinGrams) * 100))%" : "0%"
+        btmRightMetric.text =  totalCaloriesinGrams != 0 ? "\(String(format: "%.0f%", (fat / totalCaloriesinGrams) * 100))%" : "0%"
     }
     
     private func setupTableView() {
@@ -288,6 +325,12 @@ class HomeCollectionViewCell: UICollectionViewCell {
     
     private func setRoundCornerForMainMetric() {
         mainMetricSubView.layer.cornerRadius = min(mainMetricSubView.bounds.height, mainMetricSubView.bounds.width) / 2
+    }
+    
+    private func formateDate(for date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd-MM-yyyy"
+        return formatter.string(from: date)
     }
     
     
@@ -338,7 +381,7 @@ extension HomeCollectionViewCell: UIScrollViewDelegate {
 extension HomeCollectionViewCell: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 100
+        return 30
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -360,12 +403,26 @@ extension HomeCollectionViewCell: UITableViewDelegate, UITableViewDataSource {
         let cell = tableView.dequeueReusableCell(withIdentifier: reuseId, for: indexPath) as! HealthCardTableViewCell
         
         cell.selectionStyle = .none
+        if let nutrients = self.nutrients {
+            cell.nutrients = nutrients
+        }
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UIScreen.main.bounds.height / 3
+    }
+    
+    private func filterNutrients(for nutrients: [HKQuantityType : Double], with types: Set<HKQuantityType>) -> [HKQuantityType : Double] {
+        return nutrients.filter { (key, value) -> Bool in
+            for type in types {
+                if key == type {
+                    return true
+                }
+            }
+            return false
+        }
     }
     
 }
