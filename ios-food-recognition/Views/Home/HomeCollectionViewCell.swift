@@ -18,8 +18,16 @@ class HomeCollectionViewCell: UICollectionViewCell {
     
     
     // MARK: - Properties (public)
-    
-    let nutritionData = [1]
+    var energyConsumed: String? {
+        didSet {
+            setupHeader()
+        }
+    }
+    var healthCards: [HealthCard]? {
+        didSet {
+            setupTableView()
+        }
+    }
     var delegate: HomeCollectionViewCellDelegate?
     
     // MARK: - Properties (private)
@@ -194,7 +202,6 @@ class HomeCollectionViewCell: UICollectionViewCell {
         headerTitle.numberOfLines = 1
         headerTitle.textAlignment = .center
         headerTitle.text = "27/09/2018"
-        headerTitle.backgroundColor = .green
         
         prevButton.setTitle("PREV", for: .normal)
         prevButton.addTarget(self, action: #selector(previousCell), for: .touchUpInside)
@@ -261,7 +268,6 @@ class HomeCollectionViewCell: UICollectionViewCell {
     
     private func setupTableView() {
         tableView = UITableView()
-        tableView.register(HealthCardTableViewCell.self, forCellReuseIdentifier: reuseId)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(tableView)
         
@@ -274,6 +280,7 @@ class HomeCollectionViewCell: UICollectionViewCell {
         
         NSLayoutConstraint.activate(constraints)
         
+        tableView.register(HealthCardTableViewCell.self, forCellReuseIdentifier: reuseId)
         tableView.delegate = self
         tableView.dataSource = self
         tableView.showsVerticalScrollIndicator = false
@@ -282,6 +289,7 @@ class HomeCollectionViewCell: UICollectionViewCell {
     private func setRoundCornerForMainMetric() {
         mainMetricSubView.layer.cornerRadius = min(mainMetricSubView.bounds.height, mainMetricSubView.bounds.width) / 2
     }
+    
     
 }
 
@@ -329,16 +337,35 @@ extension HomeCollectionViewCell: UIScrollViewDelegate {
 
 extension HomeCollectionViewCell: UITableViewDelegate, UITableViewDataSource {
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func numberOfSections(in tableView: UITableView) -> Int {
         return 100
     }
     
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 10.0
+    }
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let view = UIView()
+        view.backgroundColor = .gray
+        view.alpha = 0.3
+        return view
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "HealthCardCell", for: indexPath) //as! HealthCardTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: reuseId, for: indexPath) as! HealthCardTableViewCell
         
-        cell.textLabel?.text = "Hi"
+        cell.selectionStyle = .none
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UIScreen.main.bounds.height / 3
     }
     
 }

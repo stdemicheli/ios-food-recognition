@@ -28,6 +28,7 @@ class HomeCollectionViewController: UICollectionViewController {
         self.collectionView.isPagingEnabled = true
         self.collectionView.showsHorizontalScrollIndicator = false
         self.cellSize = CGSize(width: self.view.frame.width, height: self.view.frame.height)
+        self.collectionView.semanticContentAttribute = UISemanticContentAttribute.forceRightToLeft
     }
 
     // MARK: - Methods (public)

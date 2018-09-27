@@ -93,7 +93,7 @@ class Food: Decodable, Equatable {
     
 }
 
-class Nutrient: Decodable {
+class Nutrient: Codable {
     
     init(attributeId: Int, value: Double) {
         self.attributeId = attributeId
@@ -138,5 +138,26 @@ struct Foods: Decodable {
 struct FoodError: Decodable {
     
     let message: String
+    
+}
+
+struct HealthCard {
+    
+    var title: String
+    var items: [HealthCard.Nutrient]
+    var type: HealthCardTypes
+    
+    // TODO: conver into Nutrient struct
+    struct Nutrient {
+        
+        var title: String
+        var value: Double
+        var unit: String
+        
+    }
+    
+    enum HealthCardTypes: String {
+        case standard
+    }
     
 }
