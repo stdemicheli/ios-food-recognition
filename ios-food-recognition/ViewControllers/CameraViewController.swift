@@ -13,13 +13,20 @@ class CameraViewController: UIViewController {
     // MARK: - Properties (public)
     
     let foodClient = FoodClient()
+    var foodObjects: [String : [Food]] {
+        var objects = [String : [Food]]()
+        objects["Saved"] = foodClient.savedFood
+        objects["Results"] = foodClient.foodSearchResult
+        return objects
+    }
+    let foodSections = ["Saved", "Results"]
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
     
     private var headerView: AnimatedHeaderView!
     private var headerViewHeight = UIScreen.main.bounds.size.height / 2.5
-    private var headerViewCollapsedHeight: CGFloat = 80.0
+    private var headerViewCollapsedHeight: CGFloat = 90.0
     private var headerHeightConstraint: NSLayoutConstraint!
     private let saveButton = UIButton()
     private let retakePhotoButton = UIButton()
@@ -61,12 +68,12 @@ class CameraViewController: UIViewController {
         setupTableView()
 
         // Testing purposes
-//        headerView.imageView?.image = UIImage(named: "caprese-salad")
-//        foodClient.fetchFoodInstantly(with: "caprese salad") { (_) in
-//            DispatchQueue.main.async {
-//                self.tableView.reloadData()
-//            }
-//        }
+        headerView.imageView?.image = UIImage(named: "caprese-salad")
+        foodClient.fetchFoodInstantly(with: "caprese salad") { (_) in
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
+            }
+        }
         
         openImagePickerController()
     }
@@ -74,7 +81,7 @@ class CameraViewController: UIViewController {
     // MARK: - Actions
     
     @IBAction func save(_ sender: Any) {
-        tabBarController?.selectedIndex = 1
+        tabBarController?.selectedIndex = 0
         resetViewController()
         // Save data to Health Kit
         // Spinner
@@ -168,9 +175,17 @@ extension CameraViewController: UITableViewDelegate, UITableViewDataSource, Food
         tableView.reloadData()
     }
     
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return foodSections.count
+    }
+    
+    func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return foodSections[section]
+    }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return foodClient.foodSearchResult.count
+        let foodSection = foodSections[section]
+        return foodObjects[foodSection]?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -179,11 +194,35 @@ extension CameraViewController: UITableViewDelegate, UITableViewDataSource, Food
         cell.delegate = self
         cell.dataSource = self
         
-        let food = foodClient.foodSearchResult[indexPath.row]
+        let foodSection = foodSections[indexPath.section]
+        guard let food = foodObjects[foodSection]?[indexPath.row] else { return cell }
         cell.food = food
         cell.calories = getCalories(for: food)
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let save = UITableViewRowAction(style: .normal, title: "Save") { (save, indexPath) in
+            let foodSection = self.foodSections[indexPath.section]
+            guard let food = self.foodObjects[foodSection]?[indexPath.row] else { return }
+            self.foodClient.savedFood.append(food)
+            guard let index = self.foodClient.foodSearchResult.index(of: food) else { return }
+            self.foodClient.foodSearchResult.remove(at: index)
+            self.tableView.reloadData()
+        }
+        save.backgroundColor = .green
+        
+        let remove = UITableViewRowAction(style: .destructive, title: "Remove") { (remove, indexPath) in
+            let foodSection = self.foodSections[indexPath.section]
+            guard let food = self.foodObjects[foodSection]?[indexPath.row] else { return }
+            guard let index = self.foodClient.savedFood.index(of: food) else { return }
+            self.foodClient.savedFood.remove(at: index)
+            self.foodClient.foodSearchResult.append(food)
+            self.tableView.reloadData()
+        }
+        
+        return [save, remove]
     }
     
 //    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -310,8 +349,10 @@ extension CameraViewController: UIScrollViewDelegate {
             headerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             saveButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 40),
             saveButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            saveButton.widthAnchor.constraint(equalToConstant: 80),
             retakePhotoButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 40),
             retakePhotoButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
+            retakePhotoButton.widthAnchor.constraint(equalToConstant: 80),
             ]
         NSLayoutConstraint.activate(constraints)
         
@@ -319,11 +360,17 @@ extension CameraViewController: UIScrollViewDelegate {
         saveButton.setTitleColor(.white, for: .normal)
         saveButton.titleLabel?.font.withSize(20.0)
         saveButton.addTarget(self, action: #selector(save(_:)), for: .touchUpInside)
+        saveButton.backgroundColor = .gray
+        saveButton.layer.cornerRadius = 15
+        saveButton.clipsToBounds = true
         
         retakePhotoButton.setTitle("Retake", for: .normal)
-        saveButton.setTitleColor(.white, for: .normal)
-        saveButton.titleLabel?.font.withSize(20.0)
+        retakePhotoButton.setTitleColor(.white, for: .normal)
+        retakePhotoButton.titleLabel?.font.withSize(20.0)
         retakePhotoButton.addTarget(self, action: #selector(retake(_:)), for: .touchUpInside)
+        retakePhotoButton.backgroundColor = .gray
+        retakePhotoButton.layer.cornerRadius = 15
+        retakePhotoButton.clipsToBounds = true
         
     }
     
