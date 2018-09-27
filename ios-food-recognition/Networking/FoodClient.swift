@@ -30,6 +30,7 @@ class FoodClient {
     var predictions = [ClarifaiConcept]()
     var nutritionInfo: Nutrition?
     var foodSearchResult = [Food]()
+    var savedFood = [Food]()
     var nutrientDefinitions: [NutrientDefinition] = {
         let nutrientDefinitions = URL(fileURLWithPath: Bundle.main.path(forResource: "NutrientDefinitions", ofType: "plist")!)
         do {
