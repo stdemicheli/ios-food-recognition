@@ -84,10 +84,10 @@ class FoodTableViewCell: UITableViewCell {
         pickerToolbar.sizeToFit()
         
         let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(resignFirstResponder))
-        let cancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(resignFirstResponder))
+        // let cancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(resignFirstResponder))
         
         // Can also add more items to toolbar
-        pickerToolbar.setItems([doneButton, cancelButton], animated: true)
+        pickerToolbar.setItems([doneButton], animated: true)
         pickerToolbar.isUserInteractionEnabled = true
         
         return pickerToolbar
