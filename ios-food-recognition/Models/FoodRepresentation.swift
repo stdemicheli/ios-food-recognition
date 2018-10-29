@@ -147,7 +147,7 @@ struct HealthCard {
     var items: [HealthCard.Nutrient]
     var type: HealthCardTypes
     
-    // TODO: conver into Nutrient struct
+    // TODO: convert into Nutrient struct
     struct Nutrient {
         
         var title: String

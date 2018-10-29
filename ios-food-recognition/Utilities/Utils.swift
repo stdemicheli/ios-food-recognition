@@ -7,3 +7,14 @@
 //
 
 import Foundation
+import UIKit
+
+let π = CGFloat.pi
+
+func DegreesToRadians (value:CGFloat) -> CGFloat {
+    return value * π / 180.0
+}
+
+func RadiansToDegrees (value:CGFloat) -> CGFloat {
+    return value * 180.0 / π
+}
