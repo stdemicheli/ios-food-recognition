@@ -11,9 +11,7 @@ import UIKit
 class CameraViewController: UIViewController {
     
     // MARK: - Properties (public)
-    
     let hkController = HealthKitController()
-    
     let foodClient = FoodClient()
     var foodObjects: [String : [Food]] {
         var objects = [String : [Food]]()
@@ -71,13 +69,22 @@ class CameraViewController: UIViewController {
 
         // Testing purposes
 //        headerView.imageView?.image = UIImage(named: "caprese-salad")
+//        let activityIndicator = ActivityIndicator(frame: self.view.frame)
+//        self.view.addSubview(activityIndicator)
 //        foodClient.fetchFoodInstantly(with: "caprese salad") { (_) in
 //            DispatchQueue.main.async {
+//                activityIndicator.endAnimation()
 //                self.tableView.reloadData()
 //            }
 //        }
-//
+
+        
         openImagePickerController()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
     }
     
     // MARK: - Actions
@@ -141,6 +148,24 @@ class CameraViewController: UIViewController {
         
         foodClient.foodSearchResult.remove(at: index)
         foodClient.foodSearchResult.insert(updatedFood, at: index)
+    }
+    
+    private func fetchFood(with image: UIImage) {
+        let activityIndicator = ActivityIndicatorViewController()
+        self.navigationController?.pushViewController(activityIndicator, animated: true)
+        navigationController?.navigationBar.isHidden = true
+        foodClient.recognizeFood(with: image) { (error) in
+            if let error = error {
+                NSLog("Could not recognize food: \(error)")
+                return
+            }
+            
+            DispatchQueue.main.async {
+                activityIndicator.endAnimation()
+//                activityIndicator.removeFromSuperview()
+                self.tableView.reloadData()
+            }
+        }
     }
 
 }
@@ -246,19 +271,11 @@ extension CameraViewController: UIImagePickerControllerDelegate, UINavigationCon
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
             self.headerView.imageView?.image = image
-            // TODO: Implement a spinner which stops after closure completion, incl. timeout
-            foodClient.recognizeFood(with: image) { (error) in
-                if let error = error {
-                    NSLog("Could not recognize food: \(error)")
-                    return
-                }
-
-                DispatchQueue.main.async {
-                    self.tableView.reloadData()
-                }
-            }
+            self.fetchFood(with: image)
         }
-        self.dismiss(animated: true, completion: nil)
+        self.dismiss(animated: true) {
+        }
+        
     }
     
 }

@@ -39,6 +39,18 @@ class HomeCollectionViewCell: UICollectionViewCell {
         }
     }
     var delegate: HomeCollectionViewCellDelegate?
+    var calories: Double? {
+        return nutrients?[HKObjectType.quantityType(forIdentifier: .dietaryEnergyConsumed)!]
+    }
+    var protein: Double? {
+        return nutrients?[HKObjectType.quantityType(forIdentifier: .dietaryProtein)!]
+    }
+    var carbs: Double? {
+        return nutrients?[HKObjectType.quantityType(forIdentifier: .dietaryCarbohydrates)!]
+    }
+    var fat: Double? {
+        return nutrients?[HKObjectType.quantityType(forIdentifier: .dietaryFatTotal)!]
+    }
     
     // MARK: - Properties (private)
     
@@ -57,6 +69,7 @@ class HomeCollectionViewCell: UICollectionViewCell {
     private var mainMetricSubView: UIView!
     private var mainMetric: UILabel!
     private var mainMetricLabel: UILabel!
+    private var progressIndicator: ProgressIndicator!
     
     private var btmLeftMetric: UILabel!
     private var btmMidMetric: UILabel!
@@ -79,7 +92,6 @@ class HomeCollectionViewCell: UICollectionViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        setRoundCornerForMainMetric()
     }
     
     // MARK: - HomeCollectionViewCellDelegate
@@ -107,11 +119,12 @@ class HomeCollectionViewCell: UICollectionViewCell {
         headerTitle = UILabel()
         nextButton = UIButton(type: .system)
         
-        let mainMetricView = UIView()
-        mainMetricSubView = UIView()
-        mainMetricStackView = UIStackView()
-        mainMetric = UILabel()
-        mainMetricLabel = UILabel()
+        progressIndicator = ProgressIndicator(frame: CGRect.zero, progress: 1234)
+//        if let calories = calories {
+//            progressIndicator = ProgressIndicator(frame: CGRect.zero, progress: calories)
+//        } else {
+//            progressIndicator = ProgressIndicator(frame: CGRect.zero, progress: 1234)
+//        }
         
         let bottomStackView = UIStackView()
         let btmLeftStackView = UIStackView()
@@ -131,11 +144,7 @@ class HomeCollectionViewCell: UICollectionViewCell {
         headerTitle.translatesAutoresizingMaskIntoConstraints = false
         nextButton.translatesAutoresizingMaskIntoConstraints = false
         
-        mainMetricView.translatesAutoresizingMaskIntoConstraints = false
-        mainMetricSubView.translatesAutoresizingMaskIntoConstraints = false
-        mainMetricStackView.translatesAutoresizingMaskIntoConstraints = false
-        mainMetric.translatesAutoresizingMaskIntoConstraints = false
-        mainMetricLabel.translatesAutoresizingMaskIntoConstraints = false
+        progressIndicator.translatesAutoresizingMaskIntoConstraints = false
         
         bottomStackView.translatesAutoresizingMaskIntoConstraints = false
         btmLeftStackView.translatesAutoresizingMaskIntoConstraints = false
@@ -148,7 +157,6 @@ class HomeCollectionViewCell: UICollectionViewCell {
         btmMidMetricTitle.translatesAutoresizingMaskIntoConstraints = false
         btmRightMetricTitle.translatesAutoresizingMaskIntoConstraints = false
         
-        
         self.addSubview(headerView)
         
         headerView.addSubview(topStackView)
@@ -156,11 +164,7 @@ class HomeCollectionViewCell: UICollectionViewCell {
         topStackView.addArrangedSubview(headerTitle)
         topStackView.addArrangedSubview(nextButton)
         
-        headerView.addSubview(mainMetricView)
-        mainMetricView.addSubview(mainMetricSubView)
-        mainMetricSubView.addSubview(mainMetricStackView)
-        mainMetricStackView.addArrangedSubview(mainMetric)
-        mainMetricStackView.addArrangedSubview(mainMetricLabel)
+        headerView.addSubview(progressIndicator)
         
         headerView.addSubview(bottomStackView)
         bottomStackView.addArrangedSubview(btmLeftStackView)
@@ -186,21 +190,13 @@ class HomeCollectionViewCell: UICollectionViewCell {
             topStackView.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 20),
             topStackView.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -20),
             bottomStackView.bottomAnchor.constraint(equalTo: headerView.bottomAnchor, constant: -10),
-            bottomStackView.heightAnchor.constraint(equalTo: mainMetricView.heightAnchor, multiplier: 0.3),
+            bottomStackView.heightAnchor.constraint(equalTo: progressIndicator.heightAnchor, multiplier: 0.2),
             bottomStackView.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 20),
             bottomStackView.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -20),
-            mainMetricView.topAnchor.constraint(equalTo: topStackView.bottomAnchor),
-            mainMetricView.bottomAnchor.constraint(equalTo: bottomStackView.topAnchor),
-            mainMetricView.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 20),
-            mainMetricView.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -20),
-            mainMetricSubView.centerXAnchor.constraint(equalTo: mainMetricView.centerXAnchor),
-            mainMetricSubView.centerYAnchor.constraint(equalTo: mainMetricView.centerYAnchor),
-            mainMetricSubView.heightAnchor.constraint(equalTo: mainMetricView.heightAnchor, multiplier: 0.9),
-            mainMetricSubView.widthAnchor.constraint(equalTo: mainMetricView.heightAnchor, multiplier: 0.9),
-            mainMetricStackView.topAnchor.constraint(equalTo: mainMetricSubView.topAnchor, constant: 60),
-            mainMetricStackView.bottomAnchor.constraint(equalTo: mainMetricSubView.bottomAnchor, constant: -60),
-            mainMetricStackView.leadingAnchor.constraint(equalTo: mainMetricSubView.leadingAnchor),
-            mainMetricStackView.trailingAnchor.constraint(equalTo: mainMetricSubView.trailingAnchor),
+            progressIndicator.topAnchor.constraint(equalTo: topStackView.bottomAnchor, constant: 20),
+            progressIndicator.bottomAnchor.constraint(equalTo: bottomStackView.topAnchor, constant: -20),
+            progressIndicator.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 20),
+            progressIndicator.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -20),
             ]
         NSLayoutConstraint.activate(constraints)
         
@@ -213,7 +209,7 @@ class HomeCollectionViewCell: UICollectionViewCell {
         headerTitle.numberOfLines = 1
         headerTitle.textAlignment = .center
         if let date = self.date {
-            headerTitle.text = formateDate(for: date)
+            headerTitle.text = formatDate(for: date)
         }
         headerTitle.textColor = .white
         headerTitle.font = UIFont.boldSystemFont(ofSize: 17)
@@ -223,25 +219,6 @@ class HomeCollectionViewCell: UICollectionViewCell {
         
         nextButton.setTitle("NEXT", for: .normal)
         nextButton.addTarget(self, action: #selector(nextCell), for: .touchUpInside)
-        
-        mainMetricStackView.axis = .vertical
-        mainMetricStackView.distribution = .fill
-        mainMetricStackView.alignment = .center
-        
-        mainMetric.numberOfLines = 1
-        mainMetric.textAlignment = .center
-        mainMetric.font = UIFont.boldSystemFont(ofSize: 22)
-        mainMetric.textColor = .white
-        mainMetricSubView.clipsToBounds = true
-        mainMetricSubView.layer.borderColor = UIColor(white: 1.0, alpha: 0.5).cgColor
-        mainMetricSubView.layer.borderWidth = 10
-        mainMetricSubView.backgroundColor = .green
-        
-        mainMetricLabel.numberOfLines = 1
-        mainMetricLabel.textAlignment = .center
-        mainMetricLabel.textColor = .white
-        mainMetricLabel.font = UIFont.boldSystemFont(ofSize: 20)
-        mainMetricLabel.text = "Kcal"
         
         bottomStackView.axis = .horizontal
         bottomStackView.distribution = .equalSpacing
@@ -290,14 +267,13 @@ class HomeCollectionViewCell: UICollectionViewCell {
         btmRightMetricTitle.textColor = .white
         btmRightMetricTitle.font = UIFont.boldSystemFont(ofSize: 17)
         
-        guard let calories = self.nutrients?[HKObjectType.quantityType(forIdentifier: .dietaryEnergyConsumed)!],
-            let protein = self.nutrients?[HKObjectType.quantityType(forIdentifier: .dietaryProtein)!],
-            let carbs = self.nutrients?[HKObjectType.quantityType(forIdentifier: .dietaryCarbohydrates)!],
-            let fat = self.nutrients?[HKObjectType.quantityType(forIdentifier: .dietaryFatTotal)!] else { return }
+        guard let calories = self.calories,
+            let protein = self.protein,
+            let carbs = self.carbs,
+            let fat = self.fat else { return }
         
         let totalCaloriesinGrams = protein + carbs + fat
         
-        mainMetric.text = String(Int(calories))
         btmLeftMetric.text = totalCaloriesinGrams != 0 ? "\(String(format: "%.0f%", (carbs / totalCaloriesinGrams) * 100))%" : "0%"
         btmMidMetric.text =  totalCaloriesinGrams != 0 ? "\(String(format: "%.0f%", (protein / totalCaloriesinGrams) * 100))%" : "0%"
         btmRightMetric.text =  totalCaloriesinGrams != 0 ? "\(String(format: "%.0f%", (fat / totalCaloriesinGrams) * 100))%" : "0%"
@@ -323,11 +299,7 @@ class HomeCollectionViewCell: UICollectionViewCell {
         tableView.showsVerticalScrollIndicator = false
     }
     
-    private func setRoundCornerForMainMetric() {
-        mainMetricSubView.layer.cornerRadius = min(mainMetricSubView.bounds.height, mainMetricSubView.bounds.width) / 2
-    }
-    
-    private func formateDate(for date: Date) -> String {
+    private func formatDate(for date: Date) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "dd-MM-yyyy"
         return formatter.string(from: date)
@@ -371,7 +343,6 @@ extension HomeCollectionViewCell: UIScrollViewDelegate {
         UIView.animate(withDuration: 0.7, delay: 0.0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.5, options: .curveEaseInOut, animations: {
             self.headerHeightConstraint.constant = self.headerViewHeight
             self.layoutIfNeeded()
-            self.setRoundCornerForMainMetric()
         }, completion: nil)
         self.layoutSubviews()
     }

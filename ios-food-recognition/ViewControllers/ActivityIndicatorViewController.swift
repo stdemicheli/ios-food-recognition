@@ -12,9 +12,9 @@ class ActivityIndicatorViewController: UIViewController, CAAnimationDelegate {
     
     // MARK: - Properties
     var animating = false
-    var timeout: CFTimeInterval = 5.0
+    var timeout: CFTimeInterval = 30.0
     var animationDuration: CFTimeInterval = 1.5
-    var opacity: CGFloat = 0.8
+    var opacity: CGFloat = 0.9
     var lineWidth: CGFloat = 15.0
     
     private let circleShapeLayer = CAShapeLayer()
@@ -24,6 +24,7 @@ class ActivityIndicatorViewController: UIViewController, CAAnimationDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         setupViews()
         setupActivityIndicator()
         beginAnimation()
@@ -72,17 +73,24 @@ class ActivityIndicatorViewController: UIViewController, CAAnimationDelegate {
         view.layer.removeAllAnimations()
         circleShapeLayer.removeFromSuperlayer()
         iconLayer.removeFromSuperlayer()
+        navigationController?.popViewController(animated: true)
     }
-    
+
     // MARK: - CAAniamtionDelegate
+
+    func animationDidStart(_ anim: CAAnimation) {
+        guard let name = anim.value(forKey: "name") as? String else { return }
+        print("animationstarted: \(name)")
+    }
     
     func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
         guard let name = anim.value(forKey: "name") as? String else { return }
-        
+        print("animationfinished: \(name)")
+
         if name == "activityIndicator" {
             endAnimation()
         }
-        
+
     }
     
     // MARK: - Private
