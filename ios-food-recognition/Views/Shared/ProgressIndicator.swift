@@ -12,26 +12,30 @@ class ProgressIndicator: UIView {
     
     // MARK: - Properties
 
-    var lineWidth: CGFloat = 35.0
-    var bgColor = UIColor.gray.cgColor
-    var fgColor = UIColor.blue.cgColor
+    var lineWidth: CGFloat = 40.0
+    var bgLineWidth: CGFloat = 7.5
+    var fgLineWidth: CGFloat = 12.0
+    var bgColor = UIColor(white: 1.0, alpha: 0.5).cgColor
+    var fgColor = UIColor.white.cgColor
     var progressValue: Double!
     var animationDuration = 1.2
-    var fontSize: CGFloat = 24.0
+    var fontSize: CGFloat = 20.0
+    var fontColor = UIColor.white
     
     private var metricLabel = UILabel()
     private var descriptionLabel = UILabel()
     private let bgLayer = CAShapeLayer()
     private let fgLayer = CAShapeLayer()
-    private let margin: CGFloat = 10
+    private let margin: CGFloat = 20
     private var startValue = 0.0
     private let animationStartDate = Date()
     
     // MARK: - Init
     
-    init(frame: CGRect, progress: Double) {
+    init(frame: CGRect, progress: Double, animationDuration: CFTimeInterval = 1.2) {
         super.init(frame: frame)
         self.progressValue = progress
+        self.animationDuration = animationDuration
         setupViews()
         animateProgress()
     }
@@ -49,13 +53,13 @@ class ProgressIndicator: UIView {
     // MARK: - Private
 
     private func setupViews() {
-        bgLayer.lineWidth = lineWidth
+        bgLayer.lineWidth = bgLineWidth
         bgLayer.fillColor = nil
         bgLayer.strokeColor = bgColor
         bgLayer.strokeEnd = 1.0
         layer.addSublayer(bgLayer)
         
-        fgLayer.lineWidth = lineWidth
+        fgLayer.lineWidth = fgLineWidth
         fgLayer.fillColor = nil
         fgLayer.strokeColor = fgColor
         fgLayer.strokeEnd = 0.5
@@ -65,14 +69,13 @@ class ProgressIndicator: UIView {
         setupShapeLayer(fgLayer)
         
         metricLabel.font = UIFont.systemFont(ofSize: fontSize)
-        metricLabel.textColor = UIColor.black
-        //metricLabel.text = "0"
+        metricLabel.textColor = fontColor
         metricLabel.translatesAutoresizingMaskIntoConstraints = false
         addSubview(metricLabel)
         
         descriptionLabel.font = UIFont.systemFont(ofSize: fontSize)
-        descriptionLabel.text = "kCal"
-        descriptionLabel.textColor = UIColor.black
+        descriptionLabel.text = "Calories Left"
+        descriptionLabel.textColor = fontColor
         descriptionLabel.translatesAutoresizingMaskIntoConstraints = false
         addSubview(descriptionLabel)
         
@@ -80,7 +83,7 @@ class ProgressIndicator: UIView {
         metricLabel.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: -margin).isActive = true
         
         descriptionLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
-        descriptionLabel.centerYAnchor.constraint(equalTo: metricLabel.bottomAnchor, constant: margin * 3).isActive = true
+        descriptionLabel.centerYAnchor.constraint(equalTo: metricLabel.bottomAnchor, constant: margin).isActive = true
     }
     
     private func animateProgress() {
@@ -90,7 +93,7 @@ class ProgressIndicator: UIView {
         activityAnimation.duration = animationDuration
         activityAnimation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
         fgLayer.add(activityAnimation, forKey: nil)
-    
+
         // Make the count up from startValue to final progressValue visible to the user
         let displayLink = CADisplayLink(target: self, selector: #selector(handleValueUpdate))
         displayLink.add(to: .main, forMode: .default)
@@ -106,7 +109,6 @@ class ProgressIndicator: UIView {
             let percentage = elapsedTime / animationDuration
             let value = startValue + percentage * (progressValue - startValue)
             metricLabel.text = String(format: "%.0f", value)
-            print(String(format: "%.0f", value))
         }
     }
     
@@ -114,10 +116,10 @@ class ProgressIndicator: UIView {
         shapeLayer.frame = self.bounds
         let startAngle = DegreesToRadians(value: 135.0)
         let endAngle = DegreesToRadians(value: 45.0)
-        //let center = metricLabel.center
         let center = CGPoint(x: bounds.midX, y: bounds.midY)
         let radius = self.bounds.width * 0.35
         let path = UIBezierPath(arcCenter: center, radius: radius, startAngle: startAngle, endAngle: endAngle, clockwise: true)
+        shapeLayer.lineCap = CAShapeLayerLineCap.round
         shapeLayer.path = path.cgPath
     }
     

@@ -114,7 +114,6 @@ class ActivityIndicator: UIView, CAAnimationDelegate {
         activityShapeLayer.path = UIBezierPath(ovalIn: activityFrame).cgPath
         layer.addSublayer(activityShapeLayer)
         
-        
         let icon = UIImage(named: "chickenIcon")!
         iconLayer.contents = icon.cgImage
         iconLayer.bounds = CGRect(x: 0.0, y: 0.0,

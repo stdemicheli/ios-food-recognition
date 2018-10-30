@@ -96,7 +96,7 @@ class FoodTableViewCell: UITableViewCell {
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         _ = self.becomeFirstResponder()
     }
-        
+    
 }
 
 // MARK: - UIPickerViewDelegate
@@ -131,7 +131,6 @@ protocol FoodTableCellDelegate: class {
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int, forCell cell: FoodTableViewCell) -> String?
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int, forCell cell: FoodTableViewCell)
-    
     
     func onPickerOpen(_ cell: FoodTableViewCell)
     

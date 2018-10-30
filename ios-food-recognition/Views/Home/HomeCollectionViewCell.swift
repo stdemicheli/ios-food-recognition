@@ -57,7 +57,7 @@ class HomeCollectionViewCell: UICollectionViewCell {
     var tableView: UITableView!
     private let reuseId = "HealthCardCell"
     var headerView: AnimatedHeaderView!
-    private var headerViewHeight = UIScreen.main.bounds.size.height / 2.2
+    private var headerViewExpandedHeight = UIScreen.main.bounds.size.height / 2.4
     private var headerViewCollapsedHeight: CGFloat = 80.0
     private var headerHeightConstraint: NSLayoutConstraint!
     
@@ -65,18 +65,18 @@ class HomeCollectionViewCell: UICollectionViewCell {
     private var headerTitle: UILabel!
     private var nextButton: UIButton!
     
-    private var mainMetricStackView: UIStackView!
-    private var mainMetricSubView: UIView!
-    private var mainMetric: UILabel!
-    private var mainMetricLabel: UILabel!
+    private var mainStackView: UIStackView!
     private var progressIndicator: ProgressIndicator!
     
+    private var btmStackView: UIStackView!
     private var btmLeftMetric: UILabel!
     private var btmMidMetric: UILabel!
     private var btmRightMetric: UILabel!
     private var btmLeftMetricTitle: UILabel!
     private var btmMidMetricTitle: UILabel!
     private var btmRightMetricTitle: UILabel!
+    
+    private var animationDuration = 1.2
     
     // MARK: - Init
     
@@ -112,21 +112,24 @@ class HomeCollectionViewCell: UICollectionViewCell {
     }
     
     private func setupHeader() {
-        headerView = AnimatedHeaderView(frame: CGRect.zero, title: "")
+        headerView = AnimatedHeaderView(frame: CGRect.zero)
         
         let topStackView = UIStackView()
         prevButton = UIButton(type: .system)
         headerTitle = UILabel()
         nextButton = UIButton(type: .system)
         
-        progressIndicator = ProgressIndicator(frame: CGRect.zero, progress: 1234)
+        mainStackView = UIStackView()
+        progressIndicator = ProgressIndicator(frame: CGRect.zero, progress: 1234, animationDuration: animationDuration)
+        let caloriesConsumedView = AnimatedMetric(frame: CGRect.zero, metric: 600, title: "Calories Consumed", image: UIImage(named: "flatwareIcon")!.withRenderingMode(.alwaysTemplate), animationDuration: animationDuration)
+        let caloriesBurnedView = AnimatedMetric(frame: CGRect.zero, metric: 600, title: "Calories Burned", image: UIImage(named: "fire")!.withRenderingMode(.alwaysTemplate), animationDuration: animationDuration)
 //        if let calories = calories {
 //            progressIndicator = ProgressIndicator(frame: CGRect.zero, progress: calories)
 //        } else {
 //            progressIndicator = ProgressIndicator(frame: CGRect.zero, progress: 1234)
 //        }
         
-        let bottomStackView = UIStackView()
+        btmStackView = UIStackView()
         let btmLeftStackView = UIStackView()
         let btmMidStackView = UIStackView()
         let btmRightStackView = UIStackView()
@@ -144,9 +147,12 @@ class HomeCollectionViewCell: UICollectionViewCell {
         headerTitle.translatesAutoresizingMaskIntoConstraints = false
         nextButton.translatesAutoresizingMaskIntoConstraints = false
         
+        mainStackView.translatesAutoresizingMaskIntoConstraints = false
         progressIndicator.translatesAutoresizingMaskIntoConstraints = false
+        caloriesConsumedView.translatesAutoresizingMaskIntoConstraints = false
+        caloriesBurnedView.translatesAutoresizingMaskIntoConstraints = false
         
-        bottomStackView.translatesAutoresizingMaskIntoConstraints = false
+        btmStackView.translatesAutoresizingMaskIntoConstraints = false
         btmLeftStackView.translatesAutoresizingMaskIntoConstraints = false
         btmMidStackView.translatesAutoresizingMaskIntoConstraints = false
         btmRightStackView.translatesAutoresizingMaskIntoConstraints = false
@@ -164,12 +170,15 @@ class HomeCollectionViewCell: UICollectionViewCell {
         topStackView.addArrangedSubview(headerTitle)
         topStackView.addArrangedSubview(nextButton)
         
-        headerView.addSubview(progressIndicator)
+        headerView.addSubview(mainStackView)
+        mainStackView.addArrangedSubview(caloriesConsumedView)
+        mainStackView.addArrangedSubview(progressIndicator)
+        mainStackView.addArrangedSubview(caloriesBurnedView)
         
-        headerView.addSubview(bottomStackView)
-        bottomStackView.addArrangedSubview(btmLeftStackView)
-        bottomStackView.addArrangedSubview(btmMidStackView)
-        bottomStackView.addArrangedSubview(btmRightStackView)
+        headerView.addSubview(btmStackView)
+        btmStackView.addArrangedSubview(btmLeftStackView)
+        btmStackView.addArrangedSubview(btmMidStackView)
+        btmStackView.addArrangedSubview(btmRightStackView)
         btmLeftStackView.addArrangedSubview(btmLeftMetric)
         btmLeftStackView.addArrangedSubview(btmLeftMetricTitle)
         btmMidStackView.addArrangedSubview(btmMidMetric)
@@ -177,8 +186,7 @@ class HomeCollectionViewCell: UICollectionViewCell {
         btmRightStackView.addArrangedSubview(btmRightMetric)
         btmRightStackView.addArrangedSubview(btmRightMetricTitle)
         
-        
-        headerHeightConstraint = headerView.heightAnchor.constraint(equalToConstant: headerViewHeight)
+        headerHeightConstraint = headerView.heightAnchor.constraint(equalToConstant: headerViewExpandedHeight)
         headerHeightConstraint.isActive = true
         
         let constraints: [NSLayoutConstraint] = [
@@ -189,14 +197,16 @@ class HomeCollectionViewCell: UICollectionViewCell {
             topStackView.heightAnchor.constraint(equalToConstant: headerViewCollapsedHeight),
             topStackView.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 20),
             topStackView.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -20),
-            bottomStackView.bottomAnchor.constraint(equalTo: headerView.bottomAnchor, constant: -10),
-            bottomStackView.heightAnchor.constraint(equalTo: progressIndicator.heightAnchor, multiplier: 0.2),
-            bottomStackView.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 20),
-            bottomStackView.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -20),
-            progressIndicator.topAnchor.constraint(equalTo: topStackView.bottomAnchor, constant: 20),
-            progressIndicator.bottomAnchor.constraint(equalTo: bottomStackView.topAnchor, constant: -20),
-            progressIndicator.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 20),
-            progressIndicator.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -20),
+            btmStackView.bottomAnchor.constraint(equalTo: headerView.bottomAnchor, constant: -10),
+            btmStackView.heightAnchor.constraint(equalTo: progressIndicator.heightAnchor, multiplier: 0.2),
+            btmStackView.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 20),
+            btmStackView.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -20),
+            mainStackView.topAnchor.constraint(equalTo: topStackView.bottomAnchor, constant: 30),
+            mainStackView.bottomAnchor.constraint(equalTo: btmStackView.topAnchor, constant: -20),
+            mainStackView.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 20),
+            mainStackView.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -20),
+            progressIndicator.centerXAnchor.constraint(equalTo: mainStackView.centerXAnchor),
+            progressIndicator.widthAnchor.constraint(equalTo: mainStackView.widthAnchor, multiplier: 0.6)
             ]
         NSLayoutConstraint.activate(constraints)
         
@@ -214,15 +224,24 @@ class HomeCollectionViewCell: UICollectionViewCell {
         headerTitle.textColor = .white
         headerTitle.font = UIFont.boldSystemFont(ofSize: 17)
         
-        prevButton.setTitle("PREV", for: .normal)
+        caloriesConsumedView.textColor = .white
+        caloriesBurnedView.textColor = .white
+        
+        prevButton.setImage(UIImage(named: "backArrow")!, for: .normal)
+        prevButton.tintColor = UIColor.white
         prevButton.addTarget(self, action: #selector(previousCell), for: .touchUpInside)
         
-        nextButton.setTitle("NEXT", for: .normal)
+        nextButton.setImage(UIImage(named: "forwardArrow")!, for: .normal)
+        nextButton.tintColor = UIColor.white
         nextButton.addTarget(self, action: #selector(nextCell), for: .touchUpInside)
         
-        bottomStackView.axis = .horizontal
-        bottomStackView.distribution = .equalSpacing
-        bottomStackView.alignment = .center
+        mainStackView.axis = .horizontal
+        mainStackView.distribution = .equalSpacing
+        mainStackView.alignment = .center
+        
+        btmStackView.axis = .horizontal
+        btmStackView.distribution = .equalSpacing
+        btmStackView.alignment = .center
         
         btmLeftStackView.axis = .vertical
         btmLeftStackView.distribution = .fill
@@ -311,14 +330,21 @@ class HomeCollectionViewCell: UICollectionViewCell {
 extension HomeCollectionViewCell: UIScrollViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if scrollView.contentOffset.y < 0 {
+        if scrollView.contentOffset.y < 0 { // Move header down
             self.headerHeightConstraint.constant += abs(scrollView.contentOffset.y)
             headerView.incrementColorAlpha(with: self.headerHeightConstraint.constant)
-        } else if scrollView.contentOffset.y > 0 && self.headerHeightConstraint.constant >= headerViewCollapsedHeight {
+            let alpha = headerHeightConstraint.constant / (headerViewExpandedHeight - headerViewCollapsedHeight)
+            mainStackView.alpha = alpha
+            btmStackView.alpha = alpha
+        } else if scrollView.contentOffset.y > 0 && self.headerHeightConstraint.constant >= headerViewCollapsedHeight { // Move header up
             // We don't want the header to move up too quickly so we divide the y-offset by 100
             self.headerHeightConstraint.constant -= scrollView.contentOffset.y / 100
             headerView.decrementColorAlpha(with: scrollView.contentOffset.y)
+            let alpha =  headerHeightConstraint.constant / (headerViewExpandedHeight - headerViewCollapsedHeight) - 0.5
+            mainStackView.alpha = alpha
+            btmStackView.alpha = alpha
             
+            progressIndicator.heightAnchor.constraint(equalTo: headerView.heightAnchor, multiplier: headerHeightConstraint.constant / (headerViewExpandedHeight - headerViewCollapsedHeight))
             if self.headerHeightConstraint.constant < headerViewCollapsedHeight {
                 self.headerHeightConstraint.constant = headerViewCollapsedHeight
             }
@@ -326,14 +352,14 @@ extension HomeCollectionViewCell: UIScrollViewDelegate {
     }
     
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        if self.headerHeightConstraint.constant > headerViewHeight {
+        if self.headerHeightConstraint.constant > headerViewExpandedHeight {
             animateHeader()
         }
     }
     
     // Gets called when the scroll comes to a halt
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        if self.headerHeightConstraint.constant > headerViewHeight {
+        if self.headerHeightConstraint.constant > headerViewExpandedHeight {
             animateHeader()
         }
     }
@@ -341,7 +367,7 @@ extension HomeCollectionViewCell: UIScrollViewDelegate {
     func animateHeader() {
         // Set and animate the height constraint back to 150
         UIView.animate(withDuration: 0.7, delay: 0.0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.5, options: .curveEaseInOut, animations: {
-            self.headerHeightConstraint.constant = self.headerViewHeight
+            self.headerHeightConstraint.constant = self.headerViewExpandedHeight
             self.layoutIfNeeded()
         }, completion: nil)
         self.layoutSubviews()

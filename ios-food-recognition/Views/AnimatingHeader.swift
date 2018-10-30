@@ -11,9 +11,9 @@ class AnimatedHeaderView: UIView {
     
     var imageView: UIImageView!
     var colorView: UIView!
-    var bgColor = UIColor(red: 235/255, green: 96/255, blue: 91/255, alpha: 1)
+    var bgColor = UIColor(red: 255/255, green: 55/255, blue: 95/255, alpha: 1)
     
-    init(frame: CGRect, title: String) {
+    override init(frame: CGRect) {
         super.init(frame: frame)
         setupView()
     }
@@ -23,32 +23,21 @@ class AnimatedHeaderView: UIView {
     }
     
     func setupView() {
-        // The general pattern when using autolayout programmatically with any view is to first initialize the view, set its translatesAutoresizingMaskIntoConstraints property to false, add it to the view, set the constraints, activate the constraints, and then set all its properties, fonts, text, image etc.
         
         // Header view
-        self.backgroundColor = UIColor.white
-        imageView = UIImageView()
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(imageView)
+        self.backgroundColor = UIColor.clear
         
         colorView = UIView()
         colorView.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(colorView)
         
         let constraints: [NSLayoutConstraint] = [
-            imageView.topAnchor.constraint(equalTo: self.topAnchor),
-            imageView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            imageView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            imageView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
             colorView.topAnchor.constraint(equalTo: self.topAnchor),
             colorView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             colorView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             colorView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
             ]
         NSLayoutConstraint.activate(constraints)
-        
-        // Aspect fill will scale the image with the view's frame (when we pull it down it will have a zoom-like effect)
-        imageView.contentMode = .scaleAspectFill
         
         colorView.backgroundColor = bgColor
         colorView.alpha = 0.0

@@ -337,7 +337,7 @@ extension CameraViewController: UIScrollViewDelegate {
     
     func setupHeader() {
         
-        headerView = AnimatedHeaderView(frame: CGRect.zero, title: "")
+        headerView = AnimatedHeaderView(frame: CGRect.zero)
         
         headerView.translatesAutoresizingMaskIntoConstraints = false
         saveButton.translatesAutoresizingMaskIntoConstraints = false
