@@ -55,6 +55,9 @@ class HomeCollectionViewCell: UICollectionViewCell {
     // MARK: - Properties (private)
     
     var tableView: UITableView!
+    private var expandedCellAtIndexPath: IndexPath?
+    private var tableViewCellHeight = UIScreen.main.bounds.height / 3
+    
     private let reuseId = "HealthCardCell"
     var headerView: AnimatedHeaderView!
     private var headerViewExpandedHeight = UIScreen.main.bounds.size.height / 2.4
@@ -408,7 +411,17 @@ extension HomeCollectionViewCell: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UIScreen.main.bounds.height / 3
+        if indexPath == expandedCellAtIndexPath {
+            return tableViewCellHeight * 2.0
+        }
+        
+        return tableViewCellHeight
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        expandedCellAtIndexPath = expandedCellAtIndexPath == indexPath ? nil : indexPath
+        tableView.beginUpdates()
+        tableView.endUpdates()
     }
     
     private func filterNutrients(for nutrients: [HKQuantityType : Double], with types: Set<HKQuantityType>) -> [HKQuantityType : Double] {
