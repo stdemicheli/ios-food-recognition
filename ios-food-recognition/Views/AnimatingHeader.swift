@@ -27,17 +27,27 @@ class AnimatedHeaderView: UIView {
         // Header view
         self.backgroundColor = UIColor.clear
         
+        imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(imageView)
+        
         colorView = UIView()
         colorView.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(colorView)
         
         let constraints: [NSLayoutConstraint] = [
+            imageView.topAnchor.constraint(equalTo: self.topAnchor),
+            imageView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            imageView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            imageView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
             colorView.topAnchor.constraint(equalTo: self.topAnchor),
             colorView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             colorView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             colorView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
             ]
         NSLayoutConstraint.activate(constraints)
+        
+        imageView.contentMode = .scaleAspectFill
         
         colorView.backgroundColor = bgColor
         colorView.alpha = 0.0

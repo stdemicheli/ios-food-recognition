@@ -149,24 +149,6 @@ class CameraViewController: UIViewController {
         foodClient.foodSearchResult.remove(at: index)
         foodClient.foodSearchResult.insert(updatedFood, at: index)
     }
-    
-    private func fetchFood(with image: UIImage) {
-        let activityIndicator = ActivityIndicatorViewController()
-        self.navigationController?.pushViewController(activityIndicator, animated: true)
-        navigationController?.navigationBar.isHidden = true
-        foodClient.recognizeFood(with: image) { (error) in
-            if let error = error {
-                NSLog("Could not recognize food: \(error)")
-                return
-            }
-            
-            DispatchQueue.main.async {
-                activityIndicator.endAnimation()
-//                activityIndicator.removeFromSuperview()
-                self.tableView.reloadData()
-            }
-        }
-    }
 
 }
 
@@ -209,7 +191,7 @@ extension CameraViewController: UITableViewDelegate, UITableViewDataSource, Food
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return foodSections[section]
     }
-        
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let foodSection = foodSections[section]
         return foodObjects[foodSection]?.count ?? 0
@@ -269,13 +251,25 @@ extension CameraViewController: UIImagePickerControllerDelegate, UINavigationCon
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
-            self.headerView.imageView?.image = image
-            self.fetchFood(with: image)
-        }
-        self.dismiss(animated: true) {
-        }
+        let activityIndicator = ActivityIndicatorViewController()
         
+        if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+            picker.pushViewController(activityIndicator, animated: false)
+            
+            self.headerView.imageView?.image = image
+            foodClient.recognizeFood(with: image) { (error) in
+                if let error = error {
+                    NSLog("Could not recognize food: \(error)")
+                    return
+                }
+                
+                DispatchQueue.main.async {
+                    self.dismiss(animated: true, completion: nil)
+                    activityIndicator.endAnimation()
+                    self.tableView.reloadData()
+                }
+            }
+        }
     }
     
 }
