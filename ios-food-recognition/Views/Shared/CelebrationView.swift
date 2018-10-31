@@ -39,11 +39,10 @@ class CelebrationView: UIView {
         let height = bounds.height / 2
         messageView.frame = CGRect(x: bounds.midX / 2, y: bounds.maxY + height, width: bounds.width - 60, height: bounds.height / 5)
         messageView.backgroundColor = .white
-        messageView.layer.borderWidth = 2.5
-        messageView.layer.borderColor = UIColor.gray.cgColor
         messageView.clipsToBounds = true
         messageView.layer.cornerRadius = 20.0
         messageView.layer.shadowColor = UIColor.gray.cgColor
+        messageView.dropShadow(color: .black, offSet: CGSize(width: 15, height: 15), radius: 20.0)
         messageView.transform = CGAffineTransform(scaleX: 0.2, y: 0.2)
         
         let titleLabel = UILabel()
@@ -74,7 +73,7 @@ class CelebrationView: UIView {
     
     private func setupEmitterView() {
         let showerHead = UIImageView(image: UIImage(named: "showerHead")!.withRenderingMode(.alwaysTemplate))
-        showerHead.tintColor = .gray
+        showerHead.tintColor = .white
         showerHead.frame = CGRect(x: bounds.midX / 2, y: -100.0, width: bounds.width / 2, height: 100)
         addSubview(showerHead)
         

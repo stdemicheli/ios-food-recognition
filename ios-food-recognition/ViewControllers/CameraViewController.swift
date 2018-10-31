@@ -94,8 +94,6 @@ class CameraViewController: UIViewController {
                 self.resetViewController()
             }
         }
-        // Spinner
-        // Move to Home and update
     }
     
     @IBAction func retake(_ sender: Any) {
@@ -113,14 +111,27 @@ class CameraViewController: UIViewController {
         navigationController?.setViewControllers(viewcontrollers, animated: false)
     }
     
-    private func getCalories(for food: Food) -> Double? {
+    private func getNutritionFacts(for food: Food) -> [String : Double] {
+        var nutrients = [String : Double]()
+        
+        
         for nutrient in food.fullNutrients {
-            if nutrient.attributeId == 208 {
-                return nutrient.value
+            
+            switch nutrient.attributeId {
+            case 208:
+                nutrients["calories"] = nutrient.value
+            case 204:
+                nutrients["fat"] = nutrient.value
+            case 205:
+                nutrients["carbs"] = nutrient.value
+            case 203:
+                nutrients["protein"] = nutrient.value
+            default:
+                continue
             }
         }
         
-        return nil
+        return nutrients
     }
     
     private func save(food: Food) {
@@ -173,12 +184,11 @@ extension CameraViewController: UITableViewDelegate, UITableViewDataSource, Food
         let cell = tableView.dequeueReusableCell(withIdentifier: "FoodCell", for: indexPath) as! FoodTableViewCell
         
         cell.delegate = self
-//        cell.dataSource = self
         
         let foodSection = foodSections[indexPath.section]
         guard let food = foodObjects[foodSection]?[indexPath.row] else { return cell }
         cell.food = food
-        cell.calories = getCalories(for: food)
+        cell.nutritionFacts = getNutritionFacts(for: food)
         
         return cell
     }
