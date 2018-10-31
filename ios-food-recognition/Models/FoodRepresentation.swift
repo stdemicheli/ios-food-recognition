@@ -66,7 +66,6 @@ struct NutritionHTTPBody: Encodable {
 
 class Food: Decodable, Equatable {
     
-    
     init(name: String, servingQty: Double, servingUnit: String, fullNutrients: [Nutrient]) {
         self.name = name
         self.servingQuantity = servingQty
