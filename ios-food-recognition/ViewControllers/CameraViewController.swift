@@ -32,7 +32,7 @@ class CameraViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     private var selectedCellAtIndexPath: IndexPath?
-    private var defaultCellHeight: CGFloat = 65.0
+    private var defaultCellHeight: CGFloat = 70.0
     private var expandedCellHeight: CGFloat = 200.0
     
     private var servingQtys: [Int] {
@@ -173,6 +173,13 @@ extension CameraViewController: UITableViewDelegate, UITableViewDataSource, Food
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return foodSections[section]
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        view.tintColor = .red
+        view.alpha = 0.7
+        let header = view as! UITableViewHeaderFooterView
+        header.textLabel?.textColor = UIColor.white
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

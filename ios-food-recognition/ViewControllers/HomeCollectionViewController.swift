@@ -16,7 +16,7 @@ class HomeCollectionViewController: UICollectionViewController {
     // MARK: - Properties (public)
     
     let hkController = HealthKitController()
-    var fetchedDates = [(Date, Date)]()
+    var fetchedDates = [(Date, Date)]() // (startDate, EndDate)
     
     // MARK: - Properties (private)
     
@@ -99,7 +99,7 @@ class HomeCollectionViewController: UICollectionViewController {
             print(self.hkController.fetchedNutrients)
         }
         
-        cell.headerView.backgroundColor = indexPath.item % 2 == 0 ? UIColor.red : UIColor.green
+        cell.headerView.backgroundColor = UIColor.red
         
         return cell
     }

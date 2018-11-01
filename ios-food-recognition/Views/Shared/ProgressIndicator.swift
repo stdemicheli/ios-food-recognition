@@ -18,6 +18,13 @@ class ProgressIndicator: UIView {
     var bgColor = UIColor(white: 1.0, alpha: 0.5).cgColor
     var fgColor = UIColor.white.cgColor
     var progressValue: Double!
+    var goalValue: Double!
+    var progressPercentage: CGFloat {
+        if (progressValue >= goalValue) {
+            return 1.0
+        }
+        return CGFloat(progressValue) / CGFloat(goalValue)
+    }
     var animationDuration: CFTimeInterval!
     var fontSize: CGFloat = 20.0
     var fontColor = UIColor.white
@@ -32,9 +39,10 @@ class ProgressIndicator: UIView {
     
     // MARK: - Init
     
-    init(frame: CGRect, progress: Double, animationDuration: CFTimeInterval? = 1.2) {
+    init(frame: CGRect, progress: Double, goal: Double, animationDuration: CFTimeInterval? = 1.2) {
         super.init(frame: frame)
         self.progressValue = progress
+        self.goalValue = goal
         self.animationDuration = animationDuration
         setupViews()
         animateProgress()
@@ -55,7 +63,7 @@ class ProgressIndicator: UIView {
     func animateProgress() {
         let activityAnimation = CABasicAnimation(keyPath: "strokeEnd")
         activityAnimation.fromValue = 0.0
-        activityAnimation.toValue = 0.5
+        activityAnimation.toValue = progressPercentage
         activityAnimation.duration = animationDuration
         activityAnimation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
         fgLayer.add(activityAnimation, forKey: nil)
@@ -90,7 +98,7 @@ class ProgressIndicator: UIView {
         fgLayer.lineWidth = fgLineWidth
         fgLayer.fillColor = nil
         fgLayer.strokeColor = fgColor
-        fgLayer.strokeEnd = 0.5
+        fgLayer.strokeEnd = progressPercentage
         layer.addSublayer(fgLayer)
         
         setupShapeLayer(bgLayer)

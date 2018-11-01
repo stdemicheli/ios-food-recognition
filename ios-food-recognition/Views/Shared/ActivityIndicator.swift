@@ -16,6 +16,7 @@ class ActivityIndicator: UIView, CAAnimationDelegate {
     var animationDuration: CFTimeInterval = 1.5
     var opacity: CGFloat = 0.9
     var lineWidth: CGFloat = 15.0
+    var strokeColor: CGColor = UIColor.red.cgColor
     
     private let activityShapeLayer = CAShapeLayer()
     private var activityFrame: CGRect!
@@ -108,7 +109,7 @@ class ActivityIndicator: UIView, CAAnimationDelegate {
                              width: activityRadius * 2,
                              height: activityRadius * 2)
         
-        activityShapeLayer.strokeColor = UIColor.gray.cgColor
+        activityShapeLayer.strokeColor = strokeColor
         activityShapeLayer.fillColor = UIColor.clear.cgColor
         activityShapeLayer.lineWidth = lineWidth
         activityShapeLayer.path = UIBezierPath(ovalIn: activityFrame).cgPath

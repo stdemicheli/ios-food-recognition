@@ -22,7 +22,7 @@ class HomeCollectionViewCell: UICollectionViewCell {
     
     let hkController = HealthKitController()
     
-    var nutrients: [HKQuantityType : Double]? {
+    var nutrients: [HKSampleType : Double]? {
         didSet {
             setupViews()
         }
@@ -32,15 +32,12 @@ class HomeCollectionViewCell: UICollectionViewCell {
             setupHeader()
         }
     }
-    
-    var healthCards: [HealthCard]? {
-        didSet {
-            setupTableView()
-        }
-    }
     var delegate: HomeCollectionViewCellDelegate?
-    var calories: Double? {
+    var caloriesConsumed: Double? {
         return nutrients?[HKObjectType.quantityType(forIdentifier: .dietaryEnergyConsumed)!]
+    }
+    var caloriesBurned: Double? {
+        return nutrients?[HKObjectType.quantityType(forIdentifier: .activeEnergyBurned)!]
     }
     var protein: Double? {
         return nutrients?[HKObjectType.quantityType(forIdentifier: .dietaryProtein)!]
@@ -70,6 +67,8 @@ class HomeCollectionViewCell: UICollectionViewCell {
     
     private var mainStackView: UIStackView!
     private var progressIndicator: ProgressIndicator!
+    private var caloriesBurnedView: AnimatedMetric!
+    private var caloriesConsumedView: AnimatedMetric!
     
     private var btmStackView: UIStackView!
     private var btmLeftMetric: UILabel!
@@ -123,14 +122,16 @@ class HomeCollectionViewCell: UICollectionViewCell {
         nextButton = UIButton(type: .system)
         
         mainStackView = UIStackView()
-        progressIndicator = ProgressIndicator(frame: CGRect.zero, progress: 1234, animationDuration: animationDuration)
-        let caloriesConsumedView = AnimatedMetric(frame: CGRect.zero, metric: 600, title: "Calories Consumed", image: UIImage(named: "flatwareIcon")!.withRenderingMode(.alwaysTemplate), animationDuration: animationDuration)
-        let caloriesBurnedView = AnimatedMetric(frame: CGRect.zero, metric: 600, title: "Calories Burned", image: UIImage(named: "fire")!.withRenderingMode(.alwaysTemplate), animationDuration: animationDuration)
-//        if let calories = calories {
-//            progressIndicator = ProgressIndicator(frame: CGRect.zero, progress: calories)
-//        } else {
-//            progressIndicator = ProgressIndicator(frame: CGRect.zero, progress: 1234)
-//        }
+        
+        if let caloriesConsumed = caloriesConsumed, let caloriesBurned = caloriesBurned {
+            progressIndicator = ProgressIndicator(frame: CGRect.zero, progress: caloriesConsumed - caloriesBurned, goal: 2000.0)
+            caloriesConsumedView = AnimatedMetric(frame: CGRect.zero, metric: caloriesConsumed, title: "Calories Consumed", image: UIImage(named: "flatwareIcon")!.withRenderingMode(.alwaysTemplate), animationDuration: animationDuration)
+            caloriesBurnedView = AnimatedMetric(frame: CGRect.zero, metric: caloriesBurned, title: "Calories Burned", image: UIImage(named: "fire")!.withRenderingMode(.alwaysTemplate), animationDuration: animationDuration)
+        } else {
+            progressIndicator = ProgressIndicator(frame: CGRect.zero, progress: 0, goal: 2000.0)
+            caloriesConsumedView = AnimatedMetric(frame: CGRect.zero, metric: 0, title: "Calories Consumed", image: UIImage(named: "flatwareIcon")!.withRenderingMode(.alwaysTemplate), animationDuration: animationDuration)
+            caloriesBurnedView = AnimatedMetric(frame: CGRect.zero, metric: 0, title: "Calories Burned", image: UIImage(named: "fire")!.withRenderingMode(.alwaysTemplate), animationDuration: animationDuration)
+        }
         
         btmStackView = UIStackView()
         let btmLeftStackView = UIStackView()
@@ -289,7 +290,7 @@ class HomeCollectionViewCell: UICollectionViewCell {
         btmRightMetricTitle.textColor = .white
         btmRightMetricTitle.font = UIFont.boldSystemFont(ofSize: 17)
         
-        guard let calories = self.calories,
+        guard let calories = self.caloriesConsumed,
             let protein = self.protein,
             let carbs = self.carbs,
             let fat = self.fat else { return }
@@ -329,6 +330,8 @@ class HomeCollectionViewCell: UICollectionViewCell {
     
     
 }
+
+// MARK: - UIScrollViewDelegate
 
 extension HomeCollectionViewCell: UIScrollViewDelegate {
     
@@ -378,10 +381,12 @@ extension HomeCollectionViewCell: UIScrollViewDelegate {
     
 }
 
+// MARK: - UITableViewDelegate
+
 extension HomeCollectionViewCell: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 30
+        return Array(getGoalSettings()).count
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -405,6 +410,9 @@ extension HomeCollectionViewCell: UITableViewDelegate, UITableViewDataSource {
         cell.selectionStyle = .none
         if let nutrients = self.nutrients {
             cell.nutrients = nutrients
+            let goalSetting = Array(getGoalSettings())[indexPath.section]
+            cell.title = goalSetting.key
+            cell.goals = merge(goals: goalSetting.value, withValues: nutrients)
         }
         
         return cell
@@ -414,7 +422,48 @@ extension HomeCollectionViewCell: UITableViewDelegate, UITableViewDataSource {
         return tableViewCellHeight
     }
     
-    private func filterNutrients(for nutrients: [HKQuantityType : Double], with types: Set<HKQuantityType>) -> [HKQuantityType : Double] {
+    private func merge(goals: [String : (String, Double)], withValues values: [HKSampleType : Double]) -> [(String, Double, Double)] {
+        var result = [(String, Double, Double)]() // Title, Progress Value, Goal Value
+        
+        for goal in goals {
+            for value in values {
+                if goal.key == value.key.identifier {
+                    result.append((goal.value.0, value.value, goal.value.1))
+                }
+            }
+        }
+        
+        return result
+    }
+    
+    private func getGoalSettings() -> [String: [String : (String, Double)]] { // Goal title: [ HKType(string) : Goal Value ]
+        let goals = [
+            "Diet XYZ":
+                [
+                    HKQuantityTypeIdentifier.dietaryFatTotal.rawValue : ("Fat", 100.0),
+                    HKQuantityTypeIdentifier.dietaryCarbohydrates.rawValue : ("Carbs", 100.0),
+                    HKQuantityTypeIdentifier.dietaryProtein.rawValue : ("Protein", 100.0),
+            ],
+            "Vitamins":
+                [
+                    HKQuantityTypeIdentifier.dietaryVitaminA.rawValue : ("Vitamin A", 100.0),
+                    HKQuantityTypeIdentifier.dietaryVitaminC.rawValue : ("Vitamin C", 100.0),
+                    HKQuantityTypeIdentifier.dietaryVitaminD.rawValue : ("Vitamin D", 100.0),
+                    HKQuantityTypeIdentifier.dietaryFolate.rawValue : ("Folate", 100.0),
+            ],
+            "Activity":
+                [
+                    
+                    HKQuantityTypeIdentifier.activeEnergyBurned.rawValue : ("Energy burned", 100.0),
+                    HKQuantityTypeIdentifier.dietaryEnergyConsumed.rawValue : ("Energy consumed", 100.0),
+            ],
+            
+            ]
+        
+        return goals
+    }
+    
+    private func filterNutrients(for nutrients: [HKSampleType : Double], with types: Set<HKQuantityType>) -> [HKSampleType : Double] {
         return nutrients.filter { (key, value) -> Bool in
             for type in types {
                 if key == type {

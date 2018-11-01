@@ -26,7 +26,7 @@ class HealthKitController {
     
     // MARK: - Properties
     
-    var fetchedNutrients = [HKQuantityType : Double]()
+    var fetchedNutrients = [HKSampleType : Double]()
     
     private var typesToWrite: Set<HKSampleType>
     private var typesToRead: Set<HKObjectType>
@@ -150,7 +150,7 @@ class HealthKitController {
     
     // MARK: - Methods (private)
     
-    private func fetch(_ sampleType: HKQuantityType, from startDate: Date, to endDate: Date, completion: @escaping (Error?) -> Void) {
+    private func fetch(_ sampleType: HKSampleType, from startDate: Date, to endDate: Date, completion: @escaping (Error?) -> Void) {
         let predicate = HKQuery.predicateForSamples(withStart: startDate, end: endDate, options: [])
         let query = HKSampleQuery(sampleType: sampleType, predicate: predicate, limit: Int(HKObjectQueryNoLimit), sortDescriptors: nil) { (query, results, error) in
             guard let samples = results as? [HKQuantitySample] else {
