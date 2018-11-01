@@ -15,6 +15,9 @@ class HorizontalBar: UIView {
     var progressValue: Double!
     var goalValue: Double!
     var progressPercentage: CGFloat {
+        if (progressValue >= goalValue) {
+            return 1.0
+        }
         return CGFloat(progressValue) / CGFloat(goalValue)
     }
     var animationDuration: CFTimeInterval!

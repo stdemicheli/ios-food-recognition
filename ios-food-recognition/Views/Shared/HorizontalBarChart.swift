@@ -45,6 +45,7 @@ class HorizontalBarChart: UIView {
         mainStackView.axis = .vertical
         mainStackView.distribution = .fillEqually
         mainStackView.spacing = 20.0
+        mainStackView.translatesAutoresizingMaskIntoConstraints = false
         addSubview(mainStackView)
         
         data.forEach { setupBar(withTitle: $0.0, progress: $0.1, goal: $0.2) }
@@ -57,21 +58,25 @@ class HorizontalBarChart: UIView {
         barStackView.axis = .horizontal
         barStackView.distribution = .fill
         barStackView.alignment = .center
+        barStackView.spacing = 50.0
+        barStackView.translatesAutoresizingMaskIntoConstraints = false
         
         let titleLabel = UILabel()
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         
-        let frame = CGRect(x: 0, y: 0, width: mainStackView.bounds.width / 1.65, height: 0)
+        let frame = CGRect(x: 0, y: 0, width: mainStackView.bounds.width / 2, height: 0)
         let bar = HorizontalBar(frame: frame, progress: progress, goal: goal)
+        bar.translatesAutoresizingMaskIntoConstraints = false
         
         barStackView.addArrangedSubview(titleLabel)
         barStackView.addArrangedSubview(bar)
         mainStackView.addArrangedSubview(barStackView)
         
-        titleLabel.widthAnchor.constraint(equalTo: barStackView.widthAnchor, multiplier: 0.3).isActive = true
+        titleLabel.widthAnchor.constraint(equalTo: barStackView.widthAnchor, multiplier: 0.65).isActive = true
         
         titleLabel.text = title
         titleLabel.font = UIFont.boldSystemFont(ofSize: 17)
+        titleLabel.numberOfLines = 2
     }
     
 }

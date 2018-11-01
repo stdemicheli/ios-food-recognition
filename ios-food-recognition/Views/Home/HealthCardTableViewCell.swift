@@ -13,22 +13,29 @@ class HealthCardTableViewCell: UITableViewCell {
 
     
     // MARK: Properties
-    var nutrients: [HKQuantityType : Double]? {
+    var nutrients: [HKSampleType : Double]? {
         didSet {
             setupViews()
         }
     }
-    var healthCard: HealthCard?
+    
+    var title: String?
+    
+    var goals: [(String, Double, Double)]? {
+        didSet {
+            setupViews()
+        }
+    }
     
     private var titleTextLabel: UILabel!
     private var bodyView: UIView!
+    private var horizontalBarChart: HorizontalBarChart!
     
     private var margins: CGFloat = 20.0
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         setupViews()
-        
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -42,103 +49,41 @@ class HealthCardTableViewCell: UITableViewCell {
     
     private func setupHeader() {
         titleTextLabel = UILabel()
+        bodyView = UIView()
         
         titleTextLabel.translatesAutoresizingMaskIntoConstraints = false
+        bodyView.translatesAutoresizingMaskIntoConstraints = false
         
-        self.addSubview(titleTextLabel)
+        addSubview(titleTextLabel)
+        addSubview(bodyView)
         
         let constraints: [NSLayoutConstraint] = [
-            titleTextLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: margins),
-            titleTextLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: margins),
-            titleTextLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: margins),
+            titleTextLabel.topAnchor.constraint(equalTo: topAnchor, constant: margins),
+            titleTextLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: margins),
+            titleTextLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: margins),
+            bodyView.topAnchor.constraint(equalTo: titleTextLabel.topAnchor, constant: margins * 2),
+            bodyView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: margins),
+            bodyView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: margins),
+            bodyView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: margins),
         ]
         NSLayoutConstraint.activate(constraints)
         
         titleTextLabel.numberOfLines = 1
         titleTextLabel.textAlignment = .left
         titleTextLabel.font = UIFont.boldSystemFont(ofSize: 20)
+        guard let title = title else { return }
+        titleTextLabel.text = title
     }
     
     private func setupBody() {
-        bodyView = UIView()
-        let bodyStackView = UIStackView()
+        guard let goals = goals else { return }
         
-        bodyView.translatesAutoresizingMaskIntoConstraints = false
-        bodyStackView.translatesAutoresizingMaskIntoConstraints = false
+        let frame = CGRect(x: 0, y: 0, width: bounds.width, height: bodyView.bounds.height)
+        horizontalBarChart = HorizontalBarChart(frame: frame, data: goals)
+        //horizontalBarChart = HorizontalBarChart(frame: frame, data: [("Gagi", 5.0, 10.0), ("Bisi", 5.0, 10.0), ("Bisi", 5.0, 10.0), ("Bisi", 5.0, 10.0)])
+        horizontalBarChart.translatesAutoresizingMaskIntoConstraints = false
+        bodyView.addSubview(horizontalBarChart)
         
-        self.addSubview(bodyView)
-        bodyView.addSubview(bodyStackView)
-        
-        let constraints: [NSLayoutConstraint] = [
-            bodyView.topAnchor.constraint(equalTo: titleTextLabel.bottomAnchor, constant: margins),
-            bodyView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: margins),
-            bodyView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -margins),
-            bodyView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -margins),
-            bodyStackView.topAnchor.constraint(equalTo: bodyView.topAnchor),
-            bodyStackView.leadingAnchor.constraint(equalTo: bodyView.leadingAnchor),
-            bodyStackView.trailingAnchor.constraint(equalTo: bodyView.trailingAnchor),
-            bodyStackView.bottomAnchor.constraint(equalTo: bodyView.bottomAnchor),
-        ]
-        
-//        if let nutrients = nutrients {
-//            let vitamins = filterNutrients(for: nutrients, with: Constants.HealthKit().vitaminTypes)
-//
-//            titleTextLabel.text = "Vitamin Breakdown"
-//            for vitamin in vitamins {
-//                let itemStackView = UIStackView()
-//                let itemTitle = UILabel()
-//                let itemProgress = UIProgressView(progressViewStyle: .default)
-//                let transform = CGAffineTransform(scaleX: 1.0, y: 5.0)
-//                itemProgress.transform = transform
-//
-//                itemStackView.translatesAutoresizingMaskIntoConstraints = false
-//                itemTitle.translatesAutoresizingMaskIntoConstraints = false
-//                itemProgress.translatesAutoresizingMaskIntoConstraints = false
-//
-//                itemStackView.addArrangedSubview(itemTitle)
-//                itemStackView.addArrangedSubview(itemProgress)
-//                bodyStackView.addArrangedSubview(itemStackView)
-//
-//                itemStackView.leadingAnchor.constraint(equalTo: bodyStackView.leadingAnchor).isActive = true
-//                itemStackView.trailingAnchor.constraint(equalTo: bodyStackView.trailingAnchor).isActive = true
-//                itemTitle.widthAnchor.constraint(equalToConstant: 120).isActive = true
-//
-//                itemStackView.axis = .horizontal
-//                itemStackView.alignment = .center
-//                itemStackView.setCustomSpacing(12.0, after: itemTitle)
-//
-//                switch vitamin.key {
-//                case HKObjectType.quantityType(forIdentifier: .dietaryVitaminA)!:
-//                    let goal = 0.0009
-//                    itemTitle.text = "Vitamin A"
-//                    itemProgress.progress = 0.0
-//                    itemProgress.setProgress(Float(vitamin.value / goal), animated: true)
-//                case HKObjectType.quantityType(forIdentifier: .dietaryVitaminC)!:
-//                    let goal = 0.09
-//                    itemTitle.text = "Vitamin C"
-//                    itemProgress.progress = 0.0
-//                    itemProgress.setProgress(Float(vitamin.value / goal), animated: true)
-//                case HKObjectType.quantityType(forIdentifier: .dietaryVitaminD)!:
-//                    let goal = 0.6
-//                    itemTitle.text = "Vitamin D"
-//                    itemProgress.progress = 0.0
-//                    itemProgress.setProgress(Float(vitamin.value / goal), animated: true)
-//                case HKObjectType.quantityType(forIdentifier: .dietaryFolate)!:
-//                    let goal = 0.0004
-//                    itemTitle.text = "Folate"
-//                    itemProgress.progress = 0.0
-//                    itemProgress.setProgress(Float(vitamin.value / goal), animated: true)
-//                default:
-//                    continue
-//                }
-//            }
-//        }
-        
-        NSLayoutConstraint.activate(constraints)
-        
-        bodyStackView.axis = .vertical
-        bodyStackView.distribution = .equalSpacing
-        bodyStackView.alignment = .center
     }
     
     private func filterNutrients(for nutrients: [HKQuantityType : Double], with types: Set<HKQuantityType>) -> [HKQuantityType : Double] {
