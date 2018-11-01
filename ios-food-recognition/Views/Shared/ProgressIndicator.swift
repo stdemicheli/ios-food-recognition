@@ -18,7 +18,7 @@ class ProgressIndicator: UIView {
     var bgColor = UIColor(white: 1.0, alpha: 0.5).cgColor
     var fgColor = UIColor.white.cgColor
     var progressValue: Double!
-    var animationDuration = 1.2
+    var animationDuration: CFTimeInterval!
     var fontSize: CGFloat = 20.0
     var fontColor = UIColor.white
     
@@ -32,7 +32,7 @@ class ProgressIndicator: UIView {
     
     // MARK: - Init
     
-    init(frame: CGRect, progress: Double, animationDuration: CFTimeInterval = 1.2) {
+    init(frame: CGRect, progress: Double, animationDuration: CFTimeInterval? = 1.2) {
         super.init(frame: frame)
         self.progressValue = progress
         self.animationDuration = animationDuration
@@ -48,6 +48,34 @@ class ProgressIndicator: UIView {
         super.layoutSubviews()
         setupShapeLayer(bgLayer)
         setupShapeLayer(fgLayer)
+    }
+    
+    // MARK: - Public
+    
+    func animateProgress() {
+        let activityAnimation = CABasicAnimation(keyPath: "strokeEnd")
+        activityAnimation.fromValue = 0.0
+        activityAnimation.toValue = 0.5
+        activityAnimation.duration = animationDuration
+        activityAnimation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
+        fgLayer.add(activityAnimation, forKey: nil)
+        
+        // Make the count up from startValue to final progressValue visible to the user
+        let displayLink = CADisplayLink(target: self, selector: #selector(handleValueUpdate))
+        displayLink.add(to: .main, forMode: .default)
+    }
+    
+    @objc func handleValueUpdate() {
+        let now = Date()
+        let elapsedTime = now.timeIntervalSince(animationStartDate)
+        
+        if elapsedTime > animationDuration {
+            metricLabel.text = String(format: "%.0f", progressValue)
+        } else {
+            let percentage = elapsedTime / animationDuration
+            let value = startValue + percentage * (progressValue - startValue)
+            metricLabel.text = String(format: "%.0f", value)
+        }
     }
     
     // MARK: - Private
@@ -84,32 +112,6 @@ class ProgressIndicator: UIView {
         
         descriptionLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor).isActive = true
         descriptionLabel.centerYAnchor.constraint(equalTo: metricLabel.bottomAnchor, constant: margin).isActive = true
-    }
-    
-    private func animateProgress() {
-        let activityAnimation = CABasicAnimation(keyPath: "strokeEnd")
-        activityAnimation.fromValue = 0.0
-        activityAnimation.toValue = 0.5
-        activityAnimation.duration = animationDuration
-        activityAnimation.timingFunction = CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
-        fgLayer.add(activityAnimation, forKey: nil)
-
-        // Make the count up from startValue to final progressValue visible to the user
-        let displayLink = CADisplayLink(target: self, selector: #selector(handleValueUpdate))
-        displayLink.add(to: .main, forMode: .default)
-    }
-    
-    @objc private func handleValueUpdate() {
-        let now = Date()
-        let elapsedTime = now.timeIntervalSince(animationStartDate)
-        
-        if elapsedTime > animationDuration {
-            metricLabel.text = String(format: "%.0f", progressValue)
-        } else {
-            let percentage = elapsedTime / animationDuration
-            let value = startValue + percentage * (progressValue - startValue)
-            metricLabel.text = String(format: "%.0f", value)
-        }
     }
     
     private func setupShapeLayer(_ shapeLayer: CAShapeLayer) {

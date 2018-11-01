@@ -21,6 +21,7 @@ class HorizontalBar: UIView {
     var barWidth: CGFloat!
     var barColor: CGColor!
     var bgBarColor = UIColor.lightGray.cgColor
+    var roundedCorners = true
     
     private let bgLayer = CAShapeLayer()
     private let fgLayer = CAShapeLayer()
@@ -53,7 +54,7 @@ class HorizontalBar: UIView {
         fgLayer.path = fgPath.cgPath
         fgLayer.lineWidth = barWidth
         fgLayer.strokeColor = barColor
-        fgLayer.lineCap = CAShapeLayerLineCap.round
+        fgLayer.lineCap = roundedCorners ? CAShapeLayerLineCap.round : CAShapeLayerLineCap.square
         
         let bgPath = UIBezierPath()
         bgPath.move(to: CGPoint(x: bounds.minX, y: bounds.midY))
@@ -62,10 +63,11 @@ class HorizontalBar: UIView {
         bgLayer.path = bgPath.cgPath
         bgLayer.lineWidth = barWidth
         bgLayer.strokeColor = bgBarColor
-        bgLayer.lineCap = CAShapeLayerLineCap.round
+        bgLayer.lineCap = roundedCorners ? CAShapeLayerLineCap.round : CAShapeLayerLineCap.square
         
         layer.addSublayer(bgLayer)
         layer.addSublayer(fgLayer)
+        
     }
     
     private func animateProgress() {

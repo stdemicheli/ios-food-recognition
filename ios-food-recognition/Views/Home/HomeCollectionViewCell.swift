@@ -411,17 +411,7 @@ extension HomeCollectionViewCell: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath == expandedCellAtIndexPath {
-            return tableViewCellHeight * 2.0
-        }
-        
         return tableViewCellHeight
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        expandedCellAtIndexPath = expandedCellAtIndexPath == indexPath ? nil : indexPath
-        tableView.beginUpdates()
-        tableView.endUpdates()
     }
     
     private func filterNutrients(for nutrients: [HKQuantityType : Double], with types: Set<HKQuantityType>) -> [HKQuantityType : Double] {
