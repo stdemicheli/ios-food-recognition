@@ -12,11 +12,11 @@ class ActivityIndicator: UIView, CAAnimationDelegate {
 
     // MARK: - Properties
     
-    var timeout: CFTimeInterval = 30.0
+    var timeout: CFTimeInterval = 60.0
     var animationDuration: CFTimeInterval = 1.5
     var opacity: CGFloat = 0.9
     var lineWidth: CGFloat = 15.0
-    var strokeColor: CGColor = UIColor.red.cgColor
+    var strokeColor: CGColor = UIColor.white.cgColor
     
     private let activityShapeLayer = CAShapeLayer()
     private var activityFrame: CGRect!
@@ -100,7 +100,11 @@ class ActivityIndicator: UIView, CAAnimationDelegate {
     // MARK: - Private
     
     private func setupViews() {
-        backgroundColor = UIColor(white: 0.9, alpha: opacity)
+        let backgroundImage = UIImageView(image: UIImage(named: "background"))
+        backgroundImage.frame = UIScreen.main.bounds
+        backgroundImage.alpha = 0.8
+        
+        addSubview(backgroundImage)
     }
     
     private func setupActivityIndicator() {
@@ -118,8 +122,8 @@ class ActivityIndicator: UIView, CAAnimationDelegate {
         let icon = UIImage(named: "chickenIcon")!
         iconLayer.contents = icon.cgImage
         iconLayer.bounds = CGRect(x: 0.0, y: 0.0,
-                                  width: icon.size.width,
-                                  height: icon.size.height)
+                                  width: icon.size.width * 1.7,
+                                  height: icon.size.height * 1.7)
         
         iconLayer.position = CGPoint(x: bounds.midX - activityRadius * 2,
                                      y: bounds.midY - activityRadius)

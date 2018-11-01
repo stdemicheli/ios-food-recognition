@@ -219,7 +219,7 @@ class FoodClient {
     private func sync(_ foods: [Food], with definitions: [NutrientDefinition]) -> [Food] {
         var syncedFoods = [Food]()
         
-        for food in syncedFoods {
+        for food in foods {
             let syncedFood = food
 
             for nutrient in syncedFood.fullNutrients {

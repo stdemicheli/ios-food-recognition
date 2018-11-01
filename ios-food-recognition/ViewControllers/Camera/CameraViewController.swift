@@ -67,13 +67,13 @@ class CameraViewController: UIViewController {
         setupHeader()
         setupTableView()
 
-        // Testing purposes
-        headerView.imageView?.image = UIImage(named: "caprese-salad")
-        foodClient.fetchFoodInstantly(with: "caprese salad") { (_) in
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-            }
-        }
+//        // Testing purposes
+//        headerView.imageView?.image = UIImage(named: "caprese-salad")
+//        foodClient.fetchFoodInstantly(with: "caprese salad") { (_) in
+//            DispatchQueue.main.async {
+//                self.tableView.reloadData()
+//            }
+//        }
 
         
         openImagePickerController()
@@ -268,9 +268,9 @@ extension CameraViewController: UIImagePickerControllerDelegate, UINavigationCon
                 }
                 
                 DispatchQueue.main.async {
-                    self.dismiss(animated: true, completion: nil)
                     activityIndicator.endAnimation()
                     self.tableView.reloadData()
+                    self.dismiss(animated: true, completion: nil)
                 }
             }
         }

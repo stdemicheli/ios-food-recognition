@@ -168,7 +168,8 @@ class HealthKitController {
             
             var sampleQty: Double = 0.0
             for sample in samples {
-                sampleQty += sample.quantityType == HKObjectType.quantityType(forIdentifier: .dietaryEnergyConsumed)
+                sampleQty += sample.quantityType == HKObjectType.quantityType(forIdentifier: .dietaryEnergyConsumed) ||
+                sample.quantityType == HKObjectType.quantityType(forIdentifier: .activeEnergyBurned)
                                 ? sample.quantity.doubleValue(for: .kilocalorie())
                                 : sample.quantity.doubleValue(for: .gram())
                 

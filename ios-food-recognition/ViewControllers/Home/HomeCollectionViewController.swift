@@ -12,7 +12,6 @@ private let reuseIdentifier = "HomeCell"
 
 class HomeCollectionViewController: UICollectionViewController {
 
-    
     // MARK: - Properties (public)
     
     let hkController = HealthKitController()
@@ -72,11 +71,6 @@ class HomeCollectionViewController: UICollectionViewController {
 
     // MARK: UICollectionViewDataSource
 
-    override func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
-    }
-
-
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return fetchedDates.count
     }
@@ -106,6 +100,8 @@ class HomeCollectionViewController: UICollectionViewController {
 
 }
 
+// MARK: UICollectionViewDelegateFlowLayout
+
 extension HomeCollectionViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -118,7 +114,10 @@ extension HomeCollectionViewController: UICollectionViewDelegateFlowLayout {
     
 }
 
+// MARK: HomeCollectionViewCellDelegate
+
 extension HomeCollectionViewController: HomeCollectionViewCellDelegate {
+
     func next() {
         let contentOffset = collectionView.contentOffset
         collectionView.scrollRectToVisible(CGRect(x: contentOffset.x + cellSize.width,
@@ -148,4 +147,9 @@ extension HomeCollectionViewController: HomeCollectionViewCellDelegate {
 //                                                  height: cellSize.height), animated: true)
 //    }
     
+
+    func presentCelebrationView(withTitle title: String) {
+        present(MessageViewController(title: title, message: nil), animated: true, completion: nil)
+    }
+
 }

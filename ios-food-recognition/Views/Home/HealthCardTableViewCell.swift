@@ -80,7 +80,6 @@ class HealthCardTableViewCell: UITableViewCell {
         
         let frame = CGRect(x: 0, y: 0, width: bounds.width, height: bodyView.bounds.height)
         horizontalBarChart = HorizontalBarChart(frame: frame, data: goals)
-        //horizontalBarChart = HorizontalBarChart(frame: frame, data: [("Gagi", 5.0, 10.0), ("Bisi", 5.0, 10.0), ("Bisi", 5.0, 10.0), ("Bisi", 5.0, 10.0)])
         horizontalBarChart.translatesAutoresizingMaskIntoConstraints = false
         bodyView.addSubview(horizontalBarChart)
         

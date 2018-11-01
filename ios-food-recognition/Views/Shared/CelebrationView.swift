@@ -17,13 +17,12 @@ class CelebrationView: UIView {
     
     private var textColor = UIColor.black
     
-    init(frame: CGRect, title: String, message: String) {
+    init(frame: CGRect, title: String, message: String?) {
         super.init(frame: frame)
         self.title = title
         self.message = message
         
         setupMessageView()
-        setupEmitterView()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -52,12 +51,16 @@ class CelebrationView: UIView {
         titleLabel.textColor = textColor
         
         let messageLabel = UILabel()
-        messageLabel.text = "You have achieved all your goals yesterday. Keep it up!"
+        messageLabel.text = message == nil ? "You have achieved all your goals for \(title ?? "this section"). Keep it up!" : message!
         messageLabel.numberOfLines = 30
         messageLabel.font = UIFont.systemFont(ofSize: 20.0)
         messageLabel.textAlignment = .center
         messageLabel.textColor = textColor
         
+        let backgroundImage = UIImageView(image: UIImage(named: "background"))
+        backgroundImage.frame = UIScreen.main.bounds
+        
+        addSubview(backgroundImage)
         addSubview(messageView)
         messageView.addSubview(titleLabel)
         messageView.addSubview(messageLabel)
@@ -68,7 +71,9 @@ class CelebrationView: UIView {
         UIView.animate(withDuration: 2.0, delay: 0.0, usingSpringWithDamping: 0.3, initialSpringVelocity: 4.0, options: [.curveEaseIn], animations: {
             messageView.center = CGPoint(x: self.bounds.midX, y: self.bounds.midY)
             messageView.transform = .identity
-        }, completion: nil)
+        }, completion: { (_) in
+            self.setupEmitterView()
+        })
     }
     
     private func setupEmitterView() {
@@ -77,7 +82,7 @@ class CelebrationView: UIView {
         showerHead.frame = CGRect(x: bounds.midX / 2, y: -100.0, width: bounds.width / 2, height: 100)
         addSubview(showerHead)
         
-        UIView.animate(withDuration: 0.7, delay: 3.0, animations: {
+        UIView.animate(withDuration: 0.7, delay: 2.0, animations: {
             showerHead.frame = CGRect(x: self.bounds.midX / 2, y: 20.0, width: self.bounds.width / 2, height: 100)
         }) { (_) in
             let rect = CGRect(x: 0.0, y: 130.0, width: self.bounds.width, height: 50.0)
@@ -88,21 +93,28 @@ class CelebrationView: UIView {
             emitter.emitterSize = rect.size
             self.layer.addSublayer(emitter)
             
-            let emitterCell = CAEmitterCell()
-            emitterCell.contents = UIImage(named: "chickenIcon")?.cgImage
-            emitterCell.birthRate = 25
-            emitterCell.lifetime = 5
-            emitterCell.yAcceleration = 100.0
-            emitterCell.xAcceleration = 10.0
-            emitterCell.zAcceleration = 10.0
-            emitterCell.spin = 5.0
-            emitterCell.velocity = 350.0
-            //emitterCell.velocityRange = 200.0
-            emitterCell.emissionLongitude = .pi * 0.5
-            emitterCell.emissionRange = .pi * 0.5
-            emitterCell.scale = 0.5
-            //emitterCell.scaleRange = 0.5
-            emitter.emitterCells = [emitterCell]
+            let images = ["brocoliIcon", "chickenIcon", "meatIcon"]
+            emitter.emitterCells = [CAEmitterCell]()
+            
+            for image in images {
+                let emitterCell = CAEmitterCell()
+                emitterCell.contents = UIImage(named: image)?.cgImage
+                emitterCell.birthRate = 25
+                emitterCell.lifetime = 5
+                emitterCell.yAcceleration = 100.0
+                emitterCell.xAcceleration = 10.0
+                emitterCell.zAcceleration = 10.0
+                emitterCell.spin = 5.0
+                emitterCell.velocity = 350.0
+                //emitterCell.velocityRange = 200.0
+                emitterCell.emissionLongitude = .pi * 0.5
+                emitterCell.emissionRange = .pi * 0.5
+                emitterCell.scale = 0.5
+                //emitterCell.scaleRange = 0.5
+                
+                emitter.emitterCells?.append(emitterCell)
+            }
+            
         }
     }
 }

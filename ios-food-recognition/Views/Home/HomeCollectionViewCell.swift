@@ -13,10 +13,10 @@ protocol HomeCollectionViewCellDelegate {
     func next()
     func previous()
     // func goToCell(with id: String)
+    func presentCelebrationView(withTitle title: String)
 }
 
 class HomeCollectionViewCell: UICollectionViewCell {
-    
     
     // MARK: - Properties (public)
     
@@ -48,6 +48,8 @@ class HomeCollectionViewCell: UICollectionViewCell {
     var fat: Double? {
         return nutrients?[HKObjectType.quantityType(forIdentifier: .dietaryFatTotal)!]
     }
+    
+    var hasShownMessage = false
     
     // MARK: - Properties (private)
     
@@ -85,7 +87,6 @@ class HomeCollectionViewCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()
-        layoutSubviews()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -202,7 +203,7 @@ class HomeCollectionViewCell: UICollectionViewCell {
             topStackView.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 20),
             topStackView.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -20),
             btmStackView.bottomAnchor.constraint(equalTo: headerView.bottomAnchor, constant: -10),
-            btmStackView.heightAnchor.constraint(equalTo: progressIndicator.heightAnchor, multiplier: 0.2),
+            btmStackView.heightAnchor.constraint(equalTo: progressIndicator.heightAnchor, multiplier: 0.3),
             btmStackView.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 20),
             btmStackView.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -20),
             mainStackView.topAnchor.constraint(equalTo: topStackView.bottomAnchor, constant: 30),
@@ -212,6 +213,7 @@ class HomeCollectionViewCell: UICollectionViewCell {
             progressIndicator.centerXAnchor.constraint(equalTo: mainStackView.centerXAnchor),
             progressIndicator.widthAnchor.constraint(equalTo: mainStackView.widthAnchor, multiplier: 0.6)
             ]
+        
         NSLayoutConstraint.activate(constraints)
         
         headerView.backgroundColor = .red
@@ -290,8 +292,7 @@ class HomeCollectionViewCell: UICollectionViewCell {
         btmRightMetricTitle.textColor = .white
         btmRightMetricTitle.font = UIFont.boldSystemFont(ofSize: 17)
         
-        guard let calories = self.caloriesConsumed,
-            let protein = self.protein,
+        guard let protein = self.protein,
             let carbs = self.carbs,
             let fat = self.fat else { return }
         
@@ -411,8 +412,17 @@ extension HomeCollectionViewCell: UITableViewDelegate, UITableViewDataSource {
         if let nutrients = self.nutrients {
             cell.nutrients = nutrients
             let goalSetting = Array(getGoalSettings())[indexPath.section]
-            cell.title = goalSetting.key
-            cell.goals = merge(goals: goalSetting.value, withValues: nutrients)
+            let title = goalSetting.key
+            cell.title = title
+            let goals = merge(goals: goalSetting.value, withValues: nutrients)
+            cell.goals = goals
+            
+            guard let date = date else { return cell }
+            // TODO: fix date tomorrow
+            if hasAchievedGoals(goals) && !hasShownMessage && Calendar.current.isDateInTomorrow(date) {
+                hasShownMessage = true
+                delegate?.presentCelebrationView(withTitle: title)
+            }
         }
         
         return cell
@@ -420,6 +430,15 @@ extension HomeCollectionViewCell: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return tableViewCellHeight
+    }
+    
+    private func hasAchievedGoals(_ goals: [(String, Double, Double)]) -> Bool {
+        for goal in goals {
+            if goal.1 < goal.2 { // if progress is smaller than goal
+                return false
+            }
+        }
+        return true
     }
     
     private func merge(goals: [String : (String, Double)], withValues values: [HKSampleType : Double]) -> [(String, Double, Double)] {
@@ -440,22 +459,22 @@ extension HomeCollectionViewCell: UITableViewDelegate, UITableViewDataSource {
         let goals = [
             "Diet XYZ":
                 [
-                    HKQuantityTypeIdentifier.dietaryFatTotal.rawValue : ("Fat", 100.0),
-                    HKQuantityTypeIdentifier.dietaryCarbohydrates.rawValue : ("Carbs", 100.0),
-                    HKQuantityTypeIdentifier.dietaryProtein.rawValue : ("Protein", 100.0),
+                    HKQuantityTypeIdentifier.dietaryFatTotal.rawValue : ("Fat", 171.0),
+                    HKQuantityTypeIdentifier.dietaryCarbohydrates.rawValue : ("Carbs", 25.0),
+                    HKQuantityTypeIdentifier.dietaryProtein.rawValue : ("Protein", 92.0),
             ],
             "Vitamins":
                 [
-                    HKQuantityTypeIdentifier.dietaryVitaminA.rawValue : ("Vitamin A", 100.0),
-                    HKQuantityTypeIdentifier.dietaryVitaminC.rawValue : ("Vitamin C", 100.0),
-                    HKQuantityTypeIdentifier.dietaryVitaminD.rawValue : ("Vitamin D", 100.0),
-                    HKQuantityTypeIdentifier.dietaryFolate.rawValue : ("Folate", 100.0),
+                    HKQuantityTypeIdentifier.dietaryVitaminA.rawValue : ("Vitamin A", 0.0009),
+                    HKQuantityTypeIdentifier.dietaryVitaminC.rawValue : ("Vitamin C", 0.09),
+                    HKQuantityTypeIdentifier.dietaryVitaminD.rawValue : ("Vitamin D", 0.6),
+                    HKQuantityTypeIdentifier.dietaryFolate.rawValue : ("Folate", 0.0004),
             ],
             "Activity":
                 [
                     
-                    HKQuantityTypeIdentifier.activeEnergyBurned.rawValue : ("Energy burned", 100.0),
-                    HKQuantityTypeIdentifier.dietaryEnergyConsumed.rawValue : ("Energy consumed", 100.0),
+                    HKQuantityTypeIdentifier.activeEnergyBurned.rawValue : ("Energy burned", 200.0),
+                    HKQuantityTypeIdentifier.dietaryEnergyConsumed.rawValue : ("Energy consumed", 2000.0),
             ],
             
             ]
@@ -475,4 +494,3 @@ extension HomeCollectionViewCell: UITableViewDelegate, UITableViewDataSource {
     }
     
 }
-
