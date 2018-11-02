@@ -217,12 +217,12 @@ class FoodClient {
     
     // TODO: Refactor
     private func sync(_ foods: [Food], with definitions: [NutrientDefinition]) -> [Food] {
-        let syncedFoods = foods
+        var syncedFoods = [Food]()
         
-        for food in syncedFoods {
-            let syncedNutrients = food.fullNutrients
+        for food in foods {
+            let syncedFood = food
 
-            for nutrient in syncedNutrients {
+            for nutrient in syncedFood.fullNutrients {
                 for definition in definitions {
                     if nutrient.attributeId == definition.attributeId {
                         nutrient.name = definition.name
@@ -231,7 +231,7 @@ class FoodClient {
                 }
             }
             
-            food.fullNutrients = syncedNutrients
+            syncedFoods.append(syncedFood)
         }
         
         return syncedFoods

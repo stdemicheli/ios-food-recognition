@@ -66,7 +66,6 @@ struct NutritionHTTPBody: Encodable {
 
 class Food: Decodable, Equatable {
     
-    
     init(name: String, servingQty: Double, servingUnit: String, fullNutrients: [Nutrient]) {
         self.name = name
         self.servingQuantity = servingQty
@@ -141,24 +140,24 @@ struct FoodError: Decodable {
     
 }
 
-struct HealthCard {
-    
-    var title: String
-    var items: [HealthCard.Nutrient]
-    var type: HealthCardTypes
-    
-    // TODO: conver into Nutrient struct
-    struct Nutrient {
-        
-        var title: String
-        var value: Double
-        var unit: String
-        var goal: Double
-        
-    }
-    
-    enum HealthCardTypes: String {
-        case standard
-    }
-    
-}
+//struct HealthCard {
+//    
+//    var title: String
+//    var items: [HealthCard.Nutrient]
+//    var type: HealthCardTypes
+//    
+//    // TODO: convert into Nutrient struct
+//    struct Nutrient {
+//        
+//        var title: String
+//        var value: Double
+//        var unit: String
+//        var goal: Double
+//        
+//    }
+//    
+//    enum HealthCardTypes: String {
+//        case standard
+//    }
+//    
+//}

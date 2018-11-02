@@ -8,8 +8,8 @@
 
 import UIKit
 
-protocol FoodTableViewCellProtocol {
-    
+protocol FoodTableCellDelegate: class {
+    func updateServingSize(for cell: FoodTableViewCell, withQty qty: Double)
 }
 
 class FoodTableViewCell: UITableViewCell {
@@ -20,29 +20,38 @@ class FoodTableViewCell: UITableViewCell {
         }
     }
     
-    var calories: Double? {
+    var nutritionFacts: [String : Double]? {
         didSet {
             updateViews()
         }
     }
     
-    var indexPath: IndexPath?
+    weak var delegate: FoodTableCellDelegate?
     
+    @IBOutlet weak var mainStackView: UIStackView!
     @IBOutlet weak var nameTextLabel: UILabel!
     @IBOutlet weak var servingTextLabel: UILabel!
     @IBOutlet weak var calorieTextLabel: UILabel!
+    @IBOutlet weak var fatTextLabel: UILabel!
+    @IBOutlet weak var carbTextLabel: UILabel!
+    @IBOutlet weak var proteinTextLabel: UILabel!
+    @IBOutlet weak var servingStepper: UIStepper!
     
-    weak var dataSource: FoodTableCellDataSource?
-    weak var delegate: FoodTableCellDelegate?
-    
-    let picker = UIPickerView()
-    private let pickerToolbar = UIToolbar()
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        picker.delegate = self
-        picker.dataSource = self
+        if let food = food {
+            servingStepper.value = food.servingQuantity
+        }
     }
+    
+    // MARK: - Public
+    
+    @IBAction func updateServingQty(_ sender: UIStepper) {
+        delegate?.updateServingSize(for: self, withQty: sender.value)
+    }
+    
+    // MARK: - Views
     
     private func updateViews() {
         if let food = food {
@@ -50,100 +59,19 @@ class FoodTableViewCell: UITableViewCell {
             servingTextLabel?.text = "\(Int(food.servingQuantity)) \(food.servingUnit)"
         }
         
-        if let calories = calories {
+        if let calories = nutritionFacts?["calories"], let fat = nutritionFacts?["fat"], let carbs = nutritionFacts?["carbs"], let protein = nutritionFacts?["protein"] {
+            calorieTextLabel.numberOfLines = 2
             calorieTextLabel?.text = "\(String(Int(calories))) kcal"
+            fatTextLabel?.text = "\(String(Int(fat)))g"
+            carbTextLabel?.text = "\(String(Int(carbs)))g"
+            proteinTextLabel?.text = "\(String(Int(protein)))g"
         } else {
             calorieTextLabel?.text = "- kcal"
+            fatTextLabel?.text = "- g"
+            carbTextLabel?.text = "- g"
+            proteinTextLabel?.text = "- g"
         }
-    }
-    
-    override var canBecomeFirstResponder: Bool {
-        return true
-    }
-    
-    override var canResignFirstResponder: Bool {
-        return true
-    }
-    
-    override func becomeFirstResponder() -> Bool {
-        picker.dataSource = self
-        delegate?.onPickerOpen(self)
-        return super.becomeFirstResponder()
-    }
-    
-    override func resignFirstResponder() -> Bool {
-        delegate?.onPickerClose(self)
-        return super.resignFirstResponder()
-    }
-    
-    override var inputView: UIView? {
-        return picker
-    }
-    
-    override var inputAccessoryView: UIView? {
-        pickerToolbar.sizeToFit()
         
-        let doneButton = UIBarButtonItem(title: "Done", style: .plain, target: self, action: #selector(resignFirstResponder))
-        // let cancelButton = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(resignFirstResponder))
-        
-        // Can also add more items to toolbar
-        pickerToolbar.setItems([doneButton], animated: true)
-        pickerToolbar.isUserInteractionEnabled = true
-        
-        return pickerToolbar
     }
-    
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        _ = self.becomeFirstResponder()
-    }
-        
-}
-
-// MARK: - UIPickerViewDelegate
-extension FoodTableViewCell: UIPickerViewDelegate {
-    
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return delegate?.pickerView(pickerView, titleForRow: row, forComponent: component, forCell: self)
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        delegate?.pickerView(pickerView, didSelectRow: row, inComponent: component, forCell: self)
-    }
-    
-}
-
-// MARK: - UIPickerViewDataSource
-extension FoodTableViewCell: UIPickerViewDataSource {
-    
-    func numberOfComponents(in pickerView: UIPickerView) -> Int {
-        return dataSource?.numberOfComponents(in: pickerView, forCell: self) ?? 0
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return dataSource?.pickerView(pickerView, numberOfRowsInComponent: component, forCell: self) ?? 0
-    }
-    
-}
-
-/// Hook of delegate of `UIPickerView`.
-protocol FoodTableCellDelegate: class {
-    
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int, forCell cell: FoodTableViewCell) -> String?
-    
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int, forCell cell: FoodTableViewCell)
-    
-    
-    func onPickerOpen(_ cell: FoodTableViewCell)
-    
-    func onPickerClose(_ cell: FoodTableViewCell)
-    
-}
-
-/// Hook of datasource of `UIPickerView`.
-protocol FoodTableCellDataSource: class {
-    
-    func numberOfComponents(in pickerView: UIPickerView, forCell cell: FoodTableViewCell) -> Int
-    
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int, forCell cell: FoodTableViewCell) -> Int
     
 }

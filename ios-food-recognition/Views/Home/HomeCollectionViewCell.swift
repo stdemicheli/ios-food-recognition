@@ -13,16 +13,16 @@ protocol HomeCollectionViewCellDelegate {
     func next()
     func previous()
     // func goToCell(with id: String)
+    func presentCelebrationView(withTitle title: String)
 }
 
 class HomeCollectionViewCell: UICollectionViewCell {
-    
     
     // MARK: - Properties (public)
     
     let hkController = HealthKitController()
     
-    var nutrients: [HKQuantityType : Double]? {
+    var nutrients: [HKSampleType : Double]? {
         didSet {
             setupViews()
         }
@@ -32,20 +32,34 @@ class HomeCollectionViewCell: UICollectionViewCell {
             setupHeader()
         }
     }
-    
-    var healthCards: [HealthCard]? {
-        didSet {
-            setupTableView()
-        }
-    }
     var delegate: HomeCollectionViewCellDelegate?
+    var caloriesConsumed: Double? {
+        return nutrients?[HKObjectType.quantityType(forIdentifier: .dietaryEnergyConsumed)!]
+    }
+    var caloriesBurned: Double? {
+        return nutrients?[HKObjectType.quantityType(forIdentifier: .activeEnergyBurned)!]
+    }
+    var protein: Double? {
+        return nutrients?[HKObjectType.quantityType(forIdentifier: .dietaryProtein)!]
+    }
+    var carbs: Double? {
+        return nutrients?[HKObjectType.quantityType(forIdentifier: .dietaryCarbohydrates)!]
+    }
+    var fat: Double? {
+        return nutrients?[HKObjectType.quantityType(forIdentifier: .dietaryFatTotal)!]
+    }
+    
+    var hasShownMessage = false
     
     // MARK: - Properties (private)
     
     var tableView: UITableView!
+    private var expandedCellAtIndexPath: IndexPath?
+    private var tableViewCellHeight = UIScreen.main.bounds.height / 3
+    
     private let reuseId = "HealthCardCell"
     var headerView: AnimatedHeaderView!
-    private var headerViewHeight = UIScreen.main.bounds.size.height / 2.2
+    private var headerViewExpandedHeight = UIScreen.main.bounds.size.height / 2.4
     private var headerViewCollapsedHeight: CGFloat = 80.0
     private var headerHeightConstraint: NSLayoutConstraint!
     
@@ -53,11 +67,12 @@ class HomeCollectionViewCell: UICollectionViewCell {
     private var headerTitle: UILabel!
     private var nextButton: UIButton!
     
-    private var mainMetricStackView: UIStackView!
-    private var mainMetricSubView: UIView!
-    private var mainMetric: UILabel!
-    private var mainMetricLabel: UILabel!
+    private var mainStackView: UIStackView!
+    private var progressIndicator: ProgressIndicator!
+    private var caloriesBurnedView: AnimatedMetric!
+    private var caloriesConsumedView: AnimatedMetric!
     
+    private var btmStackView: UIStackView!
     private var btmLeftMetric: UILabel!
     private var btmMidMetric: UILabel!
     private var btmRightMetric: UILabel!
@@ -65,12 +80,13 @@ class HomeCollectionViewCell: UICollectionViewCell {
     private var btmMidMetricTitle: UILabel!
     private var btmRightMetricTitle: UILabel!
     
+    private var animationDuration = 1.2
+    
     // MARK: - Init
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupViews()
-        layoutSubviews()
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -79,7 +95,6 @@ class HomeCollectionViewCell: UICollectionViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        setRoundCornerForMainMetric()
     }
     
     // MARK: - HomeCollectionViewCellDelegate
@@ -100,20 +115,26 @@ class HomeCollectionViewCell: UICollectionViewCell {
     }
     
     private func setupHeader() {
-        headerView = AnimatedHeaderView(frame: CGRect.zero, title: "")
+        headerView = AnimatedHeaderView(frame: CGRect.zero)
         
         let topStackView = UIStackView()
         prevButton = UIButton(type: .system)
         headerTitle = UILabel()
         nextButton = UIButton(type: .system)
         
-        let mainMetricView = UIView()
-        mainMetricSubView = UIView()
-        mainMetricStackView = UIStackView()
-        mainMetric = UILabel()
-        mainMetricLabel = UILabel()
+        mainStackView = UIStackView()
         
-        let bottomStackView = UIStackView()
+        if let caloriesConsumed = caloriesConsumed, let caloriesBurned = caloriesBurned {
+            progressIndicator = ProgressIndicator(frame: CGRect.zero, progress: caloriesConsumed - caloriesBurned, goal: 2000.0)
+            caloriesConsumedView = AnimatedMetric(frame: CGRect.zero, metric: caloriesConsumed, title: "Calories Consumed", image: UIImage(named: "flatwareIcon")!.withRenderingMode(.alwaysTemplate), animationDuration: animationDuration)
+            caloriesBurnedView = AnimatedMetric(frame: CGRect.zero, metric: caloriesBurned, title: "Calories Burned", image: UIImage(named: "fire")!.withRenderingMode(.alwaysTemplate), animationDuration: animationDuration)
+        } else {
+            progressIndicator = ProgressIndicator(frame: CGRect.zero, progress: 0, goal: 2000.0)
+            caloriesConsumedView = AnimatedMetric(frame: CGRect.zero, metric: 0, title: "Calories Consumed", image: UIImage(named: "flatwareIcon")!.withRenderingMode(.alwaysTemplate), animationDuration: animationDuration)
+            caloriesBurnedView = AnimatedMetric(frame: CGRect.zero, metric: 0, title: "Calories Burned", image: UIImage(named: "fire")!.withRenderingMode(.alwaysTemplate), animationDuration: animationDuration)
+        }
+        
+        btmStackView = UIStackView()
         let btmLeftStackView = UIStackView()
         let btmMidStackView = UIStackView()
         let btmRightStackView = UIStackView()
@@ -131,13 +152,12 @@ class HomeCollectionViewCell: UICollectionViewCell {
         headerTitle.translatesAutoresizingMaskIntoConstraints = false
         nextButton.translatesAutoresizingMaskIntoConstraints = false
         
-        mainMetricView.translatesAutoresizingMaskIntoConstraints = false
-        mainMetricSubView.translatesAutoresizingMaskIntoConstraints = false
-        mainMetricStackView.translatesAutoresizingMaskIntoConstraints = false
-        mainMetric.translatesAutoresizingMaskIntoConstraints = false
-        mainMetricLabel.translatesAutoresizingMaskIntoConstraints = false
+        mainStackView.translatesAutoresizingMaskIntoConstraints = false
+        progressIndicator.translatesAutoresizingMaskIntoConstraints = false
+        caloriesConsumedView.translatesAutoresizingMaskIntoConstraints = false
+        caloriesBurnedView.translatesAutoresizingMaskIntoConstraints = false
         
-        bottomStackView.translatesAutoresizingMaskIntoConstraints = false
+        btmStackView.translatesAutoresizingMaskIntoConstraints = false
         btmLeftStackView.translatesAutoresizingMaskIntoConstraints = false
         btmMidStackView.translatesAutoresizingMaskIntoConstraints = false
         btmRightStackView.translatesAutoresizingMaskIntoConstraints = false
@@ -148,7 +168,6 @@ class HomeCollectionViewCell: UICollectionViewCell {
         btmMidMetricTitle.translatesAutoresizingMaskIntoConstraints = false
         btmRightMetricTitle.translatesAutoresizingMaskIntoConstraints = false
         
-        
         self.addSubview(headerView)
         
         headerView.addSubview(topStackView)
@@ -156,16 +175,15 @@ class HomeCollectionViewCell: UICollectionViewCell {
         topStackView.addArrangedSubview(headerTitle)
         topStackView.addArrangedSubview(nextButton)
         
-        headerView.addSubview(mainMetricView)
-        mainMetricView.addSubview(mainMetricSubView)
-        mainMetricSubView.addSubview(mainMetricStackView)
-        mainMetricStackView.addArrangedSubview(mainMetric)
-        mainMetricStackView.addArrangedSubview(mainMetricLabel)
+        headerView.addSubview(mainStackView)
+        mainStackView.addArrangedSubview(caloriesConsumedView)
+        mainStackView.addArrangedSubview(progressIndicator)
+        mainStackView.addArrangedSubview(caloriesBurnedView)
         
-        headerView.addSubview(bottomStackView)
-        bottomStackView.addArrangedSubview(btmLeftStackView)
-        bottomStackView.addArrangedSubview(btmMidStackView)
-        bottomStackView.addArrangedSubview(btmRightStackView)
+        headerView.addSubview(btmStackView)
+        btmStackView.addArrangedSubview(btmLeftStackView)
+        btmStackView.addArrangedSubview(btmMidStackView)
+        btmStackView.addArrangedSubview(btmRightStackView)
         btmLeftStackView.addArrangedSubview(btmLeftMetric)
         btmLeftStackView.addArrangedSubview(btmLeftMetricTitle)
         btmMidStackView.addArrangedSubview(btmMidMetric)
@@ -173,8 +191,7 @@ class HomeCollectionViewCell: UICollectionViewCell {
         btmRightStackView.addArrangedSubview(btmRightMetric)
         btmRightStackView.addArrangedSubview(btmRightMetricTitle)
         
-        
-        headerHeightConstraint = headerView.heightAnchor.constraint(equalToConstant: headerViewHeight)
+        headerHeightConstraint = headerView.heightAnchor.constraint(equalToConstant: headerViewExpandedHeight)
         headerHeightConstraint.isActive = true
         
         let constraints: [NSLayoutConstraint] = [
@@ -185,23 +202,18 @@ class HomeCollectionViewCell: UICollectionViewCell {
             topStackView.heightAnchor.constraint(equalToConstant: headerViewCollapsedHeight),
             topStackView.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 20),
             topStackView.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -20),
-            bottomStackView.bottomAnchor.constraint(equalTo: headerView.bottomAnchor, constant: -10),
-            bottomStackView.heightAnchor.constraint(equalTo: mainMetricView.heightAnchor, multiplier: 0.3),
-            bottomStackView.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 20),
-            bottomStackView.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -20),
-            mainMetricView.topAnchor.constraint(equalTo: topStackView.bottomAnchor),
-            mainMetricView.bottomAnchor.constraint(equalTo: bottomStackView.topAnchor),
-            mainMetricView.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 20),
-            mainMetricView.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -20),
-            mainMetricSubView.centerXAnchor.constraint(equalTo: mainMetricView.centerXAnchor),
-            mainMetricSubView.centerYAnchor.constraint(equalTo: mainMetricView.centerYAnchor),
-            mainMetricSubView.heightAnchor.constraint(equalTo: mainMetricView.heightAnchor, multiplier: 0.9),
-            mainMetricSubView.widthAnchor.constraint(equalTo: mainMetricView.heightAnchor, multiplier: 0.9),
-            mainMetricStackView.topAnchor.constraint(equalTo: mainMetricSubView.topAnchor, constant: 60),
-            mainMetricStackView.bottomAnchor.constraint(equalTo: mainMetricSubView.bottomAnchor, constant: -60),
-            mainMetricStackView.leadingAnchor.constraint(equalTo: mainMetricSubView.leadingAnchor),
-            mainMetricStackView.trailingAnchor.constraint(equalTo: mainMetricSubView.trailingAnchor),
+            btmStackView.bottomAnchor.constraint(equalTo: headerView.bottomAnchor, constant: -10),
+            btmStackView.heightAnchor.constraint(equalTo: progressIndicator.heightAnchor, multiplier: 0.3),
+            btmStackView.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 20),
+            btmStackView.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -20),
+            mainStackView.topAnchor.constraint(equalTo: topStackView.bottomAnchor, constant: 30),
+            mainStackView.bottomAnchor.constraint(equalTo: btmStackView.topAnchor, constant: -20),
+            mainStackView.leadingAnchor.constraint(equalTo: headerView.leadingAnchor, constant: 20),
+            mainStackView.trailingAnchor.constraint(equalTo: headerView.trailingAnchor, constant: -20),
+            progressIndicator.centerXAnchor.constraint(equalTo: mainStackView.centerXAnchor),
+            progressIndicator.widthAnchor.constraint(equalTo: mainStackView.widthAnchor, multiplier: 0.6)
             ]
+        
         NSLayoutConstraint.activate(constraints)
         
         headerView.backgroundColor = .red
@@ -213,39 +225,29 @@ class HomeCollectionViewCell: UICollectionViewCell {
         headerTitle.numberOfLines = 1
         headerTitle.textAlignment = .center
         if let date = self.date {
-            headerTitle.text = formateDate(for: date)
+            headerTitle.text = formatDate(for: date)
         }
         headerTitle.textColor = .white
         headerTitle.font = UIFont.boldSystemFont(ofSize: 17)
         
-        prevButton.setTitle("PREV", for: .normal)
+        caloriesConsumedView.textColor = .white
+        caloriesBurnedView.textColor = .white
+        
+        prevButton.setImage(UIImage(named: "backArrow")!, for: .normal)
+        prevButton.tintColor = UIColor.white
         prevButton.addTarget(self, action: #selector(previousCell), for: .touchUpInside)
         
-        nextButton.setTitle("NEXT", for: .normal)
+        nextButton.setImage(UIImage(named: "forwardArrow")!, for: .normal)
+        nextButton.tintColor = UIColor.white
         nextButton.addTarget(self, action: #selector(nextCell), for: .touchUpInside)
         
-        mainMetricStackView.axis = .vertical
-        mainMetricStackView.distribution = .fill
-        mainMetricStackView.alignment = .center
+        mainStackView.axis = .horizontal
+        mainStackView.distribution = .equalSpacing
+        mainStackView.alignment = .center
         
-        mainMetric.numberOfLines = 1
-        mainMetric.textAlignment = .center
-        mainMetric.font = UIFont.boldSystemFont(ofSize: 22)
-        mainMetric.textColor = .white
-        mainMetricSubView.clipsToBounds = true
-        mainMetricSubView.layer.borderColor = UIColor(white: 1.0, alpha: 0.5).cgColor
-        mainMetricSubView.layer.borderWidth = 10
-        mainMetricSubView.backgroundColor = .green
-        
-        mainMetricLabel.numberOfLines = 1
-        mainMetricLabel.textAlignment = .center
-        mainMetricLabel.textColor = .white
-        mainMetricLabel.font = UIFont.boldSystemFont(ofSize: 20)
-        mainMetricLabel.text = "Kcal"
-        
-        bottomStackView.axis = .horizontal
-        bottomStackView.distribution = .equalSpacing
-        bottomStackView.alignment = .center
+        btmStackView.axis = .horizontal
+        btmStackView.distribution = .equalSpacing
+        btmStackView.alignment = .center
         
         btmLeftStackView.axis = .vertical
         btmLeftStackView.distribution = .fill
@@ -290,14 +292,12 @@ class HomeCollectionViewCell: UICollectionViewCell {
         btmRightMetricTitle.textColor = .white
         btmRightMetricTitle.font = UIFont.boldSystemFont(ofSize: 17)
         
-        guard let calories = self.nutrients?[HKObjectType.quantityType(forIdentifier: .dietaryEnergyConsumed)!],
-            let protein = self.nutrients?[HKObjectType.quantityType(forIdentifier: .dietaryProtein)!],
-            let carbs = self.nutrients?[HKObjectType.quantityType(forIdentifier: .dietaryCarbohydrates)!],
-            let fat = self.nutrients?[HKObjectType.quantityType(forIdentifier: .dietaryFatTotal)!] else { return }
+        guard let protein = self.protein,
+            let carbs = self.carbs,
+            let fat = self.fat else { return }
         
         let totalCaloriesinGrams = protein + carbs + fat
         
-        mainMetric.text = String(Int(calories))
         btmLeftMetric.text = totalCaloriesinGrams != 0 ? "\(String(format: "%.0f%", (carbs / totalCaloriesinGrams) * 100))%" : "0%"
         btmMidMetric.text =  totalCaloriesinGrams != 0 ? "\(String(format: "%.0f%", (protein / totalCaloriesinGrams) * 100))%" : "0%"
         btmRightMetric.text =  totalCaloriesinGrams != 0 ? "\(String(format: "%.0f%", (fat / totalCaloriesinGrams) * 100))%" : "0%"
@@ -323,11 +323,7 @@ class HomeCollectionViewCell: UICollectionViewCell {
         tableView.showsVerticalScrollIndicator = false
     }
     
-    private func setRoundCornerForMainMetric() {
-        mainMetricSubView.layer.cornerRadius = min(mainMetricSubView.bounds.height, mainMetricSubView.bounds.width) / 2
-    }
-    
-    private func formateDate(for date: Date) -> String {
+    private func formatDate(for date: Date) -> String {
         let formatter = DateFormatter()
         formatter.dateFormat = "dd-MM-yyyy"
         return formatter.string(from: date)
@@ -336,17 +332,26 @@ class HomeCollectionViewCell: UICollectionViewCell {
     
 }
 
+// MARK: - UIScrollViewDelegate
+
 extension HomeCollectionViewCell: UIScrollViewDelegate {
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if scrollView.contentOffset.y < 0 {
+        if scrollView.contentOffset.y < 0 { // Move header down
             self.headerHeightConstraint.constant += abs(scrollView.contentOffset.y)
             headerView.incrementColorAlpha(with: self.headerHeightConstraint.constant)
-        } else if scrollView.contentOffset.y > 0 && self.headerHeightConstraint.constant >= headerViewCollapsedHeight {
+            let alpha = headerHeightConstraint.constant / (headerViewExpandedHeight - headerViewCollapsedHeight)
+            mainStackView.alpha = alpha
+            btmStackView.alpha = alpha
+        } else if scrollView.contentOffset.y > 0 && self.headerHeightConstraint.constant >= headerViewCollapsedHeight { // Move header up
             // We don't want the header to move up too quickly so we divide the y-offset by 100
             self.headerHeightConstraint.constant -= scrollView.contentOffset.y / 100
             headerView.decrementColorAlpha(with: scrollView.contentOffset.y)
+            let alpha =  headerHeightConstraint.constant / (headerViewExpandedHeight - headerViewCollapsedHeight) - 0.5
+            mainStackView.alpha = alpha
+            btmStackView.alpha = alpha
             
+            progressIndicator.heightAnchor.constraint(equalTo: headerView.heightAnchor, multiplier: headerHeightConstraint.constant / (headerViewExpandedHeight - headerViewCollapsedHeight))
             if self.headerHeightConstraint.constant < headerViewCollapsedHeight {
                 self.headerHeightConstraint.constant = headerViewCollapsedHeight
             }
@@ -354,14 +359,14 @@ extension HomeCollectionViewCell: UIScrollViewDelegate {
     }
     
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
-        if self.headerHeightConstraint.constant > headerViewHeight {
+        if self.headerHeightConstraint.constant > headerViewExpandedHeight {
             animateHeader()
         }
     }
     
     // Gets called when the scroll comes to a halt
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        if self.headerHeightConstraint.constant > headerViewHeight {
+        if self.headerHeightConstraint.constant > headerViewExpandedHeight {
             animateHeader()
         }
     }
@@ -369,19 +374,20 @@ extension HomeCollectionViewCell: UIScrollViewDelegate {
     func animateHeader() {
         // Set and animate the height constraint back to 150
         UIView.animate(withDuration: 0.7, delay: 0.0, usingSpringWithDamping: 0.7, initialSpringVelocity: 0.5, options: .curveEaseInOut, animations: {
-            self.headerHeightConstraint.constant = self.headerViewHeight
+            self.headerHeightConstraint.constant = self.headerViewExpandedHeight
             self.layoutIfNeeded()
-            self.setRoundCornerForMainMetric()
         }, completion: nil)
         self.layoutSubviews()
     }
     
 }
 
+// MARK: - UITableViewDelegate
+
 extension HomeCollectionViewCell: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 30
+        return Array(getGoalSettings()).count
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -405,16 +411,78 @@ extension HomeCollectionViewCell: UITableViewDelegate, UITableViewDataSource {
         cell.selectionStyle = .none
         if let nutrients = self.nutrients {
             cell.nutrients = nutrients
+            let goalSetting = Array(getGoalSettings())[indexPath.section]
+            let title = goalSetting.key
+            cell.title = title
+            let goals = merge(goals: goalSetting.value, withValues: nutrients)
+            cell.goals = goals
+            
+            guard let date = date else { return cell }
+            // TODO: fix date tomorrow
+            if hasAchievedGoals(goals) && !hasShownMessage && Calendar.current.isDateInTomorrow(date) {
+                hasShownMessage = true
+                delegate?.presentCelebrationView(withTitle: title)
+            }
         }
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UIScreen.main.bounds.height / 3
+        return tableViewCellHeight
     }
     
-    private func filterNutrients(for nutrients: [HKQuantityType : Double], with types: Set<HKQuantityType>) -> [HKQuantityType : Double] {
+    private func hasAchievedGoals(_ goals: [(String, Double, Double)]) -> Bool {
+        for goal in goals {
+            if goal.1 < goal.2 { // if progress is smaller than goal
+                return false
+            }
+        }
+        return true
+    }
+    
+    private func merge(goals: [String : (String, Double)], withValues values: [HKSampleType : Double]) -> [(String, Double, Double)] {
+        var result = [(String, Double, Double)]() // Title, Progress Value, Goal Value
+        
+        for goal in goals {
+            for value in values {
+                if goal.key == value.key.identifier {
+                    result.append((goal.value.0, value.value, goal.value.1))
+                }
+            }
+        }
+        
+        return result
+    }
+    
+    private func getGoalSettings() -> [String: [String : (String, Double)]] { // Goal title: [ HKType(string) : Goal Value ]
+        let goals = [
+            "Diet XYZ":
+                [
+                    HKQuantityTypeIdentifier.dietaryFatTotal.rawValue : ("Fat", 171.0),
+                    HKQuantityTypeIdentifier.dietaryCarbohydrates.rawValue : ("Carbs", 25.0),
+                    HKQuantityTypeIdentifier.dietaryProtein.rawValue : ("Protein", 92.0),
+            ],
+            "Vitamins":
+                [
+                    HKQuantityTypeIdentifier.dietaryVitaminA.rawValue : ("Vitamin A", 0.0009),
+                    HKQuantityTypeIdentifier.dietaryVitaminC.rawValue : ("Vitamin C", 0.09),
+                    HKQuantityTypeIdentifier.dietaryVitaminD.rawValue : ("Vitamin D", 0.6),
+                    HKQuantityTypeIdentifier.dietaryFolate.rawValue : ("Folate", 0.0004),
+            ],
+            "Activity":
+                [
+                    
+                    HKQuantityTypeIdentifier.activeEnergyBurned.rawValue : ("Energy burned", 200.0),
+                    HKQuantityTypeIdentifier.dietaryEnergyConsumed.rawValue : ("Energy consumed", 2000.0),
+            ],
+            
+            ]
+        
+        return goals
+    }
+    
+    private func filterNutrients(for nutrients: [HKSampleType : Double], with types: Set<HKQuantityType>) -> [HKSampleType : Double] {
         return nutrients.filter { (key, value) -> Bool in
             for type in types {
                 if key == type {
@@ -426,4 +494,3 @@ extension HomeCollectionViewCell: UITableViewDelegate, UITableViewDataSource {
     }
     
 }
-

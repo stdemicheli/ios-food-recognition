@@ -11,9 +11,7 @@ import UIKit
 class CameraViewController: UIViewController {
     
     // MARK: - Properties (public)
-    
     let hkController = HealthKitController()
-    
     let foodClient = FoodClient()
     var foodObjects: [String : [Food]] {
         var objects = [String : [Food]]()
@@ -23,7 +21,6 @@ class CameraViewController: UIViewController {
     }
     let foodSections = ["Saved", "Results"]
     
-    @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var searchBar: UISearchBar!
     
     private var headerView: AnimatedHeaderView!
@@ -33,7 +30,10 @@ class CameraViewController: UIViewController {
     private let saveButton = UIButton()
     private let retakePhotoButton = UIButton()
     
-    // MARK: - Properties (private)
+    @IBOutlet weak var tableView: UITableView!
+    private var selectedCellAtIndexPath: IndexPath?
+    private var defaultCellHeight: CGFloat = 70.0
+    private var expandedCellHeight: CGFloat = 200.0
     
     private var servingQtys: [Int] {
         var qty = [Int]()
@@ -43,8 +43,6 @@ class CameraViewController: UIViewController {
         return qty
     }
     
-    private var updatedQty: Double?
-    private var selectedFoodIndexPath: IndexPath?
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -69,15 +67,21 @@ class CameraViewController: UIViewController {
         setupHeader()
         setupTableView()
 
-        // Testing purposes
+//        // Testing purposes
 //        headerView.imageView?.image = UIImage(named: "caprese-salad")
 //        foodClient.fetchFoodInstantly(with: "caprese salad") { (_) in
 //            DispatchQueue.main.async {
 //                self.tableView.reloadData()
 //            }
 //        }
-//
+
+        
         openImagePickerController()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
     }
     
     // MARK: - Actions
@@ -90,8 +94,6 @@ class CameraViewController: UIViewController {
                 self.resetViewController()
             }
         }
-        // Spinner
-        // Move to Home and update
     }
     
     @IBAction func retake(_ sender: Any) {
@@ -109,20 +111,33 @@ class CameraViewController: UIViewController {
         navigationController?.setViewControllers(viewcontrollers, animated: false)
     }
     
-    private func getCalories(for food: Food) -> Double? {
+    private func getNutritionFacts(for food: Food) -> [String : Double] {
+        var nutrients = [String : Double]()
+        
+        
         for nutrient in food.fullNutrients {
-            if nutrient.attributeId == 208 {
-                return nutrient.value
+            
+            switch nutrient.attributeId {
+            case 208:
+                nutrients["calories"] = nutrient.value
+            case 204:
+                nutrients["fat"] = nutrient.value
+            case 205:
+                nutrients["carbs"] = nutrient.value
+            case 203:
+                nutrients["protein"] = nutrient.value
+            default:
+                continue
             }
         }
         
-        return nil
+        return nutrients
     }
     
     private func save(food: Food) {
-        self.foodClient.savedFoods.append(food)
-        guard let index = self.foodClient.foodSearchResult.index(of: food) else { return }
-        self.foodClient.foodSearchResult.remove(at: index)
+        if !self.foodClient.savedFoods.contains(food) {
+            self.foodClient.savedFoods.append(food)
+        }
     }
     
     // TODO: Move to FoodClient?
@@ -138,42 +153,17 @@ class CameraViewController: UIViewController {
             nutrient.value = nutrient.value * multiplier
             return nutrient
         })
-        
-        foodClient.foodSearchResult.remove(at: index)
-        foodClient.foodSearchResult.insert(updatedFood, at: index)
     }
 
 }
 
-extension CameraViewController: UITableViewDelegate, UITableViewDataSource, FoodTableCellDataSource, FoodTableCellDelegate {
-    func numberOfComponents(in pickerView: UIPickerView, forCell cell: FoodTableViewCell) -> Int {
-        return 1
-    }
+// MARK: - TableViewDelegate
+extension CameraViewController: UITableViewDelegate, UITableViewDataSource, FoodTableCellDelegate {
     
-    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int, forCell cell: FoodTableViewCell) -> Int {
-        return servingQtys.count
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int, forCell cell: FoodTableViewCell) -> String? {
-        return String(servingQtys[row])
-    }
-    
-    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int, forCell cell: FoodTableViewCell) {
-        self.updatedQty = Double(servingQtys[row])
-    }
-    
-    func onPickerOpen(_ cell: FoodTableViewCell) {
-    }
-    
-    func onPickerClose(_ cell: FoodTableViewCell) {
-        guard let food = cell.food, let updatedQty = self.updatedQty else { return }
-        _ = update(food, with: updatedQty)
-        // Reset properties
-        self.selectedFoodIndexPath = nil
-        self.updatedQty = nil
-        
+    func updateServingSize(for cell: FoodTableViewCell, withQty qty: Double) {
+        guard let food = cell.food else { return }
+        _ = update(food, with: qty)
         save(food: food)
-        
         tableView.reloadData()
     }
     
@@ -184,7 +174,14 @@ extension CameraViewController: UITableViewDelegate, UITableViewDataSource, Food
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return foodSections[section]
     }
-        
+    
+    func tableView(_ tableView: UITableView, willDisplayHeaderView view: UIView, forSection section: Int) {
+        view.tintColor = .red
+        view.alpha = 0.7
+        let header = view as! UITableViewHeaderFooterView
+        header.textLabel?.textColor = UIColor.white
+    }
+
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         let foodSection = foodSections[section]
         return foodObjects[foodSection]?.count ?? 0
@@ -194,12 +191,11 @@ extension CameraViewController: UITableViewDelegate, UITableViewDataSource, Food
         let cell = tableView.dequeueReusableCell(withIdentifier: "FoodCell", for: indexPath) as! FoodTableViewCell
         
         cell.delegate = self
-        cell.dataSource = self
         
         let foodSection = foodSections[indexPath.section]
         guard let food = foodObjects[foodSection]?[indexPath.row] else { return cell }
         cell.food = food
-        cell.calories = getCalories(for: food)
+        cell.nutritionFacts = getNutritionFacts(for: food)
         
         return cell
     }
@@ -225,6 +221,21 @@ extension CameraViewController: UITableViewDelegate, UITableViewDataSource, Food
         return [save, remove]
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        selectedCellAtIndexPath = selectedCellAtIndexPath == indexPath ? nil : indexPath
+        
+        tableView.beginUpdates()
+        tableView.endUpdates()
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        if indexPath == selectedCellAtIndexPath {
+            return expandedCellHeight
+        }
+        
+        return defaultCellHeight
+    }
+    
 }
 
 extension CameraViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -244,21 +255,25 @@ extension CameraViewController: UIImagePickerControllerDelegate, UINavigationCon
     }
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+        let activityIndicator = ActivityIndicatorViewController()
+        
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+            picker.pushViewController(activityIndicator, animated: false)
+            
             self.headerView.imageView?.image = image
-            // TODO: Implement a spinner which stops after closure completion, incl. timeout
             foodClient.recognizeFood(with: image) { (error) in
                 if let error = error {
                     NSLog("Could not recognize food: \(error)")
                     return
                 }
-
+                
                 DispatchQueue.main.async {
+                    activityIndicator.endAnimation()
                     self.tableView.reloadData()
+                    self.dismiss(animated: true, completion: nil)
                 }
             }
         }
-        self.dismiss(animated: true, completion: nil)
     }
     
 }
@@ -320,7 +335,7 @@ extension CameraViewController: UIScrollViewDelegate {
     
     func setupHeader() {
         
-        headerView = AnimatedHeaderView(frame: CGRect.zero, title: "")
+        headerView = AnimatedHeaderView(frame: CGRect.zero)
         
         headerView.translatesAutoresizingMaskIntoConstraints = false
         saveButton.translatesAutoresizingMaskIntoConstraints = false
@@ -349,7 +364,7 @@ extension CameraViewController: UIScrollViewDelegate {
         saveButton.setTitleColor(.white, for: .normal)
         saveButton.titleLabel?.font.withSize(20.0)
         saveButton.addTarget(self, action: #selector(save(_:)), for: .touchUpInside)
-        saveButton.backgroundColor = .gray
+        saveButton.backgroundColor = .red
         saveButton.layer.cornerRadius = 15
         saveButton.clipsToBounds = true
         
@@ -357,7 +372,7 @@ extension CameraViewController: UIScrollViewDelegate {
         retakePhotoButton.setTitleColor(.white, for: .normal)
         retakePhotoButton.titleLabel?.font.withSize(20.0)
         retakePhotoButton.addTarget(self, action: #selector(retake(_:)), for: .touchUpInside)
-        retakePhotoButton.backgroundColor = .gray
+        retakePhotoButton.backgroundColor = .red
         retakePhotoButton.layer.cornerRadius = 15
         retakePhotoButton.clipsToBounds = true
         

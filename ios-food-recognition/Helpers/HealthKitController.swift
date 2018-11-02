@@ -26,7 +26,7 @@ class HealthKitController {
     
     // MARK: - Properties
     
-    var fetchedNutrients = [HKQuantityType : Double]()
+    var fetchedNutrients = [HKSampleType : Double]()
     
     private var typesToWrite: Set<HKSampleType>
     private var typesToRead: Set<HKObjectType>
@@ -150,7 +150,7 @@ class HealthKitController {
     
     // MARK: - Methods (private)
     
-    private func fetch(_ sampleType: HKQuantityType, from startDate: Date, to endDate: Date, completion: @escaping (Error?) -> Void) {
+    private func fetch(_ sampleType: HKSampleType, from startDate: Date, to endDate: Date, completion: @escaping (Error?) -> Void) {
         let predicate = HKQuery.predicateForSamples(withStart: startDate, end: endDate, options: [])
         let query = HKSampleQuery(sampleType: sampleType, predicate: predicate, limit: Int(HKObjectQueryNoLimit), sortDescriptors: nil) { (query, results, error) in
             guard let samples = results as? [HKQuantitySample] else {
@@ -168,7 +168,8 @@ class HealthKitController {
             
             var sampleQty: Double = 0.0
             for sample in samples {
-                sampleQty += sample.quantityType == HKObjectType.quantityType(forIdentifier: .dietaryEnergyConsumed)
+                sampleQty += sample.quantityType == HKObjectType.quantityType(forIdentifier: .dietaryEnergyConsumed) ||
+                sample.quantityType == HKObjectType.quantityType(forIdentifier: .activeEnergyBurned)
                                 ? sample.quantity.doubleValue(for: .kilocalorie())
                                 : sample.quantity.doubleValue(for: .gram())
                 
@@ -190,7 +191,7 @@ class HealthKitController {
             switch nutrient.attributeId {
             case 208:
                 guard let type = HKObjectType.quantityType(forIdentifier: .dietaryEnergyConsumed) else {
-                    fatalError("*** Unable to create the dietary type \(nutrient.attributeId) ***")
+                    fatalError("*** Unable to create dietary type \(nutrient.attributeId) ***")
                 }
                 let quantity = HKQuantity(unit: HKUnit.kilocalorie(), doubleValue: nutrient.value)
                 let sample = HKQuantitySample(type: type,
@@ -200,7 +201,7 @@ class HealthKitController {
                 hkObjects.insert(sample)
             case 204:
                 guard let type = HKObjectType.quantityType(forIdentifier: .dietaryFatTotal) else {
-                    fatalError("*** Unable to create the dietary type \(nutrient.attributeId) ***")
+                    fatalError("*** Unable to create dietary type \(nutrient.attributeId) ***")
                 }
                 let quantity = HKQuantity(unit: HKUnit.gram(), doubleValue: nutrient.value)
                 let sample = HKQuantitySample(type: type,
@@ -210,7 +211,7 @@ class HealthKitController {
                 hkObjects.insert(sample)
             case 606:
                 guard let type = HKObjectType.quantityType(forIdentifier: .dietaryFatSaturated) else {
-                    fatalError("*** Unable to create the dietary type \(nutrient.attributeId) ***")
+                    fatalError("*** Unable to create dietary type \(nutrient.attributeId) ***")
                 }
                 let quantity = HKQuantity(unit: HKUnit.gram(), doubleValue: nutrient.value)
                 let sample = HKQuantitySample(type: type,
@@ -220,7 +221,7 @@ class HealthKitController {
                 hkObjects.insert(sample)
             case 645:
                 guard let type = HKObjectType.quantityType(forIdentifier: .dietaryFatMonounsaturated) else {
-                    fatalError("*** Unable to create the dietary type \(nutrient.attributeId) ***")
+                    fatalError("*** Unable to create dietary type \(nutrient.attributeId) ***")
                 }
                 let quantity = HKQuantity(unit: HKUnit.gram(), doubleValue: nutrient.value)
                 let sample = HKQuantitySample(type: type,
@@ -230,7 +231,7 @@ class HealthKitController {
                 hkObjects.insert(sample)
             case 646:
                 guard let type = HKObjectType.quantityType(forIdentifier: .dietaryFatPolyunsaturated) else {
-                    fatalError("*** Unable to create the dietary type \(nutrient.attributeId) ***")
+                    fatalError("*** Unable to create dietary type \(nutrient.attributeId) ***")
                 }
                 let quantity = HKQuantity(unit: HKUnit.gram(), doubleValue: nutrient.value)
                 let sample = HKQuantitySample(type: type,
@@ -240,7 +241,7 @@ class HealthKitController {
                 hkObjects.insert(sample)
             case 601:
                 guard let type = HKObjectType.quantityType(forIdentifier: .dietaryCholesterol) else {
-                    fatalError("*** Unable to create the dietary type \(nutrient.attributeId) ***")
+                    fatalError("*** Unable to create dietary type \(nutrient.attributeId) ***")
                 }
                 let quantity = HKQuantity(unit: HKUnit.gram(), doubleValue: nutrient.value/1000)
                 let sample = HKQuantitySample(type: type,
@@ -250,7 +251,7 @@ class HealthKitController {
                 hkObjects.insert(sample)
             case 205:
                 guard let type = HKObjectType.quantityType(forIdentifier: .dietaryCarbohydrates) else {
-                    fatalError("*** Unable to create the dietary type \(nutrient.attributeId) ***")
+                    fatalError("*** Unable to create dietary type \(nutrient.attributeId) ***")
                 }
                 let quantity = HKQuantity(unit: HKUnit.gram(), doubleValue: nutrient.value)
                 let sample = HKQuantitySample(type: type,
@@ -260,7 +261,7 @@ class HealthKitController {
                 hkObjects.insert(sample)
             case 291:
                 guard let type = HKObjectType.quantityType(forIdentifier: .dietaryFiber) else {
-                    fatalError("*** Unable to create the dietary type \(nutrient.attributeId) ***")
+                    fatalError("*** Unable to create dietary type \(nutrient.attributeId) ***")
                 }
                 let quantity = HKQuantity(unit: HKUnit.gram(), doubleValue: nutrient.value)
                 let sample = HKQuantitySample(type: type,
@@ -270,7 +271,7 @@ class HealthKitController {
                 hkObjects.insert(sample)
             case 269:
                 guard let type = HKObjectType.quantityType(forIdentifier: .dietarySugar) else {
-                    fatalError("*** Unable to create the dietary type \(nutrient.attributeId) ***")
+                    fatalError("*** Unable to create dietary type \(nutrient.attributeId) ***")
                 }
                 let quantity = HKQuantity(unit: HKUnit.gram(), doubleValue: nutrient.value)
                 let sample = HKQuantitySample(type: type,
@@ -280,7 +281,7 @@ class HealthKitController {
                 hkObjects.insert(sample)
             case 203:
                 guard let type = HKObjectType.quantityType(forIdentifier: .dietaryProtein) else {
-                    fatalError("*** Unable to create the dietary type \(nutrient.attributeId) ***")
+                    fatalError("*** Unable to create dietary type \(nutrient.attributeId) ***")
                 }
                 let quantity = HKQuantity(unit: HKUnit.gram(), doubleValue: nutrient.value)
                 let sample = HKQuantitySample(type: type,
@@ -290,7 +291,7 @@ class HealthKitController {
                 hkObjects.insert(sample)
             case 301:
                 guard let type = HKObjectType.quantityType(forIdentifier: .dietaryCalcium) else {
-                    fatalError("*** Unable to create the dietary type \(nutrient.attributeId) ***")
+                    fatalError("*** Unable to create dietary type \(nutrient.attributeId) ***")
                 }
                 let quantity = HKQuantity(unit: HKUnit.gram(), doubleValue: nutrient.value/1000)
                 let sample = HKQuantitySample(type: type,
@@ -300,7 +301,7 @@ class HealthKitController {
                 hkObjects.insert(sample)
             case 303:
                 guard let type = HKObjectType.quantityType(forIdentifier: .dietaryIron) else {
-                    fatalError("*** Unable to create the dietary type \(nutrient.attributeId) ***")
+                    fatalError("*** Unable to create dietary type \(nutrient.attributeId) ***")
                 }
                 let quantity = HKQuantity(unit: HKUnit.gram(), doubleValue: nutrient.value/1000)
                 let sample = HKQuantitySample(type: type,
@@ -310,7 +311,7 @@ class HealthKitController {
                 hkObjects.insert(sample)
             case 306:
                 guard let type = HKObjectType.quantityType(forIdentifier: .dietaryPotassium) else {
-                    fatalError("*** Unable to create the dietary type \(nutrient.attributeId) ***")
+                    fatalError("*** Unable to create dietary type \(nutrient.attributeId) ***")
                 }
                 let quantity = HKQuantity(unit: HKUnit.gram(), doubleValue: nutrient.value/1000)
                 let sample = HKQuantitySample(type: type,
@@ -320,7 +321,7 @@ class HealthKitController {
                 hkObjects.insert(sample)
             case 307:
                 guard let type = HKObjectType.quantityType(forIdentifier: .dietarySodium) else {
-                    fatalError("*** Unable to create the dietary type \(nutrient.attributeId) ***")
+                    fatalError("*** Unable to create dietary type \(nutrient.attributeId) ***")
                 }
                 let quantity = HKQuantity(unit: HKUnit.gram(), doubleValue: nutrient.value/1000)
                 let sample = HKQuantitySample(type: type,
@@ -330,7 +331,7 @@ class HealthKitController {
                 hkObjects.insert(sample)
             case 320:
                 guard let type = HKObjectType.quantityType(forIdentifier: .dietaryVitaminA) else {
-                    fatalError("*** Unable to create the dietary type \(nutrient.attributeId) ***")
+                    fatalError("*** Unable to create dietary type \(nutrient.attributeId) ***")
                 }
                 let quantity = HKQuantity(unit: HKUnit.gram(), doubleValue: nutrient.value/1000000)
                 let sample = HKQuantitySample(type: type,
@@ -340,7 +341,7 @@ class HealthKitController {
                 hkObjects.insert(sample)
             case 401:
                 guard let type = HKObjectType.quantityType(forIdentifier: .dietaryVitaminC) else {
-                    fatalError("*** Unable to create the dietary type \(nutrient.attributeId) ***")
+                    fatalError("*** Unable to create dietary type \(nutrient.attributeId) ***")
                 }
                 let quantity = HKQuantity(unit: HKUnit.gram(), doubleValue: nutrient.value/1000)
                 let sample = HKQuantitySample(type: type,
@@ -350,7 +351,7 @@ class HealthKitController {
                 hkObjects.insert(sample)
             case 328:
                 guard let type = HKObjectType.quantityType(forIdentifier: .dietaryVitaminD) else {
-                    fatalError("*** Unable to create the dietary type \(nutrient.attributeId) ***")
+                    fatalError("*** Unable to create dietary type \(nutrient.attributeId) ***")
                 }
                 let quantity = HKQuantity(unit: HKUnit.gram(), doubleValue: nutrient.value/1000000)
                 let sample = HKQuantitySample(type: type,
@@ -360,7 +361,7 @@ class HealthKitController {
                 hkObjects.insert(sample)
             case 417:
                 guard let type = HKObjectType.quantityType(forIdentifier: .dietaryFolate) else {
-                    fatalError("*** Unable to create the dietary type \(nutrient.attributeId) ***")
+                    fatalError("*** Unable to create dietary type \(nutrient.attributeId) ***")
                 }
                 let quantity = HKQuantity(unit: HKUnit.gram(), doubleValue: nutrient.value/1000000)
                 let sample = HKQuantitySample(type: type,
@@ -370,7 +371,7 @@ class HealthKitController {
                 hkObjects.insert(sample)
             case 262:
                 guard let type = HKObjectType.quantityType(forIdentifier: .dietaryCaffeine) else {
-                    fatalError("*** Unable to create the dietary type \(nutrient.attributeId) ***")
+                    fatalError("*** Unable to create dietary type \(nutrient.attributeId) ***")
                 }
                 let quantity = HKQuantity(unit: HKUnit.gram(), doubleValue: nutrient.value/1000)
                 let sample = HKQuantitySample(type: type,

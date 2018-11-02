@@ -21,5 +21,3 @@ struct Prediction: Codable {
     }
     
 }
-
-// [data: [concepts: [id: xx, value: 0.98, name: tomato, app_id: main]], input: [id: xx, data: [image[url: www.sdsfs.com]]]]
